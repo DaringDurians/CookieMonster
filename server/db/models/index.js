@@ -1,11 +1,20 @@
 const User = require('./user')
 const Cookie = require('./cookie')
+const Order = require('./order')
+const db = require('../db')
 /**
  * If we had any associations to make, this would be a great place to put them!
  * ex. if we had another model called BlogPost, we might say:
  *
  *    BlogPost.belongsTo(User)
  */
+
+User.hasMany(Cookie)
+Cookie.hasMany(User)
+User.hasMany(Order)
+Order.belongsTo(User)
+Order.hasMany(Cookie)
+Cookie.hasMany(Order)
 
 /**
  * We'll export all of our models here, so that any time a module needs a model,
@@ -14,5 +23,8 @@ const Cookie = require('./cookie')
  * instead of: const User = require('../db/models/user')
  */
 module.exports = {
-  User, Cookie
+  db,
+  User,
+  Cookie,
+  Order
 }
