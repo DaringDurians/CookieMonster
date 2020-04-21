@@ -5,7 +5,18 @@ const {User} = require('../server/db/models')
 
 async function seed() {
   await db.sync({force: true})
-  const [Cody, Murphy, Jesse, Rida, Sarah, Tyler, Steven] = await Promise.all([
+  const [
+    Cody,
+    Murphy,
+    Jesse,
+    Rida,
+    Sarah,
+    Tyler,
+    Steven,
+    Natalie,
+    Dan,
+    Dakota
+  ] = await Promise.all([
     User.create({
       name: 'Cody',
       email: 'cody@email.com',
@@ -53,10 +64,41 @@ async function seed() {
       email: 'steven@email.com',
       isAdmin: true,
       password: '123'
+    }),
+
+    User.create({
+      name: 'Natalie',
+      email: 'natalie@email.com',
+      isAdmin: false,
+      password: '123'
+    }),
+
+    User.create({
+      name: 'Dan',
+      email: 'dan@email.com',
+      isAdmin: true,
+      password: '123'
+    }),
+
+    User.create({
+      name: 'Dakota',
+      email: 'dakota@email.com',
+      isAdmin: false,
+      password: '123'
     })
   ])
 
-  return [Cody, Murphy, Jesse, Rida, Sarah, Tyler, Steven]
+  // const [] = await Promise.all([
+  //   Order.create({
+  //     name: 'Cody',
+  //     email: 'cody@email.com',
+  //     isAdmin: false,
+  //     password: '123'
+  //   }),
+
+  // ])
+
+  return [Cody, Murphy, Jesse, Rida, Sarah, Tyler, Steven, Natalie, Dan, Dakota]
 }
 
 // We've separated the `seed` function from the `runSeed` function.
