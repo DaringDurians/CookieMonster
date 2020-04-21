@@ -5,8 +5,6 @@ const {User} = require('../server/db/models')
 
 async function seed() {
   await db.sync({force: true})
-  console.log('db synced!')
-
   const [Cody, Murphy, Jesse, Rida, Sarah, Tyler, Steven] = await Promise.all([
     User.create({
       name: 'Cody',
