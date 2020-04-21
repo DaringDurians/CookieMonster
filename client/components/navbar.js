@@ -7,6 +7,7 @@ import {logout} from '../store'
 const Navbar = ({handleClick, isLoggedIn}) => (
   <div>
     <h1>Cookie Monster</h1>
+
     <nav>
       <div>
         <button onClick={clickHandlerFunction}>Category Name 1</button>
