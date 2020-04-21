@@ -4,7 +4,6 @@ const db = require('../server/db')
 
 const {User, Order, OrderProducts, Product} = require('../server/db/models')
 
-
 async function seed() {
   await db.sync({force: true})
   const [
@@ -93,15 +92,6 @@ async function seed() {
   const [sampleOrder] = await Promise.all([
     Order.create({
       userId: Sarah.id
-    })
-  ])
-
-  const [sampleOrderProduct1] = await Promise.all([
-    OrderProducts.create({
-      orderId: sampleOrder.id,
-      productId: chocolateChip.id,
-      quantity: 2,
-      totalPrice: chocolateChip.price * this.quantity
     })
   ])
 
@@ -211,8 +201,18 @@ async function seed() {
         'https://tmbidigitalassetsazure.blob.core.windows.net/rms3-prod/attachments/37/1200x1200/Vanilla-Frosting_EXPS_DIYD19_22592_B03_15_1b_rms.jpg'
     })
   ])
+
+  const [sampleOrderProduct1] = await Promise.all([
+    OrderProducts.create({
+      orderId: sampleOrder.id,
+      productId: chocolateChip.id,
+      quantity: 2,
+      totalPrice: chocolateChip.price * this.quantity
+    })
+  ])
+
   // console.log(`seeded ${Product.length} products`)
-  console.log(`seeded successfully`)
+  // console.log(`seeded successfully`)
   return [
     chocolateChip,
     doubleChoclateChunk,
