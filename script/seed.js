@@ -1,5 +1,5 @@
 'use strict'
-
+const {green, red} = require('chalk')
 const db = require('../server/db')
 const {User} = require('../server/db/models')
 
@@ -7,13 +7,58 @@ async function seed() {
   await db.sync({force: true})
   console.log('db synced!')
 
-  const users = await Promise.all([
-    User.create({email: 'cody@email.com', password: '123'}),
-    User.create({email: 'murphy@email.com', password: '123'})
+  const [Cody, Murphy, Jesse, Rida, Sarah, Tyler, Steven] = await Promise.all([
+    User.create({
+      name: 'Cody',
+      email: 'cody@email.com',
+      isAdmin: false,
+      password: '123'
+    }),
+
+    User.create({
+      name: 'Murphy',
+      email: 'murphy@email.com',
+      isAdmin: false,
+      password: '123'
+    }),
+
+    User.create({
+      name: 'Jesse',
+      email: 'jesse@email.com',
+      isAdmin: false,
+      password: '123'
+    }),
+
+    User.create({
+      name: 'Rida',
+      email: 'rida@email.com',
+      isAdmin: false,
+      password: '123'
+    }),
+
+    User.create({
+      name: 'Sarah',
+      email: 'sarah@email.com',
+      isAdmin: false,
+      password: '123'
+    }),
+
+    User.create({
+      name: 'Tyler',
+      email: 'tyler@email.com',
+      isAdmin: false,
+      password: '123'
+    }),
+
+    User.create({
+      name: 'Steven',
+      email: 'steven@email.com',
+      isAdmin: true,
+      password: '123'
+    })
   ])
 
-  console.log(`seeded ${users.length} users`)
-  console.log(`seeded successfully`)
+  return [Cody, Murphy, Jesse, Rida, Sarah, Tyler, Steven]
 }
 
 // We've separated the `seed` function from the `runSeed` function.
@@ -36,12 +81,23 @@ async function runSeed() {
 // Execute the `seed` function, IF we ran this module directly (`node seed`).
 // `Async` functions always return a promise, so we can use `catch` to handle
 // any errors that might occur inside of `seed`.
-if (module === require.main) {
-  runSeed()
-}
 
 // we export the seed function for testing purposes (see `./seed.spec.js`)
 module.exports = seed
+
+if (require.main === module) {
+  runSeed()
+    .then(() => {
+      console.log(green('Seeding success!'))
+      db.close()
+    })
+    .catch(err => {
+      console.error(red('Oh noes! Something went wrong!'))
+      console.error(err)
+      db.close()
+    })
+}
+
 /*
 // CODE BELOW FOR REFERENCE ONLY
 const Student = require('./server/db/student')
