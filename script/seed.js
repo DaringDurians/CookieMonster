@@ -207,7 +207,7 @@ async function seed() {
       orderId: sampleOrder.id,
       productId: chocolateChip.id,
       quantity: 2,
-      totalPrice: chocolateChip.price * this.quantity
+      totalPrice: chocolateChip.price * 2
     })
   ])
 
