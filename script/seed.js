@@ -1,7 +1,9 @@
 'use strict'
 const {green, red} = require('chalk')
 const db = require('../server/db')
+
 const {User, Order, OrderProducts, Product} = require('../server/db/models')
+
 
 async function seed() {
   await db.sync({force: true})
@@ -103,7 +105,126 @@ async function seed() {
     })
   ])
 
+  const [
+    chocolateChip,
+    doubleChoclateChunk,
+    sugar,
+    oatmealRaisin,
+    whiteChocMacadamia,
+    snickerdoodle,
+    peanutButter,
+    sprinkles,
+    walnutCrumble,
+    chocolateFrosting,
+    vanillaFrosting
+  ] = await Promise.all([
+    Product.create({
+      name: 'Chocolate Chip',
+      category: 'Cookie',
+      price: 1.95,
+      description: 'Our version of a cookie classic!',
+      imgUrl:
+        'https://www.cookingclassy.com/wp-content/uploads/2014/06/chocolate-chip-cookie-16.jpg'
+    }),
+    Product.create({
+      name: 'Double Chocolate Chunk',
+      category: 'Cookie',
+      price: 1.95,
+      description:
+        'These cookies are great...you get a double dose of chocolate!',
+      imgUrl: 'https://www.meals.com/imagesrecipes/144807lrg.jpg'
+    }),
+    Product.create({
+      name: 'Sugar',
+      category: 'Cookie',
+      price: 1.35,
+      description: 'A sweet and tender cookie with wonderfully crisp edges!',
+      imgUrl:
+        'https://imagesvc.meredithcorp.io/v3/mm/image?url=https%3A%2F%2Fassets.marthastewart.com%2Fstyles%2Fwmax-300%2Fd35%2Fold-fashioned-sugar-hol05-msd101477%2Fold-fashioned-sugar-hol05-msd101477_vert.jpg%3Fitok%3Dg9SkvuNF'
+    }),
+    Product.create({
+      name: 'Oatmeal Raisin',
+      category: 'Cookie',
+      price: 1.65,
+      description: 'Moist, chewy and loaded with raisins!',
+      imgUrl:
+        'https://www.jessicagavin.com/wp-content/uploads/2018/12/oatmeal-raisin-cookies-10-1200-500x375.jpg'
+    }),
+    Product.create({
+      name: 'White Chocolate Macadamia Nut',
+      category: 'Cookie',
+      price: 2.45,
+      description:
+        'Loaded with extra white chocolate chips and macadamia nuts, these are guaranteed to be your new favorite cookie!',
+      imgUrl:
+        'https://www.chelseasmessyapron.com/wp-content/uploads/2019/03/White-Chocolate-Macadamia-Nut-Cookie-10-500x500.jpg'
+    }),
+    Product.create({
+      name: 'Snickerdoodle',
+      category: 'Cookie',
+      price: 1.55,
+      description: 'Heavenly cinniamon in every bite!',
+      imgUrl:
+        'https://www.browneyedbaker.com/wp-content/uploads/2009/07/snickerdoodles-main.jpg'
+    }),
+    Product.create({
+      name: 'Peanut Butter',
+      category: 'Cookie',
+      price: 1.99,
+      description:
+        'Packed with double the peanut butter, these peanut butter cookies boast a dense flavor and remarkably soft texture',
+      imgUrl:
+        'https://thenovicechefblog.com/wp-content/uploads/2014/07/The-Best-Chewy-Peanut-Butter-Cookies-3-sm-1-720x540.jpg'
+    }),
+    Product.create({
+      name: 'Sprinkles',
+      category: 'AddOn',
+      price: 0.99,
+      description: 'A rainbow of SUGAR',
+      imgUrl:
+        'https://nuts.com/images/rackcdn/ed910ae2d60f0d25bcb8-80550f96b5feb12604f4f720bfefb46d.ssl.cf1.rackcdn.com/6a84646656a4e'
+    }),
+    Product.create({
+      name: 'Walnut Crumble',
+      category: 'AddOn',
+      price: 1.12,
+      description:
+        'Crumbly nutty goodness put right ontop of your favorite cookie!',
+      imgUrl:
+        ' https://foragerchef.com/wp-content/uploads/2014/01/black-walnut-crumble-6.jpg'
+    }),
+    Product.create({
+      name: 'Chocolate Frosting',
+      category: 'AddOn',
+      price: 0.65,
+      description:
+        'Creamy smooth chocolate whipped to perfection and drizzled across any cookie you can dream of.',
+      imgUrl:
+        'https://whatsinthepan.com/wp-content/uploads/2019/04/Chocolate-Frosting.jpg'
+    }),
+    Product.create({
+      name: 'Vanilla Frosting',
+      category: 'AddOn',
+      price: 0.65,
+      description: 'Its sweet, its tangy, its FROSTING!',
+      imgUrl:
+        'https://tmbidigitalassetsazure.blob.core.windows.net/rms3-prod/attachments/37/1200x1200/Vanilla-Frosting_EXPS_DIYD19_22592_B03_15_1b_rms.jpg'
+    })
+  ])
+  // console.log(`seeded ${Product.length} products`)
+  console.log(`seeded successfully`)
   return [
+    chocolateChip,
+    doubleChoclateChunk,
+    sugar,
+    oatmealRaisin,
+    whiteChocMacadamia,
+    snickerdoodle,
+    peanutButter,
+    sprinkles,
+    walnutCrumble,
+    chocolateFrosting,
+    vanillaFrosting,
     Cody,
     Murphy,
     Jesse,
