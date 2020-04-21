@@ -114,7 +114,8 @@ async function seed() {
     Natalie,
     Dan,
     Dakota,
-    sampleOrder
+    sampleOrder,
+    sampleOrderProduct1
   ]
 }
 
