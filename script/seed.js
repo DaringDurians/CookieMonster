@@ -1,7 +1,7 @@
 'use strict'
 const {green, red} = require('chalk')
 const db = require('../server/db')
-const {User} = require('../server/db/models')
+const {User, Order, OrderProducts, Product} = require('../server/db/models')
 
 async function seed() {
   await db.sync({force: true})
@@ -88,17 +88,34 @@ async function seed() {
     })
   ])
 
-  // const [] = await Promise.all([
-  //   Order.create({
-  //     name: 'Cody',
-  //     email: 'cody@email.com',
-  //     isAdmin: false,
-  //     password: '123'
-  //   }),
+  const [sampleOrder] = await Promise.all([
+    Order.create({
+      userId: Sarah.id
+    })
+  ])
 
-  // ])
+  const [sampleOrderProduct1] = await Promise.all([
+    OrderProducts.create({
+      orderId: sampleOrder.id,
+      productId: chocolateChip.id,
+      quantity: 2,
+      totalPrice: chocolateChip.price * this.quantity
+    })
+  ])
 
-  return [Cody, Murphy, Jesse, Rida, Sarah, Tyler, Steven, Natalie, Dan, Dakota]
+  return [
+    Cody,
+    Murphy,
+    Jesse,
+    Rida,
+    Sarah,
+    Tyler,
+    Steven,
+    Natalie,
+    Dan,
+    Dakota,
+    sampleOrder
+  ]
 }
 
 // We've separated the `seed` function from the `runSeed` function.
