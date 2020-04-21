@@ -7,7 +7,6 @@ const Product = db.define('product', {
     allowNull: false,
     validate: {
       notEmpty: true
-      //  isIn: [['ChoclateChip', 'Vanilla']]
     }
   },
   category: {

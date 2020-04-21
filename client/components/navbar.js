@@ -10,9 +10,7 @@ const Navbar = ({handleClick, isLoggedIn}) => (
 
     <nav>
       <div>
-        <button onClick={clickHandlerFunction}>Category Name 1</button>
-        <button onClick={clickHandlerFunction}>Category Name 2</button>
-        <button onClick={clickHandlerFunction}>Category Name 3</button>
+        <button type="button">Category Name 3</button>
       </div>
       {isLoggedIn ? (
         <div>
