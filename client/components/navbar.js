@@ -6,8 +6,13 @@ import {logout} from '../store'
 
 const Navbar = ({handleClick, isLoggedIn}) => (
   <div>
-    <h1>BOILERMAKER</h1>
+    <h1>Cookie Monster</h1>
     <nav>
+      <div>
+        <button onClick={clickHandlerFunction}>Category Name 1</button>
+        <button onClick={clickHandlerFunction}>Category Name 2</button>
+        <button onClick={clickHandlerFunction}>Category Name 3</button>
+      </div>
       {isLoggedIn ? (
         <div>
           {/* The navbar will show these links after you log in */}
@@ -23,6 +28,14 @@ const Navbar = ({handleClick, isLoggedIn}) => (
           <Link to="/signup">Sign Up</Link>
         </div>
       )}
+      <div>
+        <Link to="/cart">
+          <img
+            src="https://cdn2.mageplaza.com/media/shopify_appicons//afd007d75091993dba6f2654d912edd5.png"
+            alt="failed to load cart image"
+          />
+        </Link>
+      </div>
     </nav>
     <hr />
   </div>
