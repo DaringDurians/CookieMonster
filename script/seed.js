@@ -1,7 +1,7 @@
 'use strict'
 const {green, red} = require('chalk')
 const db = require('../server/db')
-const {Product} = require('../server/db/models')
+const {Product, User} = require('../server/db/models')
 
 async function seed() {
   await db.sync({force: true})
@@ -66,7 +66,6 @@ async function seed() {
       password: '123'
     }),
 
-
     User.create({
       name: 'Natalie',
       email: 'natalie@email.com',
@@ -98,7 +97,6 @@ async function seed() {
   //   }),
 
   // ])
-
 
   const [
     chocolateChip,
@@ -219,19 +217,18 @@ async function seed() {
     sprinkles,
     walnutCrumble,
     chocolateFrosting,
-    vanillaFrosting, 
-    Cody, 
-    Murphy, 
-    Jesse, 
-    Rida, 
-    Sarah, 
-    Tyler, 
-    Steven, 
-    Natalie, 
-    Dan, 
+    vanillaFrosting,
+    Cody,
+    Murphy,
+    Jesse,
+    Rida,
+    Sarah,
+    Tyler,
+    Steven,
+    Natalie,
+    Dan,
     Dakota
   ]
-
 }
 
 // We've separated the `seed` function from the `runSeed` function.
