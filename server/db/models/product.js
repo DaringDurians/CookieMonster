@@ -1,13 +1,21 @@
 const Sequelize = require('sequelize')
 const db = require('../db')
 
-const Cookie = db.define('cookie', {
-  flavor: {
+const Product = db.define('product', {
+  name: {
     type: Sequelize.STRING,
     allowNull: false,
     validate: {
       notEmpty: true
       //  isIn: [['ChoclateChip', 'Vanilla']]
+    }
+  },
+  category: {
+    type: Sequelize.STRING,
+    allowNull: false,
+    validate: {
+      notEmpty: true,
+      isIn: [['Cookie', 'AddOn']]
     }
   },
   price: {
@@ -16,6 +24,9 @@ const Cookie = db.define('cookie', {
     validate: {
       notEmpty: true
     }
+  },
+  description: {
+    type: Sequelize.STRING
   },
   imgUrl: {
     type: Sequelize.STRING,
@@ -26,4 +37,4 @@ const Cookie = db.define('cookie', {
   }
 })
 
-module.exports = Cookie
+module.exports = Product
