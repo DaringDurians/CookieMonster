@@ -14,7 +14,7 @@ const OrderProducts = db.define('orderProducts', {
     type: Sequelize.INTEGER
   },
   totalPrice: {
-    type: Sequelize.FLOAT
+    type: Sequelize.INTEGER
   }
 })
 
