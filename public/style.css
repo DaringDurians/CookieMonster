@@ -2,12 +2,38 @@ body {
   font-family: sans-serif;
 }
 
+html {
+  height: 100%;
+  background-image: linear-gradient(to bottom right, white, #8ae1b3);
+}
+
 a {
   text-decoration: none;
+  color: pink;
+}
+
+a:hover {
+  opacity: 0.5;
+}
+
+a:visited {
+  color: pink;
 }
 
 label {
   display: block;
+}
+
+p {
+  color: #ef4d96;
+}
+
+h1 {
+  color: #ef4d96;
+}
+
+h3 {
+  color: #ef4d96;
 }
 
 nav a {
@@ -18,4 +44,66 @@ nav a {
 form div {
   margin: 1em;
   display: inline-block;
+}
+
+.header {
+  margin-bottom: 0px;
+}
+
+.navbar {
+  display: flex;
+  align-items: center;
+  height: 50px;
+}
+
+.cart {
+  margin-left: auto;
+}
+
+.categories {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.categories img {
+  width: 300px;
+  height: 300px;
+  border-radius: 20%;
+  border: 1px solid pink;
+  border-radius: 4px;
+  padding: 5px;
+}
+
+.cookieCategory:hover {
+  opacity: 0.5;
+  transition: all 0.4s ease;
+}
+
+.cookieCategory {
+  display: flex;
+  flex-direction: column;
+}
+
+.brownieCategory:hover {
+  opacity: 0.5;
+  transition: all 0.2s ease;
+}
+.brownieCategory {
+  display: flex;
+  flex-direction: column;
+}
+
+.singleBox {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+
+.singleBox img {
+  width: 400px;
+  height: 400px;
+  border-radius: 20%;
+  border: 1px solid pink;
+  border-radius: 8px;
+  padding: 5px;
 }

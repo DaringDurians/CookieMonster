@@ -4,10 +4,14 @@ import thunkMiddleware from 'redux-thunk'
 import {composeWithDevTools} from 'redux-devtools-extension'
 import user from './user'
 import singleCookie from './singleCookie'
+import singleUser from './singleUser'
+import singleBrownie from './singleBrownie'
 
 const reducer = combineReducers({
   user,
-  singleCookie
+  singleCookie,
+  singleUser,
+  singleBrownie
 })
 
 const middleware = composeWithDevTools(
@@ -17,3 +21,4 @@ const store = createStore(reducer, middleware)
 
 export default store
 export * from './user'
+export * from './singleCookie'
