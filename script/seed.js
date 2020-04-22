@@ -103,10 +103,10 @@ async function seed() {
     whiteChocMacadamia,
     snickerdoodle,
     peanutButter,
-    sprinkles,
-    walnutCrumble,
-    chocolateFrosting,
-    vanillaFrosting
+    chocoBrownie,
+    oreoBrownie,
+    strawberryBrownie,
+    vanillaBrownie
   ] = await Promise.all([
     Product.create({
       name: 'Chocolate Chip',
@@ -219,10 +219,10 @@ async function seed() {
     whiteChocMacadamia,
     snickerdoodle,
     peanutButter,
-    sprinkles,
-    walnutCrumble,
-    chocolateFrosting,
-    vanillaFrosting,
+    chocoBrownie,
+    oreoBrownie,
+    strawberryBrownie,
+    vanillaBrownie,
     Cody,
     Murphy,
     Jesse,
