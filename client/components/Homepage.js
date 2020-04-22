@@ -1,4 +1,5 @@
 import React from 'react'
+import {NavLink} from 'react-router-dom'
 
 export const Homepage = props => {
   return (
@@ -14,7 +15,9 @@ export const Homepage = props => {
       </div>
       <div id="cookieCategory">
         <div>
-          <h3>Cookie Title</h3>
+          <NavLink to="/cookies">
+            <h3>Cookies</h3>
+          </NavLink>
         </div>
         <div>
           <img src="tbd" alt="tbd" />
@@ -22,7 +25,9 @@ export const Homepage = props => {
       </div>
       <div id="brownieCategory">
         <div>
-          <h3>Brownie Title</h3>
+          <NavLink to="/brownies">
+            <h3>Brownies</h3>
+          </NavLink>
         </div>
         <div>
           <img src="tbd" alt="tbd" />

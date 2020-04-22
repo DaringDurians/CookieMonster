@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
-import {Link} from 'react-router-dom'
+import {Link, NavLink} from 'react-router-dom'
 import {logout} from '../store'
 
 const Navbar = ({handleClick, isLoggedIn}) => (
@@ -10,7 +10,13 @@ const Navbar = ({handleClick, isLoggedIn}) => (
 
     <nav>
       <div>
-        <button type="button">Category Name 3</button>
+        <NavLink to="/">Home</NavLink>
+      </div>
+      <div>
+        <NavLink to="/cookies">Cookies</NavLink>
+      </div>
+      <div>
+        <NavLink to="/brownies">Brownies</NavLink>
       </div>
       {isLoggedIn ? (
         <div>
