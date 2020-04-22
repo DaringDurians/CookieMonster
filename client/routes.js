@@ -2,8 +2,17 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {withRouter, Route, Switch} from 'react-router-dom'
 import PropTypes from 'prop-types'
-import {Login, Signup, UserHome} from './components'
+import {Login, Signup, UserHome, Homepage} from './components'
+import SingleCookie from './components/SingleCookie'
+import SingleUser from './components/SingleUser'
+import SingleBrownie from './components/SingleBrownie'
 import {me} from './store'
+
+import AllCookies from './components/AllCookies'
+import AllBrownies from './components/AllBrownies'
+
+import {fetchAllCookies} from './store/cookies'
+import {fetchAllBrownies} from './store/brownies'
 
 /**
  * COMPONENT
@@ -11,16 +20,24 @@ import {me} from './store'
 class Routes extends Component {
   componentDidMount() {
     this.props.loadInitialData()
+    this.props.fetchAllBrownies()
+    this.props.fetchAllCookies()
   }
 
   render() {
     const {isLoggedIn} = this.props
-
+    console.log(this.props)
     return (
       <Switch>
         {/* Routes placed here are available to all visitors */}
-        <Route path="/login" component={Login} />
-        <Route path="/signup" component={Signup} />
+        <Route exact path="/brownies" component={AllBrownies} />
+        <Route exact path="/cookies" component={AllCookies} />
+        <Route exact path="/" component={Homepage} />
+        <Route exact path="/login" component={Login} />
+        <Route exact path="/signup" component={Signup} />
+        <Route exact path="/cookies/:cookieId" component={SingleCookie} />
+        <Route exact path="/brownies/:brownieId" component={SingleBrownie} />
+        <Route exact path="/users/:userId" component={SingleUser} />
         {isLoggedIn && (
           <Switch>
             {/* Routes placed here are only available after logging in */}
@@ -49,6 +66,12 @@ const mapDispatch = dispatch => {
   return {
     loadInitialData() {
       dispatch(me())
+    },
+    fetchAllCookies() {
+      dispatch(fetchAllCookies())
+    },
+    fetchAllBrownies() {
+      dispatch(fetchAllBrownies())
     }
   }
 }

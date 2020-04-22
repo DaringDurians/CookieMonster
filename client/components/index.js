@@ -6,3 +6,8 @@
 export {default as Navbar} from './navbar'
 export {default as UserHome} from './user-home'
 export {Login, Signup} from './auth-form'
+export {Homepage} from './Homepage'
+export {SingleCookie} from './SingleCookie'
+export {SingleUser} from './SingleUser'
+export {AllCookies} from './AllCookies'
+export {AllBrownies} from './AllBrownies'
