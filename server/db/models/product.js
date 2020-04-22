@@ -14,11 +14,11 @@ const Product = db.define('product', {
     allowNull: false,
     validate: {
       notEmpty: true,
-      isIn: [['Cookie', 'AddOn']]
+      isIn: [['Cookie', 'Brownie']]
     }
   },
   price: {
-    type: Sequelize.FLOAT,
+    type: Sequelize.INTEGER,
     allowNull: false,
     validate: {
       notEmpty: true
@@ -30,6 +30,8 @@ const Product = db.define('product', {
   imgUrl: {
     type: Sequelize.STRING,
     allowNull: false,
+    defaultValue:
+      'https://www.modernhoney.com/wp-content/uploads/2017/11/Thin-and-Crispy-Chocolate-Chip-Cookies-2.jpg',
     validate: {
       notEmpty: true
     }

@@ -103,15 +103,15 @@ async function seed() {
     whiteChocMacadamia,
     snickerdoodle,
     peanutButter,
-    sprinkles,
-    walnutCrumble,
-    chocolateFrosting,
-    vanillaFrosting
+    chocoBrownie,
+    oreoBrownie,
+    strawberryBrownie,
+    vanillaBrownie
   ] = await Promise.all([
     Product.create({
       name: 'Chocolate Chip',
       category: 'Cookie',
-      price: 1.95,
+      price: 195,
       description: 'Our version of a cookie classic!',
       imgUrl:
         'https://www.cookingclassy.com/wp-content/uploads/2014/06/chocolate-chip-cookie-16.jpg'
@@ -119,7 +119,7 @@ async function seed() {
     Product.create({
       name: 'Double Chocolate Chunk',
       category: 'Cookie',
-      price: 1.95,
+      price: 195,
       description:
         'These cookies are great...you get a double dose of chocolate!',
       imgUrl: 'https://www.meals.com/imagesrecipes/144807lrg.jpg'
@@ -127,7 +127,7 @@ async function seed() {
     Product.create({
       name: 'Sugar',
       category: 'Cookie',
-      price: 1.35,
+      price: 135,
       description: 'A sweet and tender cookie with wonderfully crisp edges!',
       imgUrl:
         'https://imagesvc.meredithcorp.io/v3/mm/image?url=https%3A%2F%2Fassets.marthastewart.com%2Fstyles%2Fwmax-300%2Fd35%2Fold-fashioned-sugar-hol05-msd101477%2Fold-fashioned-sugar-hol05-msd101477_vert.jpg%3Fitok%3Dg9SkvuNF'
@@ -135,7 +135,7 @@ async function seed() {
     Product.create({
       name: 'Oatmeal Raisin',
       category: 'Cookie',
-      price: 1.65,
+      price: 165,
       description: 'Moist, chewy and loaded with raisins!',
       imgUrl:
         'https://www.jessicagavin.com/wp-content/uploads/2018/12/oatmeal-raisin-cookies-10-1200-500x375.jpg'
@@ -143,7 +143,7 @@ async function seed() {
     Product.create({
       name: 'White Chocolate Macadamia Nut',
       category: 'Cookie',
-      price: 2.45,
+      price: 245,
       description:
         'Loaded with extra white chocolate chips and macadamia nuts, these are guaranteed to be your new favorite cookie!',
       imgUrl:
@@ -152,7 +152,7 @@ async function seed() {
     Product.create({
       name: 'Snickerdoodle',
       category: 'Cookie',
-      price: 1.55,
+      price: 155,
       description: 'Heavenly cinniamon in every bite!',
       imgUrl:
         'https://www.browneyedbaker.com/wp-content/uploads/2009/07/snickerdoodles-main.jpg'
@@ -160,45 +160,43 @@ async function seed() {
     Product.create({
       name: 'Peanut Butter',
       category: 'Cookie',
-      price: 1.99,
+      price: 199,
       description:
         'Packed with double the peanut butter, these peanut butter cookies boast a dense flavor and remarkably soft texture',
       imgUrl:
         'https://thenovicechefblog.com/wp-content/uploads/2014/07/The-Best-Chewy-Peanut-Butter-Cookies-3-sm-1-720x540.jpg'
     }),
     Product.create({
-      name: 'Sprinkles',
-      category: 'AddOn',
-      price: 0.99,
-      description: 'A rainbow of SUGAR',
+      name: 'Chocolate Brownie',
+      category: 'Brownie',
+      price: 215,
+      description: 'Chocolate chocolate is the best',
       imgUrl:
-        'https://nuts.com/images/rackcdn/ed910ae2d60f0d25bcb8-80550f96b5feb12604f4f720bfefb46d.ssl.cf1.rackcdn.com/6a84646656a4e'
+        'https://celebratingsweets.com/wp-content/uploads/2014/10/Homemade-Brownies-2.jpg'
     }),
     Product.create({
-      name: 'Walnut Crumble',
-      category: 'AddOn',
-      price: 1.12,
-      description:
-        'Crumbly nutty goodness put right ontop of your favorite cookie!',
+      name: 'Oreo Brownie',
+      category: 'Brownie',
+      price: 250,
+      description: 'Dont be a Boreo and eat your Oreos',
       imgUrl:
-        ' https://foragerchef.com/wp-content/uploads/2014/01/black-walnut-crumble-6.jpg'
+        'https://www.dinneratthezoo.com/wp-content/uploads/2019/02/oreo-brownies-4.jpg'
     }),
     Product.create({
-      name: 'Chocolate Frosting',
-      category: 'AddOn',
-      price: 0.65,
-      description:
-        'Creamy smooth chocolate whipped to perfection and drizzled across any cookie you can dream of.',
+      name: 'Strawberry Brownie',
+      category: 'Brownie',
+      price: 250,
+      description: 'Can a brownie have strawberries? There are no rules here',
       imgUrl:
-        'https://whatsinthepan.com/wp-content/uploads/2019/04/Chocolate-Frosting.jpg'
+        'https://www.lifeloveandsugar.com/wp-content/uploads/2017/06/Fudgy-Strawberry-Chocolate-Brownies3b.jpg'
     }),
     Product.create({
-      name: 'Vanilla Frosting',
-      category: 'AddOn',
-      price: 0.65,
-      description: 'Its sweet, its tangy, its FROSTING!',
+      name: 'Vanilla Brownie',
+      category: 'Brownie',
+      price: 225,
+      description: 'The tastiest juxtaposition',
       imgUrl:
-        'https://tmbidigitalassetsazure.blob.core.windows.net/rms3-prod/attachments/37/1200x1200/Vanilla-Frosting_EXPS_DIYD19_22592_B03_15_1b_rms.jpg'
+        'https://i.pinimg.com/originals/68/c4/e5/68c4e544128171c2c8afdb6b59565281.jpg'
     })
   ])
 
@@ -221,10 +219,10 @@ async function seed() {
     whiteChocMacadamia,
     snickerdoodle,
     peanutButter,
-    sprinkles,
-    walnutCrumble,
-    chocolateFrosting,
-    vanillaFrosting,
+    chocoBrownie,
+    oreoBrownie,
+    strawberryBrownie,
+    vanillaBrownie,
     Cody,
     Murphy,
     Jesse,
