@@ -5,15 +5,15 @@ body {
 html {
   height: 100%;
   background-image: linear-gradient(to bottom right, white, #8ae1b3);
+  background-attachment: fixed;
 }
 
 a {
   text-decoration: none;
   color: pink;
 }
-
-a:hover {
-  opacity: 0.5;
+.navbar a:hover {
+  color: white;
 }
 
 a:visited {
@@ -54,6 +54,7 @@ form div {
   display: flex;
   align-items: center;
   height: 50px;
+  background-image: linear-gradient(to left, #8ae1b3, #00b6b0);
 }
 
 .cart {
@@ -96,7 +97,7 @@ form div {
 .singleBox {
   display: flex;
   flex-direction: row;
-  justify-content: space-evenly;
+  justify-content: space-around;
 }
 
 .singleBox img {
@@ -106,4 +107,29 @@ form div {
   border: 1px solid pink;
   border-radius: 8px;
   padding: 5px;
+}
+
+.allViewImg img {
+  width: 300px;
+  height: 300px;
+  border-radius: 20%;
+}
+
+.dessertBox {
+  width: 400px;
+  height: 400px;
+  text-align: center;
+  padding: 20px;
+}
+
+.dessertBox:hover {
+  opacity: 0.5;
+}
+
+.allView {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  padding: 10px;
 }

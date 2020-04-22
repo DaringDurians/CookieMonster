@@ -4,7 +4,7 @@ import {connect} from 'react-redux'
 import {fetchCookie} from '../store/singleCookie'
 
 let cookieId
-class SingleCookie extends React.Component {
+export class SingleCookie extends React.Component {
   componentDidMount() {
     cookieId = this.props.match.params.cookieId
     this.props.fetchCookie(cookieId)

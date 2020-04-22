@@ -3,7 +3,7 @@ import {connect} from 'react-redux'
 import {fetchUser} from '../store/singleUser'
 
 let userId
-class SingleUser extends React.Component {
+export class SingleUser extends React.Component {
   componentDidMount() {
     userId = this.props.match.params.userId
     this.props.fetchUser(userId)

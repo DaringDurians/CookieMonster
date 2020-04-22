@@ -6,9 +6,13 @@ import user from './user'
 import singleCookie from './singleCookie'
 import singleUser from './singleUser'
 import singleBrownie from './singleBrownie'
+import cookies from './cookies'
+import brownies from './brownies'
 
 const reducer = combineReducers({
   user,
+  cookies,
+  brownies,
   singleCookie,
   singleUser,
   singleBrownie

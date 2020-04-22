@@ -8,20 +8,30 @@ import SingleUser from './components/SingleUser'
 import SingleBrownie from './components/SingleBrownie'
 import {me} from './store'
 
+import AllCookies from './components/AllCookies'
+import AllBrownies from './components/AllBrownies'
+
+import {fetchAllCookies} from './store/cookies'
+import {fetchAllBrownies} from './store/brownies'
+
 /**
  * COMPONENT
  */
 class Routes extends Component {
   componentDidMount() {
     this.props.loadInitialData()
+    this.props.fetchAllBrownies()
+    this.props.fetchAllCookies()
   }
 
   render() {
     const {isLoggedIn} = this.props
-
+    console.log(this.props)
     return (
       <Switch>
         {/* Routes placed here are available to all visitors */}
+        <Route exact path="/brownies" component={AllBrownies} />
+        <Route exact path="/cookies" component={AllCookies} />
         <Route exact path="/" component={Homepage} />
         <Route exact path="/login" component={Login} />
         <Route exact path="/signup" component={Signup} />
@@ -56,6 +66,12 @@ const mapDispatch = dispatch => {
   return {
     loadInitialData() {
       dispatch(me())
+    },
+    fetchAllCookies() {
+      dispatch(fetchAllCookies())
+    },
+    fetchAllBrownies() {
+      dispatch(fetchAllBrownies())
     }
   }
 }
