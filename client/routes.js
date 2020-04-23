@@ -2,7 +2,14 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {withRouter, Route, Switch} from 'react-router-dom'
 import PropTypes from 'prop-types'
-import {Login, Signup, UserHome, Homepage} from './components'
+import {
+  Login,
+  Signup,
+  UserHome,
+  Homepage,
+  Confirmation,
+  Error
+} from './components'
 import SingleCookie from './components/SingleCookie'
 import SingleUser from './components/SingleUser'
 import SingleBrownie from './components/SingleBrownie'
@@ -10,9 +17,11 @@ import {me} from './store'
 
 import AllCookies from './components/AllCookies'
 import AllBrownies from './components/AllBrownies'
+import AllUsers from './components/AllUsers'
 
 import {fetchAllCookies} from './store/cookies'
 import {fetchAllBrownies} from './store/brownies'
+import {fetchAllUsers} from './store/allUsers'
 
 /**
  * COMPONENT
@@ -22,14 +31,16 @@ class Routes extends Component {
     this.props.loadInitialData()
     this.props.fetchAllBrownies()
     this.props.fetchAllCookies()
+    this.props.fetchAllUsers()
   }
 
   render() {
     const {isLoggedIn} = this.props
-    console.log(this.props)
+
     return (
       <Switch>
         {/* Routes placed here are available to all visitors */}
+        <Route exact path="/confirm" component={Confirmation} />
         <Route exact path="/brownies" component={AllBrownies} />
         <Route exact path="/cookies" component={AllCookies} />
         <Route exact path="/" component={Homepage} />
@@ -38,6 +49,8 @@ class Routes extends Component {
         <Route exact path="/cookies/:cookieId" component={SingleCookie} />
         <Route exact path="/brownies/:brownieId" component={SingleBrownie} />
         <Route exact path="/users/:userId" component={SingleUser} />
+        <Route exact path="/users" component={AllUsers} />
+        <Route path="*" component={Error} />
         {isLoggedIn && (
           <Switch>
             {/* Routes placed here are only available after logging in */}
@@ -72,6 +85,9 @@ const mapDispatch = dispatch => {
     },
     fetchAllBrownies() {
       dispatch(fetchAllBrownies())
+    },
+    fetchAllUsers() {
+      dispatch(fetchAllUsers())
     }
   }
 }
