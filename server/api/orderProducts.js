@@ -5,6 +5,15 @@ module.exports = router
 
 //sitting ontop api/orderProducts
 
+router.get('/', async (req, res, next) => {
+  try {
+    const order = await OrderProducts.findAll()
+    res.send(order)
+  } catch (err) {
+    next(err)
+  }
+})
+
 router.get('/:orderId', async (req, res, next) => {
   try {
     const order = await OrderProducts.findAll({
