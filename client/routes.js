@@ -2,10 +2,18 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {withRouter, Route, Switch} from 'react-router-dom'
 import PropTypes from 'prop-types'
-import {Login, Signup, UserHome, Homepage} from './components'
+import {
+  Login,
+  Signup,
+  UserHome,
+  Homepage,
+  Confirmation,
+  Error
+} from './components'
 import SingleCookie from './components/SingleCookie'
 import SingleUser from './components/SingleUser'
 import SingleBrownie from './components/SingleBrownie'
+import Cart from './components/Cart'
 import {me} from './store'
 
 import AllUsers from './components/AllUsers'
@@ -14,6 +22,7 @@ import AllBrownies from './components/AllBrownies'
 
 import {fetchAllCookies} from './store/cookies'
 import {fetchAllBrownies} from './store/brownies'
+import {fetchAllUsers} from './store/allUsers'
 
 /**
  * COMPONENT
@@ -23,6 +32,7 @@ class Routes extends Component {
     this.props.loadInitialData()
     this.props.fetchAllBrownies()
     this.props.fetchAllCookies()
+    this.props.fetchAllUsers()
   }
 
   render() {
@@ -31,6 +41,10 @@ class Routes extends Component {
     return (
       <Switch>
         {/* Routes placed here are available to all visitors */}
+        <Route path="/login" component={Login} />
+        <Route path="/signup" component={Signup} />
+        <Route path="/cart" component={Cart} />
+        <Route exact path="/confirm" component={Confirmation} />
         <Route exact path="/brownies" component={AllBrownies} />
         <Route exact path="/cookies" component={AllCookies} />
         <Route exact path="/" component={Homepage} />
@@ -38,14 +52,20 @@ class Routes extends Component {
         <Route exact path="/signup" component={Signup} />
         <Route exact path="/cookies/:cookieId" component={SingleCookie} />
         <Route exact path="/brownies/:brownieId" component={SingleBrownie} />
-        <Route exact path="/users/:userId" component={SingleUser} />
+
+        {/* <Route exact path="*" component={Error} /> */}
         {isLoggedIn && (
           <Switch>
             {/* Routes placed here are only available after logging in */}
             <Route path="/home" component={UserHome} />
             <Route exact path="/brownies" component={AllBrownies} />
             <Route exact path="/cookies" component={AllCookies} />
-            {isAdmin && <Route exact path="/users" component={AllUsers} />}
+            {isAdmin && (
+              <div>
+                <Route exact path="/users" component={AllUsers} />
+                <Route exact path="/users/:userId" component={SingleUser} />
+              </div>
+            )}
             <Route exact path="/" component={Homepage} />
             <Route exact path="/cookies/:cookieId" component={SingleCookie} />
             <Route
@@ -85,6 +105,9 @@ const mapDispatch = dispatch => {
     },
     fetchAllBrownies() {
       dispatch(fetchAllBrownies())
+    },
+    fetchAllUsers() {
+      dispatch(fetchAllUsers())
     }
   }
 }

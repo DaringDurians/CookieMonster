@@ -2,6 +2,7 @@ import React from 'react'
 import {Button} from 'reactstrap'
 import {connect} from 'react-redux'
 import {fetchBrownie} from '../store/singleBrownie'
+import {Quantity} from './Quantity'
 
 let brownieId
 class SingleBrownie extends React.Component {
@@ -25,7 +26,7 @@ class SingleBrownie extends React.Component {
             <p>Price: ${(singleBrownie.price / 100).toFixed(2)}</p>
           </div>
           <div>
-            <p>Quantity: </p>
+            <Quantity />
           </div>
           <div>
             <Button color="info" type="button" id="button">
