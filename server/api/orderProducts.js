@@ -7,6 +7,7 @@ module.exports = router
 
 router.get('/:orderId', async (req, res, next) => {
   try {
+    console.log('req.params.id', req.params.id)
     const order = await OrderProducts.findAll({
       where: {
         orderId: req.params.orderId
