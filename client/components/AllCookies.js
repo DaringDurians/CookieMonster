@@ -17,13 +17,11 @@ export const AllCookies = props => {
                     <div className="allViewImg">
                       <img src={cookie.imgUrl} alt="cookie images" />
                     </div>
-                    <div>
-                      <div>
-                        Price: {`$${Number((cookie.price / 100).toFixed(2))}`}
-                      </div>
-                      <button type="button">Add To Cart</button>
-                    </div>
+                    <div>Price: ${(cookie.price / 100).toFixed(2)}</div>
                   </NavLink>
+                  <div>
+                    <button type="button">Add To Cart</button>
+                  </div>
                 </div>
               )
             })
