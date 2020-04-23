@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const {OrderProducts} = require('../db/models')
+const {OrderProducts, Product, Order} = require('../db/models')
 const {Op} = require('sequelize')
 module.exports = router
 
@@ -16,10 +16,11 @@ router.get('/', async (req, res, next) => {
 
 router.get('/:orderId', async (req, res, next) => {
   try {
-    const order = await OrderProducts.findAll({
+    const order = await Order.findAll({
       where: {
-        orderId: req.params.orderId
-      }
+        id: req.params.orderId
+      },
+      include: [Product]
     })
     res.status(200).json(order)
   } catch (err) {

@@ -110,7 +110,7 @@ async function seed() {
   ] = await Promise.all([
     Product.create({
       name: 'Chocolate Chip',
-      category: 'Cookie',
+      category: 'cookies',
       price: 195,
       description: 'Our version of a cookie classic!',
       imgUrl:
@@ -118,7 +118,7 @@ async function seed() {
     }),
     Product.create({
       name: 'Double Chocolate Chunk',
-      category: 'Cookie',
+      category: 'cookies',
       price: 195,
       description:
         'These cookies are great...you get a double dose of chocolate!',
@@ -126,7 +126,7 @@ async function seed() {
     }),
     Product.create({
       name: 'Sugar',
-      category: 'Cookie',
+      category: 'cookies',
       price: 135,
       description: 'A sweet and tender cookie with wonderfully crisp edges!',
       imgUrl:
@@ -134,7 +134,7 @@ async function seed() {
     }),
     Product.create({
       name: 'Oatmeal Raisin',
-      category: 'Cookie',
+      category: 'cookies',
       price: 165,
       description: 'Moist, chewy and loaded with raisins!',
       imgUrl:
@@ -142,7 +142,7 @@ async function seed() {
     }),
     Product.create({
       name: 'White Chocolate Macadamia Nut',
-      category: 'Cookie',
+      category: 'cookies',
       price: 245,
       description:
         'Loaded with extra white chocolate chips and macadamia nuts, these are guaranteed to be your new favorite cookie!',
@@ -151,7 +151,7 @@ async function seed() {
     }),
     Product.create({
       name: 'Snickerdoodle',
-      category: 'Cookie',
+      category: 'cookies',
       price: 155,
       description: 'Heavenly cinniamon in every bite!',
       imgUrl:
@@ -159,7 +159,7 @@ async function seed() {
     }),
     Product.create({
       name: 'Peanut Butter',
-      category: 'Cookie',
+      category: 'cookies',
       price: 199,
       description:
         'Packed with double the peanut butter, these peanut butter cookies boast a dense flavor and remarkably soft texture',
@@ -168,7 +168,7 @@ async function seed() {
     }),
     Product.create({
       name: 'Chocolate Brownie',
-      category: 'Brownie',
+      category: 'brownies',
       price: 215,
       description: 'Chocolate chocolate is the best',
       imgUrl:
@@ -176,7 +176,7 @@ async function seed() {
     }),
     Product.create({
       name: 'Oreo Brownie',
-      category: 'Brownie',
+      category: 'brownies',
       price: 250,
       description: 'Dont be a Boreo and eat your Oreos',
       imgUrl:
@@ -184,7 +184,7 @@ async function seed() {
     }),
     Product.create({
       name: 'Strawberry Brownie',
-      category: 'Brownie',
+      category: 'brownies',
       price: 250,
       description: 'Can a brownie have strawberries? There are no rules here',
       imgUrl:
@@ -192,7 +192,7 @@ async function seed() {
     }),
     Product.create({
       name: 'Vanilla Brownie',
-      category: 'Brownie',
+      category: 'brownies',
       price: 225,
       description: 'The tastiest juxtaposition',
       imgUrl:

@@ -23,26 +23,16 @@ export class Cart extends Component {
       <div id="cartBox">
         <div id="orderSummary">
           <h3>Order Summary:</h3>
+          {/* If logged in ---> find user.id  ----> find order.id for active orders   ----> map on proderProducts for the order.id and render quantity, price, name, img
+              if not logged in ----> check if local storage exists  ----> retrive cart
+                                      if local storage is empty --------> check if cookies exists ------> use the cookies to store actions
+                                                                          if no cookies exist ----------> set new cookies and then track store actions*/}
           <ul>
-            {/* {this.props.order.map(order => {
-                <li>
-                  if(order.id === this.props.order.id){
-                    return 0
-                  }
-                  <div>
-                    <h4>Cookie Quantity</h4>
-                  </div>
-                  <div>
-                    <h4>Cookie Name</h4>
-                  </div>
-                  <div>
-                    <h4>Cookie Price</h4>
-                  </div>
-                  <div id="orderTotal">
-                    <h4>Order Total</h4>
-                  </div>
-                </li>
-              })} */}
+            {this.props.order.products.map(product => {
+              // <li key={product.id}>
+              //   <link to={`/${product.catorgory}/`}
+              // </li>
+            })}
           </ul>
         </div>
         <div>
@@ -64,3 +54,18 @@ const mapDispatchToProps = dispatch => ({
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Cart)
+
+{
+  /* <div>
+                    <h4>Cookie Quantity</h4>
+                  </div>
+                  <div>
+                    <h4>{Cookie Name}</h4>
+                  </div>
+                  <div>
+                    <h4>Cookie Price</h4>
+                  </div>
+                  <div id="orderTotal">
+                    <h4>Order Total</h4>
+                  </div> */
+}
