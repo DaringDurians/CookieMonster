@@ -21,6 +21,7 @@ router.delete('/:id', async (req, res, next) => {
         id: req.params.id
       }
     })
+    res.status(204).send()
   } catch (err) {
     next(err)
   }
