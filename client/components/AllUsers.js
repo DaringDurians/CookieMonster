@@ -1,7 +1,9 @@
 import React from 'react'
 import {connect} from 'react-redux'
+import {NavLink} from 'react-router-dom'
 
 export const AllUsers = props => {
+  console.log(props)
   return (
     <div>
       <div>
@@ -9,8 +11,10 @@ export const AllUsers = props => {
           ? props.users.length
             ? props.users.map(user => {
                 return (
-                  <div key={user.id}>
-                    <div>Name: {user.name}</div>
+                  <div className="usersBox" key={user.id}>
+                    <NavLink to={`/users/${user.id}`}>
+                      <div>{user.name}</div>
+                    </NavLink>
                   </div>
                 )
               })
