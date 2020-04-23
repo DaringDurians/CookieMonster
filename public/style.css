@@ -144,3 +144,8 @@ form div {
   flex-direction: column;
   align-items: center;
 }
+
+.quantityBox {
+  display: flex;
+  flex-direction: row;
+}
