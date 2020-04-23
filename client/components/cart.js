@@ -28,11 +28,11 @@ export class Cart extends Component {
                                       if local storage is empty --------> check if cookies exists ------> use the cookies to store actions
                                                                           if no cookies exist ----------> set new cookies and then track store actions*/}
           <ul>
-            {this.props.order.products.map(product => {
-              // <li key={product.id}>
-              //   <link to={`/${product.catorgory}/`}
-              // </li>
-            })}
+            {/* {this.props.order.products.map(product => (
+              <li key={product.id}>
+                <Link to={`/${product.catorgory}/${product.id}`}>{product.name} {product.imgUrl} key={product.id}</Link>
+              </li>
+            ))} */}
           </ul>
         </div>
         <div>
