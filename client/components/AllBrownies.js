@@ -17,13 +17,11 @@ export const AllBrownies = props => {
                     <div className="allViewImg">
                       <img src={brownie.imgUrl} alt="brownie images" />
                     </div>
-                    <div>
-                      Price: {`$${Number((brownie.price / 100).toFixed(2))}`}
-                    </div>
-                    <div>
-                      <button type="button">Add To Cart</button>
-                    </div>
+                    <div>Price: ${(brownie.price / 100).toFixed(2)}</div>
                   </NavLink>
+                  <div>
+                    <button type="button">Add To Cart</button>
+                  </div>
                 </div>
               )
             })

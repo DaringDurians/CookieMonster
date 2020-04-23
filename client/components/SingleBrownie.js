@@ -22,7 +22,7 @@ class SingleBrownie extends React.Component {
             <p>{singleBrownie.description}</p>
           </div>
           <div>
-            <p>Price: {(singleBrownie.price / 100).toFixed(2)}</p>
+            <p>Price: ${(singleBrownie.price / 100).toFixed(2)}</p>
           </div>
           <div>
             <p>Quantity: </p>
