@@ -51,7 +51,7 @@ export const postProduct = (name, category, price, description, imgUrl) => {
 export const deleteProduct = id => {
   return async dispatch => {
     try {
-      await axios.delete(`/api/products/brownies/${id}`)
+      await axios.delete(`/api/products/${id}`)
       dispatch(deleteBrownie(id))
     } catch (err) {
       console.log(err)
@@ -67,12 +67,11 @@ const brownies = (brownies = [], action) => {
     case POST_BROWNIE:
       return [...brownies, action.brownie]
     case DELETE_BROWNIE:
-      if (brownies.find(brownie => brownie.id === action.id)) {
-        console.log(brownies)
-        return [...brownies.filter(brownie => brownie.id !== action.id)]
-      } else {
-        return brownies
-      }
+      return [
+        ...brownies.filter(brownie => {
+          return brownie.id !== action.id
+        })
+      ]
     default:
       return brownies
   }

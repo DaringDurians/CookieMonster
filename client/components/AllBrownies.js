@@ -9,6 +9,7 @@ let category
 let price
 let description
 let imgUrl
+let brownieId
 export class AllBrownies extends React.Component {
   constructor() {
     super()
@@ -25,6 +26,12 @@ export class AllBrownies extends React.Component {
     description = event.target.description.value
     imgUrl = event.target.imgUrl.value
     this.props.postProduct(name, category, price, description, imgUrl)
+  }
+  handleDelete(id) {
+    brownieId = id
+    console.log(brownieId)
+    this.props.deleteProduct(brownieId)
+    console.log('>>>>>>>>>>>>>> after delete')
   }
   render() {
     return (
@@ -50,7 +57,7 @@ export class AllBrownies extends React.Component {
                       {this.props.isAdmin ? (
                         <button
                           type="button"
-                          onClick={deleteProduct(brownie.id)}
+                          onClick={() => this.handleDelete(brownie.id)}
                         >
                           X
                         </button>
@@ -75,7 +82,8 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   postProduct: () =>
     dispatch(postProduct(name, category, price, description, imgUrl)),
-  fetchBrownies: () => dispatch(fetchAllBrownies())
+  fetchBrownies: () => dispatch(fetchAllBrownies()),
+  deleteProduct: () => dispatch(deleteProduct(brownieId))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(AllBrownies)

@@ -1,7 +1,7 @@
 import React from 'react'
 
 const ProductsForm = props => {
-  const {handleSubmit, category} = props
+  const {handleSubmit} = props
   return (
     <form onSubmit={handleSubmit}>
       <label htmlFor="name">Product Name</label>
