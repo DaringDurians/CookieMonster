@@ -2,8 +2,27 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {withRouter, Route, Switch} from 'react-router-dom'
 import PropTypes from 'prop-types'
-import {Login, Signup, UserHome, Cart} from './components'
+import {
+  Login,
+  Signup,
+  UserHome,
+  Homepage,
+  Confirmation,
+  Error,
+  Cart
+} from './components'
+import SingleCookie from './components/SingleCookie'
+import SingleUser from './components/SingleUser'
+import SingleBrownie from './components/SingleBrownie'
 import {me} from './store'
+
+import AllCookies from './components/AllCookies'
+import AllBrownies from './components/AllBrownies'
+import AllUsers from './components/AllUsers'
+
+import {fetchAllCookies} from './store/cookies'
+import {fetchAllBrownies} from './store/brownies'
+import {fetchAllUsers} from './store/allUsers'
 
 /**
  * COMPONENT
@@ -11,6 +30,9 @@ import {me} from './store'
 class Routes extends Component {
   componentDidMount() {
     this.props.loadInitialData()
+    this.props.fetchAllBrownies()
+    this.props.fetchAllCookies()
+    this.props.fetchAllUsers()
   }
 
   render() {
@@ -22,6 +44,18 @@ class Routes extends Component {
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
         <Route path="/cart" component={Cart} />
+        <Route path="/cart" component={Cart} />
+        <Route exact path="/confirm" component={Confirmation} />
+        <Route exact path="/brownies" component={AllBrownies} />
+        <Route exact path="/cookies" component={AllCookies} />
+        <Route exact path="/" component={Homepage} />
+        <Route exact path="/login" component={Login} />
+        <Route exact path="/signup" component={Signup} />
+        <Route exact path="/cookies/:cookieId" component={SingleCookie} />
+        <Route exact path="/brownies/:brownieId" component={SingleBrownie} />
+        <Route exact path="/users/:userId" component={SingleUser} />
+        <Route exact path="/users" component={AllUsers} />
+        <Route path="*" component={Error} />
         {isLoggedIn && (
           <Switch>
             {/* Routes placed here are only available after logging in */}
@@ -50,6 +84,15 @@ const mapDispatch = dispatch => {
   return {
     loadInitialData() {
       dispatch(me())
+    },
+    fetchAllCookies() {
+      dispatch(fetchAllCookies())
+    },
+    fetchAllBrownies() {
+      dispatch(fetchAllBrownies())
+    },
+    fetchAllUsers() {
+      dispatch(fetchAllUsers())
     }
   }
 }
