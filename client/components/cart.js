@@ -29,41 +29,11 @@ export class Cart extends Component {
           <div>
             <h4>Cookie Quantity</h4>
           </div>
-          <ul>
-            {Array.isArray(this.props.orderProducts) &&
-              this.props.orderProducts.map(orderProducts => (
-                <li key={order.id}>
-                  <Link
-                    to={`/${category}/${product.id}`}
-                    key={orderProducts.id}
-                  >
-                    <img src={product.imgUrl} />
-                    <NewCampusForm />
-                    {campus.name}
-                  </Link>
-                  <button
-                    type="button"
-                    onClick={this.handleRemoveClick}
-                    id={campus.id}
-                  >
-                    X
-                  </button>
-                </li>
-              ))}
-          </ul>
-          {/* <form onChange={this.handleQuantity}>
-            <label htmlFor="productQuantity">Quantity</label>
-            {/* <!-- Will need to change value to cookie quantity figure from map function --> */}
-          {/* <input
-              type="number"
-              id="productQuantity"
-              name="productQuantity"
-              value={this.state.quantity}
-            />
-          </form> */}
+
           <div>
             <h4>Cookie Name</h4>
           </div>
+
           <div>
             <h4>Cookie Price</h4>
           </div>
