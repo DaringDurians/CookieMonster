@@ -2,7 +2,7 @@ import React from 'react'
 import {connect} from 'react-redux'
 import {NavLink} from 'react-router-dom'
 import ProductsForm from './ProductsForm'
-import {postProduct} from '../store/brownies'
+import {postProduct, deleteProduct, fetchAllBrownies} from '../store/brownies'
 
 let name
 let category
@@ -13,6 +13,9 @@ export class AllBrownies extends React.Component {
   constructor() {
     super()
     this.handleSubmit = this.handleSubmit.bind(this)
+  }
+  componentDidMount() {
+    this.props.fetchBrownies()
   }
   handleSubmit(event) {
     event.preventDefault()
@@ -44,6 +47,14 @@ export class AllBrownies extends React.Component {
                       <div>Price: ${(brownie.price / 100).toFixed(2)}</div>
                     </NavLink>
                     <div>
+                      {this.props.isAdmin ? (
+                        <button
+                          type="button"
+                          onClick={deleteProduct(brownie.id)}
+                        >
+                          X
+                        </button>
+                      ) : null}
                       <button type="button">Add To Cart</button>
                     </div>
                   </div>
@@ -63,7 +74,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   postProduct: () =>
-    dispatch(postProduct(name, category, price, description, imgUrl))
+    dispatch(postProduct(name, category, price, description, imgUrl)),
+  fetchBrownies: () => dispatch(fetchAllBrownies())
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(AllBrownies)

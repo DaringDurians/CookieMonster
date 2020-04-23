@@ -3,6 +3,7 @@ import axios from 'axios'
 // Action Constants
 const GOT_BROWNIES = 'GOT_BROWNIES'
 const POST_BROWNIE = 'POST_BROWNIE'
+const DELETE_BROWNIE = 'DELETE_BROWNIE'
 
 // Action Creators
 export const gotBrownies = brownies => ({
@@ -12,6 +13,10 @@ export const gotBrownies = brownies => ({
 export const postBrownie = brownie => ({
   type: POST_BROWNIE,
   brownie
+})
+export const deleteBrownie = id => ({
+  type: DELETE_BROWNIE,
+  id
 })
 
 // Thunk Creators
@@ -43,6 +48,16 @@ export const postProduct = (name, category, price, description, imgUrl) => {
     }
   }
 }
+export const deleteProduct = id => {
+  return async dispatch => {
+    try {
+      await axios.delete(`/api/products/brownies/${id}`)
+      dispatch(deleteBrownie(id))
+    } catch (err) {
+      console.log(err)
+    }
+  }
+}
 
 // Reducers
 const brownies = (brownies = [], action) => {
@@ -51,6 +66,13 @@ const brownies = (brownies = [], action) => {
       return action.brownies
     case POST_BROWNIE:
       return [...brownies, action.brownie]
+    case DELETE_BROWNIE:
+      if (brownies.find(brownie => brownie.id === action.id)) {
+        console.log(brownies)
+        return [...brownies.filter(brownie => brownie.id !== action.id)]
+      } else {
+        return brownies
+      }
     default:
       return brownies
   }
