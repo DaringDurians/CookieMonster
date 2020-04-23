@@ -115,6 +115,11 @@ form div {
   border-radius: 20%;
 }
 
+.staticBox img {
+  width: 500px;
+  height: 500px;
+}
+
 .dessertBox {
   width: 400px;
   height: 400px;
@@ -132,4 +137,15 @@ form div {
   flex-wrap: wrap;
   justify-content: space-around;
   padding: 10px;
+}
+
+.staticBox {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.quantityBox {
+  display: flex;
+  flex-direction: row;
 }

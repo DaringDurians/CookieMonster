@@ -34,6 +34,7 @@ const Navbar = ({handleClick, isLoggedIn, isAdmin}) => (
       <div className="cart">
         <Link to="/cart">
           <img
+            id="cartImage"
             src="https://cdn2.mageplaza.com/media/shopify_appicons//afd007d75091993dba6f2654d912edd5.png"
             alt="failed to load cart image"
             width="50px"
@@ -51,7 +52,8 @@ const Navbar = ({handleClick, isLoggedIn, isAdmin}) => (
  */
 const mapState = state => {
   return {
-    isLoggedIn: !!state.user.id
+    isLoggedIn: !!state.user.id,
+    isAdmin: !!state.user.isAdmin
   }
 }
 
