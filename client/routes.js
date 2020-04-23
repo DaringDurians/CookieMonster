@@ -8,7 +8,8 @@ import {
   UserHome,
   Homepage,
   Confirmation,
-  Error
+  Error,
+  Cart
 } from './components'
 import SingleCookie from './components/SingleCookie'
 import SingleUser from './components/SingleUser'
@@ -40,6 +41,10 @@ class Routes extends Component {
     return (
       <Switch>
         {/* Routes placed here are available to all visitors */}
+        <Route path="/login" component={Login} />
+        <Route path="/signup" component={Signup} />
+        <Route path="/cart" component={Cart} />
+        <Route path="/cart" component={Cart} />
         <Route exact path="/confirm" component={Confirmation} />
         <Route exact path="/brownies" component={AllBrownies} />
         <Route exact path="/cookies" component={AllCookies} />
