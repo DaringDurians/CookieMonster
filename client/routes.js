@@ -57,7 +57,8 @@ class Routes extends Component {
         {isLoggedIn && (
           <Switch>
             {/* Routes placed here are only available after logging in */}
-            <Route path="/home" component={UserHome} />
+            <Route exact path="/home" component={UserHome} />
+
             <Route exact path="/brownies" component={AllBrownies} />
             <Route exact path="/cookies" component={AllCookies} />
             {isAdmin && (
@@ -78,6 +79,7 @@ class Routes extends Component {
         )}
         {/* Displays our Login component as a fallback */}
         <Route component={Login} />
+        <Route path="*" component={Error} />
       </Switch>
     )
   }
