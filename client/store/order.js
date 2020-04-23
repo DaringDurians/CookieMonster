@@ -16,13 +16,13 @@ const initalOrder = {
 /**
  * ACTION CREATORS
  */
-const gotOrder = order => ({type: GOT_ORDER, order})
+const gotOrder = orderId => ({type: GOT_ORDER, orderId})
 
 /**
  * THUNK CREATORS
  */
 
-export const order = orderId => async dispatch => {
+export const fetchOrder = orderId => async dispatch => {
   try {
     const {data} = await axios.get(`/api/orderProducts/${orderId}`)
     console.log('data from order thunk', data)
@@ -35,11 +35,11 @@ export const order = orderId => async dispatch => {
 /**
  * REDUCER
  */
-export default function(state = initalOrder, action) {
+export default function(order = [], action) {
   switch (action.type) {
     case GOT_ORDER:
       return {products: action.order, loading: false}
     default:
-      return state
+      return order
   }
 }

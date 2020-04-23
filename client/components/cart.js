@@ -3,18 +3,16 @@ import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {logout} from '../store'
-import {products} from './'
+import {products} from '.'
+import {fetchOrder} from '../store/order'
 export class Cart extends Component {
   constructor() {
     super()
     this.state = ''
-    this.handleQuantity = this.handleQuantity.bind(this)
   }
 
-  handleQuantity(event) {
-    this.setState({
-      [event.target.name]: event.target.value
-    })
+  componentDidMount() {
+    this.props.fetchOrder(1)
   }
 
   // ({handleClick, isLoggedIn}) => (
@@ -43,25 +41,21 @@ export class Cart extends Component {
           <h4>Order Total</h4>
         </div>
         <div>
-          <button type="submit" id="confirmButton" onClick="handlesubmit">
+          {/* <button type="submit" id="confirmButton" onClick="handlesubmit">
             Submit
-          </button>
+          </button> */}
         </div>
       </div>
     )
   }
 }
 
-// const mapState = state => {
-//   return {
-//     isLoggedIn: !!state.user.id
-//   }
-// }
+const mapStateToProps = state => ({
+  order: state.order
+})
 
-// const mapDispatch = dispatch => {
-//   return {
-//     handleClick() {
-//       dispatch(logout())
-//     }
-//   }
-// }
+const mapDispatchToProps = dispatch => ({
+  fetchOrder: id => dispatch(fetchOrder(id))
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(Cart)

@@ -8,12 +8,12 @@ import {
   UserHome,
   Homepage,
   Confirmation,
-  Error,
-  Cart
+  Error
 } from './components'
 import SingleCookie from './components/SingleCookie'
 import SingleUser from './components/SingleUser'
 import SingleBrownie from './components/SingleBrownie'
+import Cart from './components/Cart'
 import {me} from './store'
 
 import AllCookies from './components/AllCookies'
@@ -43,7 +43,6 @@ class Routes extends Component {
         {/* Routes placed here are available to all visitors */}
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
-        <Route path="/cart" component={Cart} />
         <Route path="/cart" component={Cart} />
         <Route exact path="/confirm" component={Confirmation} />
         <Route exact path="/brownies" component={AllBrownies} />
