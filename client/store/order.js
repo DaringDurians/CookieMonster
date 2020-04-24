@@ -16,15 +16,15 @@ const GOT_ORDER = 'GOT_ORDER'
 /**
  * ACTION CREATORS
  */
-const gotOrder = order => ({type: GOT_ORDER, order})
+const gotOrder = userId => ({type: GOT_ORDER, userId})
 
 /**
  * THUNK CREATORS
  */
 
-export const fetchOrder = orderId => async dispatch => {
+export const fetchOrder = userId => async dispatch => {
   try {
-    const {data} = await axios.get(`/api/orderProducts/${orderId}`)
+    const {data} = await axios.get(`/api/orderProducts/${userId}`)
     console.log('data from order thunk', data)
     dispatch(gotOrder(data))
   } catch (error) {
@@ -38,7 +38,7 @@ export const fetchOrder = orderId => async dispatch => {
 export default function(order = [], action) {
   switch (action.type) {
     case GOT_ORDER:
-      return action.order
+      return action.orderId
     default:
       return order
   }
