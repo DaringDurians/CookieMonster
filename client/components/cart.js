@@ -5,6 +5,7 @@ import {Link} from 'react-router-dom'
 import {logout} from '../store'
 import {products} from '.'
 import {fetchOrder} from '../store/order'
+import {Quantity} from './Quantity'
 export class Cart extends Component {
   constructor() {
     super()
@@ -12,13 +13,12 @@ export class Cart extends Component {
   }
 
   componentDidMount() {
-    this.props.fetchOrder(1)
+    this.props.fetchOrder(5)
   }
 
   // ({handleClick, isLoggedIn}) => (
   render() {
-    console.log('********************', this.props.order)
-    //orderid = 1
+    console.log('this.props.order in Cart render', this.props.order)
     return (
       <div id="cartBox">
         <div id="orderSummary">
@@ -26,13 +26,27 @@ export class Cart extends Component {
           {/* If logged in ---> find user.id  ----> find order.id for active orders   ----> map on proderProducts for the order.id and render quantity, price, name, img
               if not logged in ----> check if local storage exists  ----> retrive cart
                                       if local storage is empty --------> check if cookies exists ------> use the cookies to store actions
-                                                                          if no cookies exist ----------> set new cookies and then track store actions*/}
+                                                                          if no cookies exist ----------> set new cookies and then track store actions
+          to={`/${item.category}/${item.id}`}
+          */}
           <ul>
-            {/* {this.props.order.products.map(product => (
-              <li key={product.id}>
-                <Link to={`/${product.catorgory}/${product.id}`}>{product.name} {product.imgUrl} key={product.id}</Link>
-              </li>
-            ))} */}
+            {this.props.order.map(order => (
+              <ul key={order.id}>
+                <span>Quantity-------></span>
+                <span>Item---------></span>
+                <span>Amount</span>
+                {order.products.map(product => (
+                  <ul key={product.id}>
+                    {product.orderProducts.quantity}
+                    <Quantity quantity={product.orderProducts.quantity} />
+                    <Link to={`/${product.category}/${product.id}`}>
+                      {product.name}
+                    </Link>---->
+                    {product.orderProducts.totalPrice / 100}
+                  </ul>
+                ))}
+              </ul>
+            ))}
           </ul>
         </div>
         <div>
@@ -50,22 +64,22 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  fetchOrder: id => dispatch(fetchOrder(id))
+  fetchOrder: userId => dispatch(fetchOrder(userId))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Cart)
 
-{
-  /* <div>
-                    <h4>Cookie Quantity</h4>
-                  </div>
-                  <div>
-                    <h4>{Cookie Name}</h4>
-                  </div>
-                  <div>
-                    <h4>Cookie Price</h4>
-                  </div>
-                  <div id="orderTotal">
-                    <h4>Order Total</h4>
-                  </div> */
-}
+//SEEEEEEEEEEEEEEED ADD
+
+// const [sampleOrderProduct2] = await Promise.all([
+//     OrderProducts.create({
+//       orderId: sampleOrder.id,
+//       productId: sugar.id,
+//       quantity: 1,
+//       totalPrice: chocolateChip.price
+//     })
+//   ])
+
+/////ALSO CHANGE REDUCER AND ACTION AND THUNK FOR USERID!
+///CHANGE PRODUCT FORMS for brownies and cookies
+////ensure seed is changes with brownies and cookies
