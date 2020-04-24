@@ -3,6 +3,7 @@ import {connect} from 'react-redux'
 import {NavLink} from 'react-router-dom'
 import ProductsForm from './ProductsForm'
 import {postProduct, deleteProduct, fetchAllCookies} from '../store/cookies'
+import {Quantity} from './Quantity'
 
 let name
 let category
@@ -73,6 +74,7 @@ export class AllCookies extends React.Component {
 }
 
 const mapStateToProps = state => ({
+  order: state.order,
   cookies: state.cookies,
   isAdmin: !!state.user.isAdmin
 })

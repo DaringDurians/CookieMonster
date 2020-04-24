@@ -4,68 +4,78 @@ import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {logout} from '../store'
 import {products} from '.'
-import {fetchOrder} from '../store/order'
-export class Cart extends Component {
-  constructor() {
-    super()
-    this.state = ''
-  }
+import {fetchOrderByUserId} from '../store/order'
+import ProductsForm from './ProductsForm'
 
-  componentDidMount() {
-    this.props.fetchOrder(1)
+export class Cart extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {}
   }
 
   // ({handleClick, isLoggedIn}) => (
+
   render() {
-    console.log('********************', this.props.order)
-    //orderid = 1
-    return (
+    const {isLoggedIn} = this.props
+    let totalItems = 0
+    let totalPrice = 0
+    return isLoggedIn ? (
       <div id="cartBox">
-        <div id="orderSummary">
-          <h3>Order Summary:</h3>
-          {/* If logged in ---> find user.id  ----> find order.id for active orders   ----> map on proderProducts for the order.id and render quantity, price, name, img
-              if not logged in ----> check if local storage exists  ----> retrive cart
-                                      if local storage is empty --------> check if cookies exists ------> use the cookies to store actions
-                                                                          if no cookies exist ----------> set new cookies and then track store actions*/}
-          <ul>
-            {/* {this.props.order.products.map(product => (
-              <li key={product.id}>
-                <Link to={`/${product.catorgory}/${product.id}`}>{product.name} {product.imgUrl} key={product.id}</Link>
-              </li>
-            ))} */}
-          </ul>
-        </div>
         <div>
-          {/* <button type="submit" id="confirmButton" onClick="handlesubmit">
-              Submit
-            </button> */}
+          <p>Itemized Breakdown:</p>
         </div>
+        <div id="itemizedSummary">
+          {this.props.order.products
+            ? this.props.order.products.length
+              ? this.props.order.products.map(product => {
+                  totalItems += product.orderProducts.quantity
+                  totalPrice += product.orderProducts.totalPrice
+                  return (
+                    <ul key={product.id}>
+                      <li>
+                        {product.name} x {product.orderProducts.quantity} :{' '}
+                        {'$' +
+                          (product.orderProducts.totalPrice / 100).toFixed(
+                            2
+                          )}{' '}
+                      </li>
+                    </ul>
+                  )
+                })
+              : 'No items in cart'
+            : 'No items in cart'}
+        </div>
+        {this.props.order.products ? (
+          this.props.order.products.length ? (
+            <div id="totalSummary">
+              <div>
+                <p>Total Items: {totalItems}</p>
+              </div>
+              <div>
+                <p>Total Price: {'$' + (totalPrice / 100).toFixed(2)}</p>
+              </div>
+            </div>
+          ) : (
+            <div />
+          )
+        ) : (
+          <div />
+        )}
       </div>
+    ) : (
+      <div />
     )
   }
 }
 
 const mapStateToProps = state => ({
+  isLoggedIn: !!state.user.id,
+  user: state.user,
   order: state.order
 })
 
-const mapDispatchToProps = dispatch => ({
-  fetchOrder: id => dispatch(fetchOrder(id))
-})
+// const mapDispatchToProps = dispatch => ({
+//   fetchOrderByUserId: id => dispatch(fetchOrderByUserId(id)),
+// })
 
-export default connect(mapStateToProps, mapDispatchToProps)(Cart)
-
-{
-  /* <div>
-                    <h4>Cookie Quantity</h4>
-                  </div>
-                  <div>
-                    <h4>{Cookie Name}</h4>
-                  </div>
-                  <div>
-                    <h4>Cookie Price</h4>
-                  </div>
-                  <div id="orderTotal">
-                    <h4>Order Total</h4>
-                  </div> */
-}
+export default connect(mapStateToProps, null)(Cart)

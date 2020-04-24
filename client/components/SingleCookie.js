@@ -2,6 +2,8 @@ import React from 'react'
 import {Button} from 'reactstrap'
 import {connect} from 'react-redux'
 import {fetchCookie, updatedCookie} from '../store/singleCookie'
+import {fetchOrderProductDetails} from '../store/orderProduct'
+import Quantity from './Quantity'
 import ProductsForm from './ProductsForm'
 
 let name
@@ -18,6 +20,7 @@ export class SingleCookie extends React.Component {
   componentDidMount() {
     cookieId = this.props.match.params.cookieId
     this.props.fetchCookie(cookieId)
+    this.props.fetchOrderProductDetails(cookieId)
   }
   handleSubmit() {
     event.preventDefault()
@@ -61,9 +64,10 @@ export class SingleCookie extends React.Component {
             <p>Quantity: </p>
           </div>
           <div>
-            <Button color="info" type="button" id="button">
-              Add To Cart
-            </Button>{' '}
+            <Quantity
+              quantity={this.props.orderProduct.quantity}
+              prodId={singleCookie.id}
+            />
           </div>
         </div>
       </div>
@@ -74,6 +78,7 @@ export class SingleCookie extends React.Component {
 const mapState = state => {
   return {
     singleCookie: state.singleCookie,
+    orderProduct: state.orderProduct,
     isAdmin: !!state.user.isAdmin
   }
 }
@@ -82,7 +87,8 @@ const mapDispatch = dispatch => ({
   updatedCookie: () =>
     dispatch(
       updatedCookie(cookieId, name, category, price, description, imgUrl)
-    )
+    ),
+  fetchOrderProductDetails: prodId => dispatch(fetchOrderProductDetails(prodId))
 })
 
 export default connect(mapState, mapDispatch)(SingleCookie)
