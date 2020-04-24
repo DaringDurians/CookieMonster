@@ -1,5 +1,4 @@
 import axios from 'axios'
-import {NavLink} from 'react-router-dom'
 
 // Action Constants
 const GOT_USERS = 'GOT_USERS'

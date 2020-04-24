@@ -53,6 +53,7 @@ class Routes extends Component {
         <Route exact path="/cookies/:cookieId" component={SingleCookie} />
         <Route exact path="/brownies/:brownieId" component={SingleBrownie} />
 
+        {/* <Route exact path="*" component={Error} /> */}
         {isLoggedIn && (
           <Switch>
             {/* Routes placed here are only available after logging in */}
