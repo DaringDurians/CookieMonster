@@ -6,7 +6,7 @@
 export {default as Navbar} from './navbar'
 export {default as UserHome} from './user-home'
 export {Login, Signup} from './auth-form'
-export {Cart} from './Cart'
+export {Cart} from './cart'
 export {Homepage} from './Homepage'
 export {SingleCookie} from './SingleCookie'
 export {SingleUser} from './SingleUser'

@@ -8,15 +8,15 @@ const GOT_ORDER = 'GOT_ORDER'
 /**
  * INITIAL STATE
  */
-const initalOrder = {
-  products: [],
-  loading: true
-}
+// const initalOrder = {
+//   products: [],
+//   loading: true
+// }
 
 /**
  * ACTION CREATORS
  */
-const gotOrder = orderId => ({type: GOT_ORDER, orderId})
+const gotOrder = order => ({type: GOT_ORDER, order})
 
 /**
  * THUNK CREATORS
@@ -38,7 +38,7 @@ export const fetchOrder = orderId => async dispatch => {
 export default function(order = [], action) {
   switch (action.type) {
     case GOT_ORDER:
-      return {products: action.order, loading: false}
+      return action.order
     default:
       return order
   }

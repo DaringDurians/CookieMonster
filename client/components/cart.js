@@ -17,33 +17,28 @@ export class Cart extends Component {
 
   // ({handleClick, isLoggedIn}) => (
   render() {
-    console.log('********************', this.props)
+    console.log('********************', this.props.order)
     //orderid = 1
     return (
       <div id="cartBox">
         <div id="orderSummary">
           <h3>Order Summary:</h3>
-          {/* <!-- Will need to map over cookies in order for this section below --> */}
-          <div>
-            <h4>Cookie Quantity</h4>
-          </div>
-
-          <div>
-            <h4>Cookie Name</h4>
-          </div>
-
-          <div>
-            <h4>Cookie Price</h4>
-          </div>
-        </div>
-
-        <div id="orderTotal">
-          <h4>Order Total</h4>
+          {/* If logged in ---> find user.id  ----> find order.id for active orders   ----> map on proderProducts for the order.id and render quantity, price, name, img
+              if not logged in ----> check if local storage exists  ----> retrive cart
+                                      if local storage is empty --------> check if cookies exists ------> use the cookies to store actions
+                                                                          if no cookies exist ----------> set new cookies and then track store actions*/}
+          <ul>
+            {/* {this.props.order.products.map(product => (
+              <li key={product.id}>
+                <Link to={`/${product.catorgory}/${product.id}`}>{product.name} {product.imgUrl} key={product.id}</Link>
+              </li>
+            ))} */}
+          </ul>
         </div>
         <div>
           {/* <button type="submit" id="confirmButton" onClick="handlesubmit">
-            Submit
-          </button> */}
+              Submit
+            </button> */}
         </div>
       </div>
     )
@@ -59,3 +54,18 @@ const mapDispatchToProps = dispatch => ({
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Cart)
+
+{
+  /* <div>
+                    <h4>Cookie Quantity</h4>
+                  </div>
+                  <div>
+                    <h4>{Cookie Name}</h4>
+                  </div>
+                  <div>
+                    <h4>Cookie Price</h4>
+                  </div>
+                  <div id="orderTotal">
+                    <h4>Order Total</h4>
+                  </div> */
+}

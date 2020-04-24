@@ -13,7 +13,7 @@ import {
 import SingleCookie from './components/SingleCookie'
 import SingleUser from './components/SingleUser'
 import SingleBrownie from './components/SingleBrownie'
-import Cart from './components/Cart'
+import Cart from './components/cart'
 import {me} from './store'
 
 import AllUsers from './components/AllUsers'

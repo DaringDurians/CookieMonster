@@ -14,7 +14,7 @@ const Product = db.define('product', {
     allowNull: false,
     validate: {
       notEmpty: true,
-      isIn: [['Cookie', 'Brownie']]
+      isIn: [['cookies', 'brownies']]
     }
   },
   price: {

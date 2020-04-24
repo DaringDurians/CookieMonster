@@ -8,7 +8,7 @@ router.get('/', async (req, res, next) => {
   try {
     const allBrownies = await Product.findAll({
       where: {
-        category: 'Brownie'
+        category: 'brownies'
       }
     })
     res.status(200).json(allBrownies)
@@ -21,7 +21,7 @@ router.get('/:id', async (req, res, next) => {
   try {
     const brownie = await Product.findOne({
       where: {
-        category: 'Brownie',
+        category: 'brownies',
         id: req.params.id
       }
     })
