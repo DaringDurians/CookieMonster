@@ -1,6 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {NavLink} from 'react-router-dom'
+import {Quantity} from './Quantity'
 
 export const AllCookies = props => {
   return (
@@ -19,6 +20,10 @@ export const AllCookies = props => {
                     </div>
                     <div>Price: ${(cookie.price / 100).toFixed(2)}</div>
                   </NavLink>
+                  <div>
+                    add quantity component here!
+                    {/*<Quantity /> */}
+                  </div>
                   <div>
                     <button type="button">Add To Cart</button>
                   </div>

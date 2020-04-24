@@ -2,6 +2,7 @@ import React from 'react'
 import {Button} from 'reactstrap'
 import {connect} from 'react-redux'
 import {fetchCookie} from '../store/singleCookie'
+import {Quantity} from './Quantity'
 
 let cookieId
 export class SingleCookie extends React.Component {
@@ -26,6 +27,9 @@ export class SingleCookie extends React.Component {
           </div>
           <div>
             <p>Quantity: </p>
+          </div>
+          <div>
+            <Quantity />
           </div>
           <div>
             <Button color="info" type="button" id="button">

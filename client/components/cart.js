@@ -38,14 +38,12 @@ export class Cart extends Component {
                 Image-------> Item---------> Quantity-------> Amount
                 {order.products.map(product => (
                   <ul key={product.id}>
-                    <div className="allViewImg">
-                      <img src={product.imgUrl} alt="brownie images" />
-                    </div>
-                    <div>
-                      <Link to={`/${product.category}/${product.id}`}>
-                        {product.name}
-                      </Link>---->
-                    </div>
+                    <Link to={`/${product.category}/${product.id}`}>
+                      <div className="allViewImg">
+                        <img src={product.imgUrl} alt="brownie images" />
+                      </div>
+                      <div>{product.name}</div>
+                    </Link>---->
                     <div>
                       <p>{product.orderProducts.quantity}</p>
                       <Quantity quantity={product.orderProducts.quantity} />
