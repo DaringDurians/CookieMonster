@@ -209,6 +209,15 @@ async function seed() {
     })
   ])
 
+  const [sampleOrderProduct2] = await Promise.all([
+    OrderProducts.create({
+      orderId: sampleOrder.id,
+      productId: sugar.id,
+      quantity: 1,
+      totalPrice: chocolateChip.price
+    })
+  ])
+
   // console.log(`seeded ${Product.length} products`)
   // console.log(`seeded successfully`)
   return [
@@ -234,7 +243,8 @@ async function seed() {
     Dan,
     Dakota,
     sampleOrder,
-    sampleOrderProduct1
+    sampleOrderProduct1,
+    sampleOrderProduct2
   ]
 }
 
