@@ -30,3 +30,29 @@ router.get('/:id', async (req, res, next) => {
     next(err)
   }
 })
+
+router.delete('/:id', async (req, res, next) => {
+  try {
+    await Product.destroy({
+      where: {
+        id: req.params.id
+      }
+    })
+    res.status(204)
+  } catch (error) {
+    next(error)
+  }
+})
+
+router.put('/:id', async (req, res, next) => {
+  try {
+    const updated = await Product.update(req.body, {
+      returning: true,
+      where: {id: req.params.id}
+    })
+    res.json(updated[1][0])
+  } catch (err) {
+    next(err)
+  }
+})
+

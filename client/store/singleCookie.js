@@ -1,9 +1,15 @@
 import axios from 'axios'
 
 const GOT_COOKIE = 'GOT_COOKIE'
+const UPDATE_COOKIE = 'UPDATE_COOKIE'
 
 const gotCookie = id => ({
   type: GOT_COOKIE,
+  id
+})
+
+const updateCookie = id => ({
+  type: UPDATE_COOKIE,
   id
 })
 
@@ -14,6 +20,30 @@ export const fetchCookie = id => {
       dispatch(gotCookie(data))
     } catch (err) {
       console.log('ERROR fetching cookie', err)
+    }
+  }
+}
+
+export const updatedCookie = (
+  id,
+  name,
+  category,
+  price,
+  description,
+  imgUrl
+) => {
+  return async dispatch => {
+    try {
+      const {data} = await axios.put(`/api/products/cookies/${id}`, {
+        name,
+        category,
+        price,
+        description,
+        imgUrl
+      })
+      dispatch(updateCookie(data))
+    } catch (err) {
+      console.log('ERROR updating cookie', err)
     }
   }
 }
