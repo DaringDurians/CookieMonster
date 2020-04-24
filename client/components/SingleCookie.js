@@ -65,8 +65,9 @@ export class SingleCookie extends React.Component {
           </div>
           <div>
             <Quantity
-              quantity={this.props.orderProduct.quantity}
+              quantity={this.props.orderProduct.quantity || 0}
               prodId={singleCookie.id}
+              price={singleCookie.price}
             />
           </div>
         </div>

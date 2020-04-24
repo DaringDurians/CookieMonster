@@ -5,6 +5,7 @@ import axios from 'axios'
  */
 const GOT_ORDER_PRODUCT = 'GOT_ORDER_PRODUCT'
 const UPDATED_ORDER_PRODUCT = 'UPDATED_ORDER_PRODUCT'
+const CREATED_ORDER_PRODUCT = 'CREATED_ORDER_PRODUCT'
 
 /**
  * ACTION CREATORS
@@ -16,6 +17,11 @@ const gotOrderProduct = orderProduct => ({
 
 const updatedOrderProduct = orderProduct => ({
   type: UPDATED_ORDER_PRODUCT,
+  orderProduct
+})
+
+const createdOrderProduct = orderProduct => ({
+  type: CREATED_ORDER_PRODUCT,
   orderProduct
 })
 
@@ -37,14 +43,32 @@ export const updateOrderProductDetails = (
   quantity
 ) => async dispatch => {
   try {
-    console.log(quantity)
     const {data} = await axios.put(`/api/orderProducts/${productId}`, {
       quantity: quantity
     })
-    console.log(data)
     dispatch(updatedOrderProduct(data))
   } catch (error) {
     console.error(error)
+  }
+}
+
+export const createOrderProductDetails = (
+  orderId,
+  productId,
+  quantity,
+  totalPrice
+) => async dispatch => {
+  try {
+    console.log(orderId, productId, quantity, totalPrice)
+    const {data} = await axios.post(`/api/orderProducts/${productId}`, {
+      orderId,
+      productId,
+      quantity,
+      totalPrice
+    })
+    dispatch(createdOrderProduct(data))
+  } catch (error) {
+    console.error('LOL NOW IT IS THIS THUNK')
   }
 }
 
@@ -56,6 +80,8 @@ export default function(orderProduct = {}, action) {
     case GOT_ORDER_PRODUCT:
       return action.orderProduct ? action.orderProduct : {}
     case UPDATED_ORDER_PRODUCT:
+      return action.orderProduct ? action.orderProduct : {}
+    case CREATED_ORDER_PRODUCT:
       return action.orderProduct ? action.orderProduct : {}
     default:
       return orderProduct

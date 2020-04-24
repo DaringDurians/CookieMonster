@@ -16,9 +16,17 @@ router.get('/:productId', async (req, res, next) => {
   }
 })
 
+router.post('/:productId', async (req, res, next) => {
+  try {
+    const orderProduct = await OrderProducts.create(req.body)
+    res.status(201).json(orderProduct)
+  } catch (err) {
+    next(err)
+  }
+})
+
 router.put('/:productId', async (req, res, next) => {
   try {
-    console.log(req.body.quantity)
     const orderProduct = await OrderProducts.update(req.body, {
       where: {
         productId: req.params.productId
