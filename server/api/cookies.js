@@ -30,6 +30,7 @@ router.get('/:id', async (req, res, next) => {
     next(err)
   }
 })
+
 router.delete('/:id', async (req, res, next) => {
   try {
     await Product.destroy({
@@ -54,3 +55,4 @@ router.put('/:id', async (req, res, next) => {
     next(err)
   }
 })
+

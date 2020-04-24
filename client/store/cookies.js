@@ -3,7 +3,7 @@ import axios from 'axios'
 // Action Constants
 const GOT_COOKIES = 'GOT_COOKIES'
 const POST_COOKIE = 'POST_COOKIE'
-
+const DELETE_COOKIE = 'DELETE_COOKIE'
 // Action Creators
 export const getCookies = cookies => ({
   type: GOT_COOKIES,
@@ -12,6 +12,10 @@ export const getCookies = cookies => ({
 export const postCookie = cookie => ({
   type: POST_COOKIE,
   cookie
+})
+export const deleteCookie = id => ({
+  type: DELETE_COOKIE,
+  id
 })
 
 // Thunk Creators
@@ -43,6 +47,16 @@ export const postProduct = (name, category, price, description, imgUrl) => {
     }
   }
 }
+export const deleteProduct = id => {
+  return async dispatch => {
+    try {
+      await axios.delete(`/api/products/${id}`)
+      dispatch(deleteCookie(id))
+    } catch (err) {
+      console.log(err)
+    }
+  }
+}
 
 // Reducers
 const cookies = (cookies = [], action) => {
@@ -51,6 +65,12 @@ const cookies = (cookies = [], action) => {
       return action.cookies
     case POST_COOKIE:
       return [...cookies, action.cookie]
+    case DELETE_COOKIE:
+      return [
+        ...cookies.filter(cookie => {
+          return cookie.id !== action.id
+        })
+      ]
     default:
       return cookies
   }
