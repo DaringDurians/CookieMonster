@@ -29,15 +29,12 @@ export class Cart extends Component {
             ? this.props.order.products.length
               ? this.props.order.products.map(product => {
                   totalItems += product.orderProducts.quantity
-                  totalPrice += product.orderProducts.totalPrice
+                  totalPrice += product.orderProducts.quantity * product.price
                   return (
                     <ul key={product.id}>
                       <li>
                         {product.name} x {product.orderProducts.quantity} :{' '}
-                        {'$' +
-                          (product.orderProducts.totalPrice / 100).toFixed(
-                            2
-                          )}{' '}
+                        {'$' + (product.price / 100).toFixed(2)}{' '}
                       </li>
                     </ul>
                   )

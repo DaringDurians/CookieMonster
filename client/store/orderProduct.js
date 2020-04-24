@@ -40,11 +40,13 @@ export const fetchOrderProductDetails = productId => async dispatch => {
 
 export const updateOrderProductDetails = (
   productId,
-  quantity
+  quantity,
+  totalPrice
 ) => async dispatch => {
   try {
     const {data} = await axios.put(`/api/orderProducts/${productId}`, {
-      quantity: quantity
+      quantity,
+      totalPrice
     })
     dispatch(updatedOrderProduct(data))
   } catch (error) {

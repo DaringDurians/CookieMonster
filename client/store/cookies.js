@@ -62,7 +62,7 @@ export const deleteProduct = id => {
 const cookies = (cookies = [], action) => {
   switch (action.type) {
     case GOT_COOKIES:
-      return action.cookies
+      return action.cookies.sort((a, b) => a.id - b.id)
     case POST_COOKIE:
       return [...cookies, action.cookie]
     case DELETE_COOKIE:

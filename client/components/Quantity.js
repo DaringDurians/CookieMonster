@@ -17,6 +17,8 @@ export class Quantity extends React.Component {
   componentWillReceiveProps(nextProps) {
     if (nextProps.quantity !== this.props.quantity) {
       this.setState({quantity: nextProps.quantity})
+    } else {
+      this.setState({quantity: this.props.quantity})
     }
   }
 
@@ -64,9 +66,11 @@ export class Quantity extends React.Component {
               <button
                 type="button"
                 onClick={() => {
+                  const totalPrice = this.props.price * this.state.quantity
                   this.props.updateOrderProductDetails(
                     this.props.prodId,
-                    this.state.quantity
+                    this.state.quantity,
+                    totalPrice
                   )
                 }}
               >
@@ -76,14 +80,15 @@ export class Quantity extends React.Component {
               <button
                 type="button"
                 onClick={() => {
-                  console.log(this.state.quantity)
                   const totalPrice = this.props.price * this.state.quantity
-                  this.props.createOrderProductDetails(
-                    this.props.order.id,
-                    this.props.prodId,
-                    this.state.quantity,
-                    totalPrice
-                  )
+                  if (this.state.quantity > 0) {
+                    this.props.createOrderProductDetails(
+                      this.props.order.id,
+                      this.props.prodId,
+                      this.state.quantity,
+                      totalPrice
+                    )
+                  }
                 }}
               >
                 {' '}
@@ -104,8 +109,8 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  updateOrderProductDetails: (prodId, quantity) =>
-    dispatch(updateOrderProductDetails(prodId, quantity)),
+  updateOrderProductDetails: (prodId, quantity, totalPrice) =>
+    dispatch(updateOrderProductDetails(prodId, quantity, totalPrice)),
   createOrderProductDetails: (orderId, productId, quantity, totalPrice) =>
     dispatch(
       createOrderProductDetails(orderId, productId, quantity, totalPrice)

@@ -27,11 +27,12 @@ router.post('/:productId', async (req, res, next) => {
 
 router.put('/:productId', async (req, res, next) => {
   try {
-    const orderProduct = await OrderProducts.update(req.body, {
+    const orderProduct = await OrderProducts.findOne({
       where: {
         productId: req.params.productId
       }
     })
+    await orderProduct.update(req.body)
     res.status(201).json(orderProduct)
   } catch (err) {
     next(err)

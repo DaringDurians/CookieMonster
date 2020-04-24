@@ -66,8 +66,9 @@ class SingleBrownie extends React.Component {
           </div>
           <div>
             <Quantity
-              quantity={this.props.orderProduct.quantity}
+              quantity={this.props.orderProduct.quantity || 0}
               prodId={singleBrownie.id}
+              price={singleBrownie.price}
             />
           </div>
         </div>
