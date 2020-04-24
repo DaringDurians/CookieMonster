@@ -14,11 +14,12 @@ router.get('/', async (req, res, next) => {
   }
 })
 
-router.get('/:orderId', async (req, res, next) => {
+router.get('/:userId', async (req, res, next) => {
   try {
     const order = await Order.findAll({
       where: {
-        id: req.params.orderId
+        userId: req.params.userId,
+        active: true
       },
       include: [Product]
     })

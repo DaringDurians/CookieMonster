@@ -6,14 +6,6 @@ import axios from 'axios'
 const GOT_ORDER = 'GOT_ORDER'
 
 /**
- * INITIAL STATE
- */
-// const initalOrder = {
-//   products: [],
-//   loading: true
-// }
-
-/**
  * ACTION CREATORS
  */
 const gotOrder = userId => ({type: GOT_ORDER, userId})
@@ -38,7 +30,7 @@ export const fetchOrder = userId => async dispatch => {
 export default function(order = [], action) {
   switch (action.type) {
     case GOT_ORDER:
-      return action.orderId
+      return action.userId
     default:
       return order
   }

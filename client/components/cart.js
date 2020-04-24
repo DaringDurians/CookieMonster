@@ -6,6 +6,9 @@ import {logout} from '../store'
 import {products} from '.'
 import {fetchOrder} from '../store/order'
 import {Quantity} from './Quantity'
+
+///CHANGE PRODUCT Add FORMS for brownies and cookies
+
 export class Cart extends Component {
   constructor() {
     super()
@@ -32,17 +35,26 @@ export class Cart extends Component {
           <ul>
             {this.props.order.map(order => (
               <ul key={order.id}>
-                <span>Quantity-------></span>
-                <span>Item---------></span>
-                <span>Amount</span>
+                Image-------> Item---------> Quantity-------> Amount
                 {order.products.map(product => (
                   <ul key={product.id}>
-                    {product.orderProducts.quantity}
-                    <Quantity quantity={product.orderProducts.quantity} />
-                    <Link to={`/${product.category}/${product.id}`}>
-                      {product.name}
-                    </Link>---->
-                    {product.orderProducts.totalPrice / 100}
+                    <div className="allViewImg">
+                      <img src={product.imgUrl} alt="brownie images" />
+                    </div>
+                    <div>
+                      <Link to={`/${product.category}/${product.id}`}>
+                        {product.name}
+                      </Link>---->
+                    </div>
+                    <div>
+                      <p>{product.orderProducts.quantity}</p>
+                      <Quantity quantity={product.orderProducts.quantity} />
+                    </div>
+                    <div>
+                      <p>
+                        {(product.orderProducts.totalPrice / 100).toFixed(2)}
+                      </p>
+                    </div>
                   </ul>
                 ))}
               </ul>
@@ -68,18 +80,3 @@ const mapDispatchToProps = dispatch => ({
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Cart)
-
-//SEEEEEEEEEEEEEEED ADD
-
-// const [sampleOrderProduct2] = await Promise.all([
-//     OrderProducts.create({
-//       orderId: sampleOrder.id,
-//       productId: sugar.id,
-//       quantity: 1,
-//       totalPrice: chocolateChip.price
-//     })
-//   ])
-
-/////ALSO CHANGE REDUCER AND ACTION AND THUNK FOR USERID!
-///CHANGE PRODUCT FORMS for brownies and cookies
-////ensure seed is changes with brownies and cookies
