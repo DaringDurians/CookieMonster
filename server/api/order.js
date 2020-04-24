@@ -16,13 +16,25 @@ router.get('/', async (req, res, next) => {
 
 router.get('/:userId', async (req, res, next) => {
   try {
-    const order = await Order.findAll({
+    // const order = await Order.findAll({
+    //   where: {
+    //     userId: req.params.userId,
+    //     active: true
+    //   },
+    //   include: [Product]
+    // })
+
+    const order = await Order.findOrCreate({
       where: {
-        userId: req.params.userId
-      },
-      include: [Product]
+        userId: req.params.userId,
+        active: true
+      }
+    }).spread(function(order, created) {
+      if (created) {
+        console.log('*****************', created, order)
+        res.status(200).json(order)
+      }
     })
-    res.status(200).json(order)
   } catch (err) {
     next(err)
   }
