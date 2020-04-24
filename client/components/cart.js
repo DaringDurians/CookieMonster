@@ -17,6 +17,7 @@ export class Cart extends Component {
 
   // ({handleClick, isLoggedIn}) => (
   render() {
+    console.log(JSON.parse(window.sessionStorage.getItem('cart')))
     console.log('********************', this.props.order)
     //orderid = 1
     return (

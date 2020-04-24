@@ -3,6 +3,7 @@ import {Button} from 'reactstrap'
 import {connect} from 'react-redux'
 import {fetchCookie, updatedCookie} from '../store/singleCookie'
 import ProductsForm from './ProductsForm'
+import Quantity from './Quantity'
 
 let name
 let category
@@ -36,6 +37,7 @@ export class SingleCookie extends React.Component {
     )
     this.props.fetchCookie(cookieId)
   }
+  updateCart() {}
   render() {
     const {singleCookie} = this.props
     return (
@@ -59,11 +61,12 @@ export class SingleCookie extends React.Component {
           </div>
           <div>
             <p>Quantity: </p>
+            <Quantity />
           </div>
           <div>
-            <Button color="info" type="button" id="button">
+            {/* <Button color="info" type="button" id="button" onClick={()=> this.updateCart()}>
               Add To Cart
-            </Button>{' '}
+            </Button>{' '} */}
           </div>
         </div>
       </div>
