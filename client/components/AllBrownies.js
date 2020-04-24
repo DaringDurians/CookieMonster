@@ -29,9 +29,7 @@ export class AllBrownies extends React.Component {
   }
   handleDelete(id) {
     brownieId = id
-    console.log(brownieId)
     this.props.deleteProduct(brownieId)
-    console.log('>>>>>>>>>>>>>> after delete')
   }
   render() {
     return (
