@@ -38,15 +38,6 @@ class Routes extends Component {
   }
 
   render() {
-    let cart = {}
-
-    // userId: this.props.userId,
-    //   prodId: 0,
-    //   active: true,
-    //   quantity: 0,
-    //   price: 0
-    window.sessionStorage.setItem('cart', JSON.stringify(cart))
-
     const {isLoggedIn, isAdmin} = this.props
     return (
       <Switch>

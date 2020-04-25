@@ -27,10 +27,11 @@ export class Cart extends Component {
                   totalPrice += product.quantity * product.price
                   return (
                     <ul key={product.id}>
-                      <li>
-                        {product.name} x {product.quantity} :{' '}
+                      <div className="smallImg">
+                        <img src={product.imgUrl} /> {product.name} x{' '}
+                        {product.quantity} :{' '}
                         {'$' + (product.price / 100).toFixed(2)}{' '}
-                      </li>
+                      </div>
                     </ul>
                   )
                 })
