@@ -13,7 +13,7 @@ import {
 import SingleCookie from './components/SingleCookie'
 import SingleUser from './components/SingleUser'
 import SingleBrownie from './components/SingleBrownie'
-import Cart from './components/cart'
+import Cart from './components/Cart'
 import {me} from './store'
 
 import AllUsers from './components/AllUsers'
@@ -23,6 +23,7 @@ import AllBrownies from './components/AllBrownies'
 import {fetchAllCookies} from './store/cookies'
 import {fetchAllBrownies} from './store/brownies'
 import {fetchAllUsers} from './store/allUsers'
+import {fetchOrderByUserId} from './store/order'
 
 /**
  * COMPONENT
@@ -37,9 +38,15 @@ class Routes extends Component {
   }
 
   render() {
-    let cart = {userId: this.props.userId, price: 35.5, qty: 2}
+    let cart = {}
+
+    // userId: this.props.userId,
+    //   prodId: 0,
+    //   active: true,
+    //   quantity: 0,
+    //   price: 0
     window.sessionStorage.setItem('cart', JSON.stringify(cart))
-    console.log(JSON.parse(window.sessionStorage.getItem('cart')))
+
     const {isLoggedIn, isAdmin} = this.props
     return (
       <Switch>
@@ -95,6 +102,7 @@ const mapState = state => {
   return {
     // Being 'logged in' for our purposes will be defined has having a state.user that has a truthy id.
     // Otherwise, state.user will be an empty object, and state.user.id will be falsey
+    user: state.user,
     isLoggedIn: !!state.user.id,
     isAdmin: !!state.user.isAdmin,
     userId: state.user.id
@@ -114,6 +122,9 @@ const mapDispatch = dispatch => {
     },
     fetchAllUsers() {
       dispatch(fetchAllUsers())
+    },
+    fetchOrderByUserId(id) {
+      dispatch(fetchOrderByUserId(id))
     }
   }
 }

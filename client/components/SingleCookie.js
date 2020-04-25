@@ -1,9 +1,9 @@
 import React from 'react'
-import {Button} from 'reactstrap'
 import {connect} from 'react-redux'
 import {fetchCookie, updatedCookie} from '../store/singleCookie'
-import ProductsForm from './ProductsForm'
+import {fetchOrderProductDetails} from '../store/orderProduct'
 import Quantity from './Quantity'
+import ProductsForm from './ProductsForm'
 
 let name
 let category
@@ -19,11 +19,12 @@ export class SingleCookie extends React.Component {
   componentDidMount() {
     cookieId = this.props.match.params.cookieId
     this.props.fetchCookie(cookieId)
+    this.props.fetchOrderProductDetails(cookieId)
   }
   handleSubmit() {
     event.preventDefault()
     name = event.target.name.value
-    category = 'Cookie'
+    category = 'cookies'
     price = parseInt(event.target.price.value) * 100
     description = event.target.description.value
     imgUrl = event.target.imgUrl.value
@@ -60,13 +61,11 @@ export class SingleCookie extends React.Component {
             <p>Price: {(singleCookie.price / 100).toFixed(2)}</p>
           </div>
           <div>
-            <p>Quantity: </p>
-            <Quantity />
-          </div>
-          <div>
-            {/* <Button color="info" type="button" id="button" onClick={()=> this.updateCart()}>
-              Add To Cart
-            </Button>{' '} */}
+            <Quantity
+              quantity={this.props.orderProduct.quantity || 0}
+              prodId={singleCookie.id}
+              price={singleCookie.price}
+            />
           </div>
         </div>
       </div>
@@ -77,6 +76,7 @@ export class SingleCookie extends React.Component {
 const mapState = state => {
   return {
     singleCookie: state.singleCookie,
+    orderProduct: state.orderProduct,
     isAdmin: !!state.user.isAdmin
   }
 }
@@ -85,7 +85,8 @@ const mapDispatch = dispatch => ({
   updatedCookie: () =>
     dispatch(
       updatedCookie(cookieId, name, category, price, description, imgUrl)
-    )
+    ),
+  fetchOrderProductDetails: prodId => dispatch(fetchOrderProductDetails(prodId))
 })
 
 export default connect(mapState, mapDispatch)(SingleCookie)
