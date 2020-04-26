@@ -20,7 +20,9 @@ export class Quantity extends React.Component {
     }
 
     if (nextProps.quantity !== this.props.quantity) {
-      this.setState({quantity: nextProps.quantity})
+      this.setState({
+        quantity: nextProps.quantity
+      })
     } else {
       this.setState({quantity: this.props.quantity})
     }
@@ -63,13 +65,13 @@ export class Quantity extends React.Component {
           .filter(product => product.quantity !== 0)
         allProducts = updateProduct
       } else if (prod.quantity !== 0) {
-          allProducts = [...temp, prod]
-        } else {
-          allProducts = [...temp]
-        }
-    } else if (prod.quantity !== 0) {
-        allProducts = [prod]
+        allProducts = [...temp, prod]
+      } else {
+        allProducts = [...temp]
       }
+    } else if (prod.quantity !== 0) {
+      allProducts = [prod]
+    }
     window.sessionStorage.setItem(
       this.props.userId,
       JSON.stringify(allProducts)

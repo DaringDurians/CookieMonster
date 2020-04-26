@@ -1,4 +1,5 @@
 import React, {Component} from 'react'
+import Quantity from './Quantity'
 import {connect} from 'react-redux'
 
 export class Cart extends Component {
@@ -10,7 +11,7 @@ export class Cart extends Component {
     const allProducts = JSON.parse(
       window.sessionStorage.getItem(this.props.userId)
     )
-    console.log('values>>>>>>>>>>>>>', allProducts)
+    // console.log('Cart Values>>>>>>>>>>>>>', allProducts)
     const {isLoggedIn} = this.props
     let totalItems = 0
     let totalPrice = 0
@@ -20,23 +21,30 @@ export class Cart extends Component {
           <p>Itemized Breakdown:</p>
         </div>
         <div id="itemizedSummary">
-          {allProducts
-            ? allProducts.length
-              ? allProducts.map(product => {
-                  totalItems += product.quantity
-                  totalPrice += product.quantity * product.price
-                  return (
-                    <ul key={product.id}>
-                      <div className="smallImg">
-                        <img src={product.imgUrl} /> {product.name} x{' '}
-                        {product.quantity} :{' '}
-                        {'$' + (product.price / 100).toFixed(2)}{' '}
-                      </div>
-                    </ul>
-                  )
-                })
-              : 'No items in cart'
-            : 'No items in cart'}
+          {allProducts.map(product => {
+            totalItems += product.quantity
+            totalPrice += product.quantity * product.price
+            return (
+              <ul key={product.prodId}>
+                <div className="smallImg">
+                  <img src={product.imgUrl} /> {product.name} x{' '}
+                  {product.quantity}
+                  {console.log(
+                    'quantity info',
+                    product.quantity,
+                    product.prodId,
+                    product.price
+                  )}
+                  <Quantity
+                    quantity={product.quantity}
+                    prodId={product.prodId}
+                    price={product.price / product.quantity}
+                  />{' '}
+                  : {'$' + (product.price / 100).toFixed(2)}{' '}
+                </div>
+              </ul>
+            )
+          })}
         </div>
         {allProducts ? (
           allProducts ? (
