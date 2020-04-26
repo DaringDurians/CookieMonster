@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
+import {Link} from 'react-router-dom'
 
 export class Cart extends Component {
   constructor(props) {
@@ -53,6 +54,11 @@ export class Cart extends Component {
               </div>
               <div>
                 <p>Total Price: {'$' + (totalPrice / 100).toFixed(2)}</p>
+              </div>
+              <div>
+                <Link to="/home">
+                  <button type="button">Check Out</button>
+                </Link>
               </div>
             </div>
           ) : (
