@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import Quantity from './Quantity'
 import {connect} from 'react-redux'
+import {Link} from 'react-router-dom'
 
 export class Cart extends Component {
   constructor(props) {
@@ -21,44 +22,49 @@ export class Cart extends Component {
   }
 
   render() {
+    // console.log('BEFORE PARSING values>>>>>>>>>>>>>', allProducts)
     const allProducts = JSON.parse(
       window.sessionStorage.getItem(this.props.userId)
     )
-    // console.log('Cart Values>>>>>>>>>>>>>', allProducts)
-    const {isLoggedIn} = this.props
+
+    console.log('values>>>>>>>>>>>>>', allProducts)
+    // const {isLoggedIn} = this.props
+
     let totalItems = 0
     let totalPrice = 0
-    return isLoggedIn ? (
+    return (
       <div id="cartBox">
         <div>
-          <p>Itemized Breakdown:</p>
+          <p>Cart Contents:</p>
         </div>
         <div id="itemizedSummary">
-          {allProducts
-            ? allProducts.length
-              ? allProducts.map(product => {
-                  totalItems += product.quantity
-                  totalPrice += product.price
-                  return (
-                    <ul key={product.prodId}>
-                      <div className="smallImg">
-                        <img src={product.imgUrl} /> {product.name} x{' '}
-                        {product.quantity}
-                        <Quantity
-                          quantity={product.quantity}
-                          prodId={product.prodId}
-                          price={product.price / product.quantity}
-                          onRender={() => {
-                            this.setState({loaded: true})
-                          }}
-                        />{' '}
-                        : {'$' + (product.price / 100).toFixed(2)}{' '}
-                      </div>
-                    </ul>
-                  )
-                })
-              : 'No items in cart'
-            : 'No items in cart'}
+
+          {allProducts 
+          ? (allProducts.length 
+            ? (allProducts.map(product => {
+                totalItems += product.quantity
+                totalPrice += product.price
+                return (
+                  <ul key={product.prodId}>
+                    <div className="smallImg">
+                      <Link to={`/${product.category}/${product.prodId}`}>
+                        <img src={product.imgUrl} />
+                      </Link>
+                      {product.name} x {product.quantity} :{' '}
+                      {'$' + (product.price / 100).toFixed(2)}{' '}
+                    </div>
+                  </ul>
+                )
+              })
+            ) : (
+              <div />
+            )
+          ) : (
+            <div>
+              <p>No items in cart</p>
+            </div>
+          )}
+
         </div>
         {allProducts ? (
           allProducts ? (
@@ -69,6 +75,11 @@ export class Cart extends Component {
               <div>
                 <p>Total Price: {'$' + (totalPrice / 100).toFixed(2)}</p>
               </div>
+              <div>
+                <Link to="/checkout">
+                  <button type="button">Check Out</button>
+                </Link>
+              </div>
             </div>
           ) : (
             <div />
@@ -77,8 +88,6 @@ export class Cart extends Component {
           <div />
         )}
       </div>
-    ) : (
-      <div />
     )
   }
 }

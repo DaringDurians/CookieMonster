@@ -3,6 +3,8 @@ const {OrderProducts, Product} = require('../db/models')
 const {Op} = require('sequelize')
 module.exports = router
 
+// sitting on top if api/orderproducts/
+
 router.get('/:productId', async (req, res, next) => {
   try {
     const orderProduct = await OrderProducts.findOne({
