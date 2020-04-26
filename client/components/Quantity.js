@@ -30,6 +30,7 @@ export class Quantity extends React.Component {
     let prod = {
       prodId: this.props.prodId,
       name: prodName.name,
+      category: prodName.category,
       imgUrl: prodName.imgUrl,
       active: true,
       quantity: this.state.quantity,
