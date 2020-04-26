@@ -1,10 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {
-  updateOrderProductDetails,
-  createOrderProductDetails
-  // getProduct,
-} from '../store/orderProduct'
+import // getProduct,
+'../store/orderProduct'
 
 let totalPrice
 export class Quantity extends React.Component {
@@ -12,15 +9,28 @@ export class Quantity extends React.Component {
     super(props)
 
     this.state = {
-      quantity: 0
+      quantity: 0,
+      addedToCart: false
     }
   }
 
   componentWillReceiveProps(nextProps) {
+    if (nextProps.quantity > 0) {
+      this.setState({addedToCart: true})
+    }
+
     if (nextProps.quantity !== this.props.quantity) {
       this.setState({quantity: nextProps.quantity})
     } else {
       this.setState({quantity: this.props.quantity})
+    }
+  }
+
+  toggleQuantityButton() {
+    if (this.state.quantity > 0) {
+      this.setState({addedToCart: true})
+    } else {
+      this.setState({addedToCart: false})
     }
   }
 
@@ -36,12 +46,12 @@ export class Quantity extends React.Component {
       price: totalPrice
     }
 
-    if (prod.quantity !== 0) {
-      const temp = JSON.parse(window.sessionStorage.getItem(this.props.userId))
-      if (temp !== null) {
-        const found = temp.find(product => product.prodId === prod.prodId)
-        if (found) {
-          const updateProduct = temp.map(product => {
+    const temp = JSON.parse(window.sessionStorage.getItem(this.props.userId))
+    if (temp !== null) {
+      const found = temp.find(product => product.prodId === prod.prodId)
+      if (found) {
+        const updateProduct = temp
+          .map(product => {
             if (product.prodId === prod.prodId) {
               product.quantity = prod.quantity
               product.price = prod.price
@@ -50,18 +60,30 @@ export class Quantity extends React.Component {
               return product
             }
           })
-          allProducts = updateProduct
-        } else {
+          .filter(product => product.quantity !== 0)
+        allProducts = updateProduct
+      } else if (prod.quantity !== 0) {
           allProducts = [...temp, prod]
+        } else {
+          allProducts = [...temp]
         }
-      } else {
+    } else if (prod.quantity !== 0) {
         allProducts = [prod]
       }
-      window.sessionStorage.setItem(
-        this.props.userId,
-        JSON.stringify(allProducts)
-      )
-    }
+    window.sessionStorage.setItem(
+      this.props.userId,
+      JSON.stringify(allProducts)
+    )
+  }
+
+  removeProductFromSessions() {
+    const prodId = this.props.prodId
+    const temp = JSON.parse(window.sessionStorage.getItem(this.props.userId))
+    const updateProduct = temp.filter(product => product.prodId !== prodId)
+    window.sessionStorage.setItem(
+      this.props.userId,
+      JSON.stringify(updateProduct)
+    )
   }
 
   render() {
@@ -86,9 +108,10 @@ export class Quantity extends React.Component {
               type="number"
               name="quantity"
               id="quantity"
+              min="0"
               value={this.state.quantity}
               onChange={event => {
-                this.setState({quantity: event.target.value})
+                this.setState({quantity: parseInt(event.target.value)})
               }}
             />
           </div>
@@ -104,40 +127,30 @@ export class Quantity extends React.Component {
             </button>
           </div>
           <div>
-            {this.props.quantity > 0 ? (
+            <button
+              type="button"
+              onClick={() => {
+                totalPrice = this.props.price * this.state.quantity
+                this.updateSessions()
+                this.toggleQuantityButton()
+              }}
+            >
+              {this.state.addedToCart ? 'Update Cart' : 'Add To Cart'}
+            </button>
+            {this.state.addedToCart ? (
               <button
-                type="button"
                 onClick={() => {
-                  totalPrice = this.props.price * this.state.quantity
-                  this.props.updateOrderProductDetails(
-                    this.props.prodId,
-                    this.state.quantity,
-                    totalPrice
-                  )
-                  this.updateSessions()
+                  this.removeProductFromSessions()
+                  this.setState({
+                    quantity: 0,
+                    addedToCart: false
+                  })
                 }}
               >
-                Update Cart
+                Remove Item
               </button>
             ) : (
-              <button
-                type="button"
-                onClick={() => {
-                  totalPrice = this.props.price * this.state.quantity
-                  if (this.state.quantity === 0) {
-                    this.props.createOrderProductDetails(
-                      this.props.order.id,
-                      this.props.prodId,
-                      this.state.quantity,
-                      totalPrice
-                    )
-                  }
-                  this.updateSessions()
-                }}
-              >
-                {' '}
-                Add To Cart
-              </button>
+              <div />
             )}
           </div>
           <div />
@@ -148,7 +161,6 @@ export class Quantity extends React.Component {
 }
 
 const mapStateToProps = state => {
-  console.log(state)
   return {
     orderProduct: state.orderProduct,
     order: state.order,
@@ -157,14 +169,8 @@ const mapStateToProps = state => {
   }
 }
 
-const mapDispatchToProps = dispatch => ({
-  updateOrderProductDetails: (prodId, quantity, totalPrice) =>
-    dispatch(updateOrderProductDetails(prodId, quantity, totalPrice)),
-  createOrderProductDetails: (orderId, productId, quantity, totalPrice) =>
-    dispatch(
-      createOrderProductDetails(orderId, productId, quantity, totalPrice)
-    )
-  // getProduct: () => dispatch(getProduct()),
-})
+// const mapDispatchToProps = dispatch => ({
+//   // getProduct: () => dispatch(getProduct()),
+// })
 
-export default connect(mapStateToProps, mapDispatchToProps)(Quantity)
+export default connect(mapStateToProps, null)(Quantity)
