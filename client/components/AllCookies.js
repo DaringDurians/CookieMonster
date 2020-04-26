@@ -3,6 +3,7 @@ import {connect} from 'react-redux'
 import {NavLink} from 'react-router-dom'
 import ProductsForm from './ProductsForm'
 import {postProduct, deleteProduct, fetchAllCookies} from '../store/cookies'
+import {Quantity} from './Quantity'
 
 let name
 let category
@@ -21,7 +22,7 @@ export class AllCookies extends React.Component {
   handleSubmit(event) {
     event.preventDefault()
     name = event.target.name.value
-    category = 'Cookie'
+    category = 'cookies'
     price = parseInt(event.target.price.value) * 100
     description = event.target.description.value
     imgUrl = event.target.imgUrl.value
@@ -35,7 +36,7 @@ export class AllCookies extends React.Component {
     return (
       <div className="allView">
         {this.props.isAdmin ? (
-          <ProductsForm handleSubmit={this.handleSubmit} category="Brownie" />
+          <ProductsForm handleSubmit={this.handleSubmit} category="cookies" />
         ) : null}
         {this.props.cookies
           ? this.props.cookies.length
@@ -50,6 +51,9 @@ export class AllCookies extends React.Component {
                         <img src={cookie.imgUrl} alt="cookie images" />
                       </div>
                       <div>Price: ${(cookie.price / 100).toFixed(2)}</div>
+                      <div>
+                        <button type="button">Add To Cart</button>
+                      </div>
                     </NavLink>
                     <div>
                       {this.props.isAdmin ? (
@@ -60,7 +64,6 @@ export class AllCookies extends React.Component {
                           X
                         </button>
                       ) : null}
-                      <button type="button">Add To Cart</button>
                     </div>
                   </div>
                 )
@@ -73,6 +76,7 @@ export class AllCookies extends React.Component {
 }
 
 const mapStateToProps = state => ({
+  order: state.order,
   cookies: state.cookies,
   isAdmin: !!state.user.isAdmin
 })

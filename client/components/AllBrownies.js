@@ -1,8 +1,9 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {NavLink} from 'react-router-dom'
+import {Link, NavLink} from 'react-router-dom'
 import ProductsForm from './ProductsForm'
 import {postProduct, deleteProduct, fetchAllBrownies} from '../store/brownies'
+import {Quantity} from './Quantity'
 
 let name
 let category
@@ -21,7 +22,7 @@ export class AllBrownies extends React.Component {
   handleSubmit(event) {
     event.preventDefault()
     name = event.target.name.value
-    category = 'Brownie'
+    category = 'brownies'
     price = parseInt(event.target.price.value) * 100
     description = event.target.description.value
     imgUrl = event.target.imgUrl.value
@@ -35,7 +36,7 @@ export class AllBrownies extends React.Component {
     return (
       <div className="allView">
         {this.props.isAdmin ? (
-          <ProductsForm handleSubmit={this.handleSubmit} category="Brownie" />
+          <ProductsForm handleSubmit={this.handleSubmit} category="brownies" />
         ) : null}
         {this.props.brownies
           ? this.props.brownies.length
@@ -50,6 +51,9 @@ export class AllBrownies extends React.Component {
                         <img src={brownie.imgUrl} alt="brownie images" />
                       </div>
                       <div>Price: ${(brownie.price / 100).toFixed(2)}</div>
+                      <div>
+                        <button type="button">Add To Cart</button>
+                      </div>
                     </NavLink>
                     <div>
                       {this.props.isAdmin ? (
@@ -60,7 +64,6 @@ export class AllBrownies extends React.Component {
                           X
                         </button>
                       ) : null}
-                      <button type="button">Add To Cart</button>
                     </div>
                   </div>
                 )

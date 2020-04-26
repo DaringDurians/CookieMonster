@@ -2,7 +2,8 @@ import React from 'react'
 import {Button} from 'reactstrap'
 import {connect} from 'react-redux'
 import {fetchBrownie, updatedBrownie} from '../store/singleBrownie'
-import {Quantity} from './Quantity'
+import {fetchOrderProductDetails} from '../store/orderProduct'
+import Quantity from './Quantity'
 import ProductsForm from './ProductsForm'
 
 let name
@@ -20,6 +21,7 @@ class SingleBrownie extends React.Component {
   componentDidMount() {
     brownieId = this.props.match.params.brownieId
     this.props.fetchBrownie(brownieId)
+    this.props.fetchOrderProductDetails(brownieId)
   }
   handleChange() {
     this.setState({value: event.target.value})
@@ -27,7 +29,7 @@ class SingleBrownie extends React.Component {
   handleSubmit() {
     event.preventDefault()
     name = event.target.name.value
-    category = 'Brownie'
+    category = 'brownies'
     price = parseInt(event.target.price.value) * 100
     description = event.target.description.value
     imgUrl = event.target.imgUrl.value
@@ -42,7 +44,8 @@ class SingleBrownie extends React.Component {
     this.props.fetchBrownie(brownieId)
   }
   render() {
-    const {singleBrownie} = this.props
+    const {singleBrownie, userId} = this.props
+    const currentCart = JSON.parse(window.sessionStorage.getItem(userId))
     return (
       <div className="singleBox">
         {this.props.isAdmin ? (
@@ -63,12 +66,21 @@ class SingleBrownie extends React.Component {
             <p>Price: ${(singleBrownie.price / 100).toFixed(2)}</p>
           </div>
           <div>
-            <Quantity />
-          </div>
-          <div>
-            <Button color="info" type="button" id="button">
-              Add To Cart
-            </Button>{' '}
+            <Quantity
+              quantity={
+                currentCart
+                  ? currentCart.find(
+                      prodObj => prodObj.prodId === singleBrownie.id
+                    )
+                    ? currentCart.find(
+                        prodObj => prodObj.prodId === singleBrownie.id
+                      ).quantity
+                    : 0
+                  : 0
+              }
+              prodId={singleBrownie.id}
+              price={singleBrownie.price}
+            />
           </div>
         </div>
       </div>
@@ -78,7 +90,9 @@ class SingleBrownie extends React.Component {
 
 const mapState = state => {
   return {
+    userId: state.user.id,
     singleBrownie: state.singleBrownie,
+    orderProduct: state.orderProduct,
     isAdmin: !!state.user.isAdmin
   }
 }
@@ -87,7 +101,8 @@ const mapDispatch = dispatch => ({
   updatedBrownie: () =>
     dispatch(
       updatedBrownie(brownieId, name, category, price, description, imgUrl)
-    )
+    ),
+  fetchOrderProductDetails: prodId => dispatch(fetchOrderProductDetails(prodId))
 })
 
 export default connect(mapState, mapDispatch)(SingleBrownie)

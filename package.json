@@ -38,7 +38,7 @@
       "git add"
     ]
   },
-  "author": "Fullstack Academy of Code",
+  "author": "Rida Iqbal, Tyler Eaden, Sarah Park, Steven Hejnas",
   "license": "MIT",
   "dependencies": {
     "axios": "^0.19.0",

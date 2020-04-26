@@ -6,6 +6,14 @@ module.exports = router
 router.use('/brownies', require('./brownies'))
 router.use('/cookies', require('./cookies'))
 
+// router.get('/', async (req, res, next) => {
+//   try {
+//     res.json(await Product.findAll())
+//   } catch (err) {
+//     next(err)
+//   }
+// })
+
 router.post('/', async (req, res, next) => {
   try {
     res.json(await Product.create(req.body))

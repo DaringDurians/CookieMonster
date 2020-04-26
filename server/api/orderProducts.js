@@ -1,28 +1,41 @@
 const router = require('express').Router()
-const {OrderProducts, Product, Order} = require('../db/models')
+const {OrderProducts, Product} = require('../db/models')
 const {Op} = require('sequelize')
 module.exports = router
 
-//sitting ontop api/orderProducts
+// sitting on top if api/orderproducts/
 
-router.get('/', async (req, res, next) => {
+router.get('/:productId', async (req, res, next) => {
   try {
-    const order = await OrderProducts.findAll()
-    res.send(order)
+    const orderProduct = await OrderProducts.findOne({
+      where: {
+        productId: req.params.productId
+      }
+    })
+    res.status(200).json(orderProduct)
   } catch (err) {
     next(err)
   }
 })
 
-router.get('/:orderId', async (req, res, next) => {
+router.post('/:productId', async (req, res, next) => {
   try {
-    const order = await Order.findAll({
+    const orderProduct = await OrderProducts.create(req.body)
+    res.status(201).json(orderProduct)
+  } catch (err) {
+    next(err)
+  }
+})
+
+router.put('/:productId', async (req, res, next) => {
+  try {
+    const orderProduct = await OrderProducts.findOne({
       where: {
-        id: req.params.orderId
-      },
-      include: [Product]
+        productId: req.params.productId
+      }
     })
-    res.status(200).json(order)
+    await orderProduct.update(req.body)
+    res.status(201).json(orderProduct)
   } catch (err) {
     next(err)
   }
