@@ -148,7 +148,6 @@ export class Quantity extends React.Component {
 }
 
 const mapStateToProps = state => {
-  console.log(state)
   return {
     orderProduct: state.orderProduct,
     order: state.order,

@@ -7,36 +7,43 @@ export class Cart extends Component {
     this.state = {}
   }
   render() {
+    // console.log('BEFORE PARSING values>>>>>>>>>>>>>', allProducts)
     const allProducts = JSON.parse(
       window.sessionStorage.getItem(this.props.userId)
     )
     console.log('values>>>>>>>>>>>>>', allProducts)
-    const {isLoggedIn} = this.props
+    // const {isLoggedIn} = this.props
     let totalItems = 0
     let totalPrice = 0
-    return isLoggedIn ? (
+    return (
       <div id="cartBox">
         <div>
-          <p>Itemized Breakdown:</p>
+          <p>Cart Contents:</p>
         </div>
         <div id="itemizedSummary">
-          {allProducts
-            ? allProducts.length
-              ? allProducts.map(product => {
-                  totalItems += product.quantity
-                  totalPrice += product.quantity * product.price
-                  return (
-                    <ul key={product.id}>
-                      <div className="smallImg">
-                        <img src={product.imgUrl} /> {product.name} x{' '}
-                        {product.quantity} :{' '}
-                        {'$' + (product.price / 100).toFixed(2)}{' '}
-                      </div>
-                    </ul>
-                  )
-                })
-              : 'No items in cart'
-            : 'No items in cart'}
+          {allProducts ? (
+            allProducts.length ? (
+              allProducts.map(product => {
+                totalItems += product.quantity
+                totalPrice += product.quantity * product.price
+                return (
+                  <ul key={product.id}>
+                    <div className="smallImg">
+                      <img src={product.imgUrl} /> {product.name} x{' '}
+                      {product.quantity} :{' '}
+                      {'$' + (product.price / 100).toFixed(2)}{' '}
+                    </div>
+                  </ul>
+                )
+              })
+            ) : (
+              <div />
+            )
+          ) : (
+            <div>
+              <p>No items in cart</p>
+            </div>
+          )}
         </div>
         {allProducts ? (
           allProducts ? (
@@ -55,8 +62,10 @@ export class Cart extends Component {
           <div />
         )}
       </div>
-    ) : (
-      <div />
+      // ) : (
+      //   <div id="aboutUs">
+      //     <p>No items in cart</p>
+      //   </div>
     )
   }
 }
