@@ -19,6 +19,9 @@ export class Quantity extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    console.log('next', nextProps)
+    console.log('this', this.props)
+
     if (nextProps.quantity > 0) {
       this.setState({addedToCart: true})
     }
