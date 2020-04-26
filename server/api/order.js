@@ -3,11 +3,10 @@ const {OrderProducts, Product, Order} = require('../db/models')
 const {Op} = require('sequelize')
 module.exports = router
 
-//sitting ontop api/orderProducts
-
+//sitting ontop api/order
 router.get('/', async (req, res, next) => {
   try {
-    const order = await OrderProducts.findAll()
+    const order = await Order.findAll()
     res.send(order)
   } catch (err) {
     next(err)
@@ -26,6 +25,14 @@ router.get('/:userId', async (req, res, next) => {
         res.status(200).json(order)
       }
     })
+  } catch (err) {
+    next(err)
+  }
+})
+
+router.post('/', async (req, res, next) => {
+  try {
+    res.json(await Order.create(req.body))
   } catch (err) {
     next(err)
   }

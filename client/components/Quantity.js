@@ -1,7 +1,5 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import // getProduct,
-'../store/orderProduct'
 
 let totalPrice
 export class Quantity extends React.Component {
@@ -15,7 +13,7 @@ export class Quantity extends React.Component {
   }
 
   componentDidMount() {
-    console.log('Quantity Did Mount')
+    console.log('Quantity Did Mount', this.props)
   }
 
   componentWillReceiveProps(nextProps) {
@@ -177,9 +175,5 @@ const mapStateToProps = state => {
     products: [...state.cookies, ...state.brownies]
   }
 }
-
-// const mapDispatchToProps = dispatch => ({
-//   // getProduct: () => dispatch(getProduct()),
-// })
 
 export default connect(mapStateToProps, null)(Quantity)

@@ -1,6 +1,12 @@
 import React, {Component} from 'react'
 import Quantity from './Quantity'
 import {connect} from 'react-redux'
+import {NavLink} from 'react-router-dom'
+import {sendCart} from '../store/order.js'
+
+let userId
+let active
+let total
 
 export class Cart extends Component {
   constructor(props) {
@@ -20,11 +26,18 @@ export class Cart extends Component {
     this.forceUpdate()
   }
 
+  handleCheckout(totalPrice) {
+    userId = this.props.user.id
+    active = false
+    total = totalPrice
+    this.props.sendCart(userId, active, total)
+  }
+
   render() {
+    console.log('current checkout', this.props)
     const allProducts = JSON.parse(
       window.sessionStorage.getItem(this.props.userId)
     )
-    // console.log('Cart Values>>>>>>>>>>>>>', allProducts)
     const {isLoggedIn} = this.props
     let totalItems = 0
     let totalPrice = 0
@@ -44,6 +57,7 @@ export class Cart extends Component {
                       <div className="smallImg">
                         <img src={product.imgUrl} /> {product.name} x{' '}
                         {product.quantity}
+                        {console.log('PRODUCT.QUANTITY', product.quantity)}
                         <Quantity
                           quantity={product.quantity}
                           prodId={product.prodId}
@@ -69,6 +83,17 @@ export class Cart extends Component {
               <div>
                 <p>Total Price: {'$' + (totalPrice / 100).toFixed(2)}</p>
               </div>
+              <div>
+                <NavLink to="/confirm">
+                  <button
+                    type="button"
+                    name="checkout"
+                    onClick={() => this.handleCheckout(totalPrice)}
+                  >
+                    Checkout
+                  </button>
+                </NavLink>
+              </div>
             </div>
           ) : (
             <div />
@@ -90,4 +115,8 @@ const mapStateToProps = state => ({
   userId: state.user.id
 })
 
-export default connect(mapStateToProps, null)(Cart)
+const mapDispatch = dispatch => ({
+  sendCart: () => dispatch(sendCart(userId, active, total))
+})
+
+export default connect(mapStateToProps, mapDispatch)(Cart)

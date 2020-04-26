@@ -3,6 +3,15 @@ const {OrderProducts, Product} = require('../db/models')
 const {Op} = require('sequelize')
 module.exports = router
 
+router.get('/', async (req, res, next) => {
+  try {
+    const order = await OrderProducts.findAll()
+    res.send(order)
+  } catch (err) {
+    next(err)
+  }
+})
+
 router.get('/:productId', async (req, res, next) => {
   try {
     const orderProduct = await OrderProducts.findOne({
