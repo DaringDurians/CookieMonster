@@ -19,7 +19,6 @@ export class SingleCookie extends React.Component {
   componentDidMount() {
     cookieId = this.props.match.params.cookieId
     this.props.fetchCookie(cookieId)
-    this.props.fetchOrderProductDetails(cookieId)
   }
   handleSubmit() {
     event.preventDefault()

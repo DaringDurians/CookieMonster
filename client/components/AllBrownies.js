@@ -61,7 +61,6 @@ export class AllBrownies extends React.Component {
                           X
                         </button>
                       ) : null}
-                      <button type="button">Add To Cart</button>
                     </div>
                   </div>
                 )

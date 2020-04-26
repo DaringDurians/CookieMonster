@@ -5,7 +5,9 @@ import {connect} from 'react-redux'
 export class Cart extends Component {
   constructor(props) {
     super(props)
-    this.state = {}
+    this.state = {
+      loaded: false
+    }
 
     this.forceUpdateHandler = this.forceUpdateHandler.bind(this)
   }
@@ -46,7 +48,9 @@ export class Cart extends Component {
                           quantity={product.quantity}
                           prodId={product.prodId}
                           price={product.price / product.quantity}
-                          onRender={() => this.forceUpdateHandler()}
+                          onRender={() => {
+                            this.setState({loaded: true})
+                          }}
                         />{' '}
                         : {'$' + (product.price / 100).toFixed(2)}{' '}
                       </div>
