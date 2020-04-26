@@ -6,7 +6,18 @@ export class Cart extends Component {
   constructor(props) {
     super(props)
     this.state = {}
+
+    this.forceUpdateHandler = this.forceUpdateHandler.bind(this)
   }
+
+  componentDidMount() {
+    console.log('Cart Did Mount')
+  }
+
+  forceUpdateHandler() {
+    this.forceUpdate()
+  }
+
   render() {
     const allProducts = JSON.parse(
       window.sessionStorage.getItem(this.props.userId)
@@ -21,30 +32,29 @@ export class Cart extends Component {
           <p>Itemized Breakdown:</p>
         </div>
         <div id="itemizedSummary">
-          {allProducts.map(product => {
-            totalItems += product.quantity
-            totalPrice += product.quantity * product.price
-            return (
-              <ul key={product.prodId}>
-                <div className="smallImg">
-                  <img src={product.imgUrl} /> {product.name} x{' '}
-                  {product.quantity}
-                  {console.log(
-                    'quantity info',
-                    product.quantity,
-                    product.prodId,
-                    product.price
-                  )}
-                  <Quantity
-                    quantity={product.quantity}
-                    prodId={product.prodId}
-                    price={product.price / product.quantity}
-                  />{' '}
-                  : {'$' + (product.price / 100).toFixed(2)}{' '}
-                </div>
-              </ul>
-            )
-          })}
+          {allProducts
+            ? allProducts.length
+              ? allProducts.map(product => {
+                  totalItems += product.quantity
+                  totalPrice += product.price
+                  return (
+                    <ul key={product.prodId}>
+                      <div className="smallImg">
+                        <img src={product.imgUrl} /> {product.name} x{' '}
+                        {product.quantity}
+                        <Quantity
+                          quantity={product.quantity}
+                          prodId={product.prodId}
+                          price={product.price / product.quantity}
+                          onRender={() => this.forceUpdateHandler()}
+                        />{' '}
+                        : {'$' + (product.price / 100).toFixed(2)}{' '}
+                      </div>
+                    </ul>
+                  )
+                })
+              : 'No items in cart'
+            : 'No items in cart'}
         </div>
         {allProducts ? (
           allProducts ? (

@@ -14,6 +14,10 @@ export class Quantity extends React.Component {
     }
   }
 
+  componentDidMount() {
+    console.log('Quantity Did Mount')
+  }
+
   componentWillReceiveProps(nextProps) {
     if (nextProps.quantity > 0) {
       this.setState({addedToCart: true})
