@@ -13,7 +13,7 @@ import {
 import SingleCookie from './components/SingleCookie'
 import SingleUser from './components/SingleUser'
 import SingleBrownie from './components/SingleBrownie'
-import Cart from './components/cart'
+import Cart from './components/Cart'
 import {me} from './store'
 
 import AllUsers from './components/AllUsers'
@@ -23,10 +23,12 @@ import AllBrownies from './components/AllBrownies'
 import {fetchAllCookies} from './store/cookies'
 import {fetchAllBrownies} from './store/brownies'
 import {fetchAllUsers} from './store/allUsers'
+import {fetchOrderByUserId} from './store/order'
 
 /**
  * COMPONENT
  */
+
 class Routes extends Component {
   componentDidMount() {
     this.props.loadInitialData()
@@ -37,7 +39,6 @@ class Routes extends Component {
 
   render() {
     const {isLoggedIn, isAdmin} = this.props
-    console.log(this.props)
     return (
       <Switch>
         {/* Routes placed here are available to all visitors */}
@@ -92,8 +93,10 @@ const mapState = state => {
   return {
     // Being 'logged in' for our purposes will be defined has having a state.user that has a truthy id.
     // Otherwise, state.user will be an empty object, and state.user.id will be falsey
+    user: state.user,
     isLoggedIn: !!state.user.id,
-    isAdmin: !!state.user.isAdmin
+    isAdmin: !!state.user.isAdmin,
+    userId: state.user.id
   }
 }
 
@@ -110,6 +113,9 @@ const mapDispatch = dispatch => {
     },
     fetchAllUsers() {
       dispatch(fetchAllUsers())
+    },
+    fetchOrderByUserId(id) {
+      dispatch(fetchOrderByUserId(id))
     }
   }
 }

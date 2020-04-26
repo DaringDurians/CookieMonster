@@ -1,7 +1,8 @@
 import React from 'react'
-import {Button} from 'reactstrap'
 import {connect} from 'react-redux'
 import {fetchCookie, updatedCookie} from '../store/singleCookie'
+import {fetchOrderProductDetails} from '../store/orderProduct'
+import Quantity from './Quantity'
 import ProductsForm from './ProductsForm'
 
 let name
@@ -22,7 +23,7 @@ export class SingleCookie extends React.Component {
   handleSubmit() {
     event.preventDefault()
     name = event.target.name.value
-    category = 'Cookie'
+    category = 'cookies'
     price = parseInt(event.target.price.value) * 100
     description = event.target.description.value
     imgUrl = event.target.imgUrl.value
@@ -36,8 +37,10 @@ export class SingleCookie extends React.Component {
     )
     this.props.fetchCookie(cookieId)
   }
+  updateCart() {}
   render() {
-    const {singleCookie} = this.props
+    const {singleCookie, userId} = this.props
+    const currentCart = JSON.parse(window.sessionStorage.getItem(userId))
     return (
       <div className="singleBox">
         {this.props.isAdmin ? (
@@ -58,12 +61,21 @@ export class SingleCookie extends React.Component {
             <p>Price: {(singleCookie.price / 100).toFixed(2)}</p>
           </div>
           <div>
-            <p>Quantity: </p>
-          </div>
-          <div>
-            <Button color="info" type="button" id="button">
-              Add To Cart
-            </Button>{' '}
+            <Quantity
+              quantity={
+                currentCart
+                  ? currentCart.find(
+                      prodObj => prodObj.prodId === singleCookie.id
+                    )
+                    ? currentCart.find(
+                        prodObj => prodObj.prodId === singleCookie.id
+                      ).quantity
+                    : 0
+                  : 0
+              }
+              prodId={singleCookie.id}
+              price={singleCookie.price}
+            />
           </div>
         </div>
       </div>
@@ -73,7 +85,9 @@ export class SingleCookie extends React.Component {
 
 const mapState = state => {
   return {
+    userId: state.user.id,
     singleCookie: state.singleCookie,
+    orderProduct: state.orderProduct,
     isAdmin: !!state.user.isAdmin
   }
 }
@@ -82,7 +96,8 @@ const mapDispatch = dispatch => ({
   updatedCookie: () =>
     dispatch(
       updatedCookie(cookieId, name, category, price, description, imgUrl)
-    )
+    ),
+  fetchOrderProductDetails: prodId => dispatch(fetchOrderProductDetails(prodId))
 })
 
 export default connect(mapState, mapDispatch)(SingleCookie)

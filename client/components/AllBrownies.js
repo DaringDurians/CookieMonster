@@ -3,6 +3,7 @@ import {connect} from 'react-redux'
 import {NavLink} from 'react-router-dom'
 import ProductsForm from './ProductsForm'
 import {postProduct, deleteProduct, fetchAllBrownies} from '../store/brownies'
+import {Quantity} from './Quantity'
 
 let name
 let category
@@ -60,7 +61,6 @@ export class AllBrownies extends React.Component {
                           X
                         </button>
                       ) : null}
-                      <button type="button">Add To Cart</button>
                     </div>
                   </div>
                 )

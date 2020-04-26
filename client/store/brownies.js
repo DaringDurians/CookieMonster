@@ -63,7 +63,7 @@ export const deleteProduct = id => {
 const brownies = (brownies = [], action) => {
   switch (action.type) {
     case GOT_BROWNIES:
-      return action.brownies
+      return action.brownies.sort((a, b) => a.id - b.id)
     case POST_BROWNIE:
       return [...brownies, action.brownie]
     case DELETE_BROWNIE:
