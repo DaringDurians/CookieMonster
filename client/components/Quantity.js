@@ -3,7 +3,6 @@ import {connect} from 'react-redux'
 import {
   updateOrderProductDetails,
   createOrderProductDetails
-  // getProduct,
 } from '../store/orderProduct'
 
 let totalPrice

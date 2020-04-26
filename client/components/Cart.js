@@ -58,7 +58,7 @@ export class Cart extends Component {
                 <p>Total Price: {'$' + (totalPrice / 100).toFixed(2)}</p>
               </div>
               <div>
-                <Link to="/home">
+                <Link to="/checkout">
                   <button type="button">Check Out</button>
                 </Link>
               </div>
