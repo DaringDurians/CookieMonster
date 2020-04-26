@@ -1,19 +1,35 @@
 import React, {Component} from 'react'
+import Quantity from './Quantity'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 
 export class Cart extends Component {
   constructor(props) {
     super(props)
-    this.state = {}
+    this.state = {
+      loaded: false
+    }
+
+    this.forceUpdateHandler = this.forceUpdateHandler.bind(this)
   }
+
+  componentDidMount() {
+    console.log('Cart Did Mount')
+  }
+
+  forceUpdateHandler() {
+    this.forceUpdate()
+  }
+
   render() {
     // console.log('BEFORE PARSING values>>>>>>>>>>>>>', allProducts)
     const allProducts = JSON.parse(
       window.sessionStorage.getItem(this.props.userId)
     )
+
     console.log('values>>>>>>>>>>>>>', allProducts)
     // const {isLoggedIn} = this.props
+
     let totalItems = 0
     let totalPrice = 0
     return (
@@ -22,11 +38,12 @@ export class Cart extends Component {
           <p>Cart Contents:</p>
         </div>
         <div id="itemizedSummary">
-          {allProducts ? (
-            allProducts.length ? (
-              allProducts.map(product => {
+
+          {allProducts 
+          ? (allProducts.length 
+            ? (allProducts.map(product => {
                 totalItems += product.quantity
-                totalPrice += product.quantity * product.price
+                totalPrice += product.price
                 return (
                   <ul key={product.prodId}>
                     <div className="smallImg">
@@ -47,6 +64,7 @@ export class Cart extends Component {
               <p>No items in cart</p>
             </div>
           )}
+
         </div>
         {allProducts ? (
           allProducts ? (

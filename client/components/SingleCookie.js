@@ -19,7 +19,6 @@ export class SingleCookie extends React.Component {
   componentDidMount() {
     cookieId = this.props.match.params.cookieId
     this.props.fetchCookie(cookieId)
-    this.props.fetchOrderProductDetails(cookieId)
   }
   handleSubmit() {
     event.preventDefault()
@@ -40,7 +39,8 @@ export class SingleCookie extends React.Component {
   }
   updateCart() {}
   render() {
-    const {singleCookie} = this.props
+    const {singleCookie, userId} = this.props
+    const currentCart = JSON.parse(window.sessionStorage.getItem(userId))
     return (
       <div className="singleBox">
         {this.props.isAdmin ? (
@@ -62,7 +62,17 @@ export class SingleCookie extends React.Component {
           </div>
           <div>
             <Quantity
-              quantity={this.props.orderProduct.quantity || 0}
+              quantity={
+                currentCart
+                  ? currentCart.find(
+                      prodObj => prodObj.prodId === singleCookie.id
+                    )
+                    ? currentCart.find(
+                        prodObj => prodObj.prodId === singleCookie.id
+                      ).quantity
+                    : 0
+                  : 0
+              }
               prodId={singleCookie.id}
               price={singleCookie.price}
             />
@@ -75,6 +85,7 @@ export class SingleCookie extends React.Component {
 
 const mapState = state => {
   return {
+    userId: state.user.id,
     singleCookie: state.singleCookie,
     orderProduct: state.orderProduct,
     isAdmin: !!state.user.isAdmin

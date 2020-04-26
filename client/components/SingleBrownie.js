@@ -44,7 +44,8 @@ class SingleBrownie extends React.Component {
     this.props.fetchBrownie(brownieId)
   }
   render() {
-    const {singleBrownie} = this.props
+    const {singleBrownie, userId} = this.props
+    const currentCart = JSON.parse(window.sessionStorage.getItem(userId))
     return (
       <div className="singleBox">
         {this.props.isAdmin ? (
@@ -66,7 +67,17 @@ class SingleBrownie extends React.Component {
           </div>
           <div>
             <Quantity
-              quantity={this.props.orderProduct.quantity || 0}
+              quantity={
+                currentCart
+                  ? currentCart.find(
+                      prodObj => prodObj.prodId === singleBrownie.id
+                    )
+                    ? currentCart.find(
+                        prodObj => prodObj.prodId === singleBrownie.id
+                      ).quantity
+                    : 0
+                  : 0
+              }
               prodId={singleBrownie.id}
               price={singleBrownie.price}
             />
@@ -79,6 +90,7 @@ class SingleBrownie extends React.Component {
 
 const mapState = state => {
   return {
+    userId: state.user.id,
     singleBrownie: state.singleBrownie,
     orderProduct: state.orderProduct,
     isAdmin: !!state.user.isAdmin
