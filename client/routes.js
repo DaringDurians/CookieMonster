@@ -59,7 +59,7 @@ class Routes extends Component {
           <Switch>
             {/* Routes placed here are only available after logging in */}
             <Route exact path="/home" component={UserHome} />
-
+            <Route path="/cart" component={Cart} />
             <Route exact path="/brownies" component={AllBrownies} />
             <Route exact path="/cookies" component={AllCookies} />
             {isAdmin && (

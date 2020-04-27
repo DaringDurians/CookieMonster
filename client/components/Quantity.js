@@ -1,7 +1,6 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import // getProduct,
-'../store/orderProduct'
+import {getQuantityThunk, setQuantityThunk} from '../store/quantity'
 
 let totalPrice
 export class Quantity extends React.Component {
@@ -14,14 +13,20 @@ export class Quantity extends React.Component {
     }
   }
 
-  componentDidMount() {
-    console.log('Quantity Did Mount')
+  componentWillMount() {
+    if (
+      window.sessionStorage.getItem(this.props.userId) &&
+      this.props.prodId &&
+      this.props.userId
+    ) {
+      this.props.getQuantityThunk(
+        this.props.prodId,
+        JSON.parse(window.sessionStorage.getItem(this.props.userId))
+      )
+    }
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log('next', nextProps)
-    console.log('this', this.props)
-
     if (nextProps.quantity > 0) {
       this.setState({addedToCart: true})
     }
@@ -142,6 +147,7 @@ export class Quantity extends React.Component {
                 totalPrice = this.props.price * this.state.quantity
                 this.updateSessions()
                 this.toggleQuantityButton()
+                this.props.setQuantityThunk(this.state.quantity)
               }}
             >
               {this.state.addedToCart ? 'Update Cart' : 'Add To Cart'}
@@ -154,6 +160,7 @@ export class Quantity extends React.Component {
                     quantity: 0,
                     addedToCart: false
                   })
+                  this.props.setQuantityThunk(0)
                 }}
               >
                 Remove Item
@@ -178,8 +185,10 @@ const mapStateToProps = state => {
   }
 }
 
-// const mapDispatchToProps = dispatch => ({
-//   // getProduct: () => dispatch(getProduct()),
-// })
+const mapDispatchToProps = dispatch => ({
+  getQuantityThunk: (prodId, products) =>
+    dispatch(getQuantityThunk(prodId, products)),
+  setQuantityThunk: quantity => dispatch(setQuantityThunk(quantity))
+})
 
-export default connect(mapStateToProps, null)(Quantity)
+export default connect(mapStateToProps, mapDispatchToProps)(Quantity)
