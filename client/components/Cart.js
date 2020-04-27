@@ -45,16 +45,20 @@ export class Cart extends Component {
     event.preventDefault()
     name = event.target.fullname.value
     email = event.target.email.value
-    await axios.post(`/api/users`, {name, email})
+    const {data} = await axios.post(`/api/users`, {name, email})
+    userId = data.id
+    console.log('HANDLE FORM SUBMIT', userId)
     this.handleCheckout(totalPrice)
-    return this.setState({
+    this.setState({
       checkedOut: true
     })
   }
 
   async handleCheckout(totalPrice) {
-    userId = this.props.user.id
-    active = false
+    if (userId === undefined) {
+      userId = this.props.user.id
+    }
+    active = true
     total = totalPrice
     await this.props.sendCart(userId, active, total)
     const {data} = await axios.get(`/api/order/${userId}`)
@@ -65,6 +69,7 @@ export class Cart extends Component {
       price = product.price
       this.props.createOrderProductDetails(orderId, prodId, quantity, price)
     })
+    await axios.put(`/api/order/${orderId}`, {active: false})
   }
 
   // eslint-disable-next-line complexity
@@ -77,8 +82,13 @@ export class Cart extends Component {
     let totalItems = 0
     return (
       <div id="cartBox">
-        <div>{this.state.showCheckoutForm ? <CheckoutForm /> : null}</div>
-        {!this.checkedOut ? (
+        <div>
+          {this.state.showCheckoutForm && !this.state.checkedOut ? (
+            <CheckoutForm handleFormSubmit={this.handleFormSubmit} />
+          ) : null}
+        </div>
+        {console.log(this.state.checkedOut)}
+        {!this.state.checkedOut ? (
           <div>
             <p>Cart Contents:</p>
             <div id="itemizedSummary">
