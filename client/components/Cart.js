@@ -7,10 +7,9 @@ export class Cart extends Component {
     super(props)
     this.state = {
       loaded: false,
-      updated: false,
-      removed: false
+      updated: false
     }
-    this.removeClickHandler = this.removeClickHandler.bind(this)
+
     this.updateClickHandler = this.updateClickHandler.bind(this)
   }
 
@@ -20,10 +19,6 @@ export class Cart extends Component {
 
   updateClickHandler() {
     this.setState({updated: !this.state.updated})
-  }
-
-  removeClickHandler() {
-    this.setState({removed: !this.state.removed})
   }
 
   render() {
@@ -55,9 +50,8 @@ export class Cart extends Component {
                           prodId={product.prodId}
                           price={product.price / product.quantity}
                           updateClickHandlder={this.updateClickHandler}
-                          removeClickHandler={this.removeClickHandler}
                           onRender={() => {
-                            this.setState({loaded: true})
+                            this.setState({loaded: !this.state.loaded})
                           }}
                         />{' '}
                         : {'$' + (product.price / 100).toFixed(2)}{' '}

@@ -164,8 +164,8 @@ export class Quantity extends React.Component {
                     addedToCart: false
                   })
                   this.props.setQuantityThunk(0)
-                  if (this.props.removeClickHandlder) {
-                    this.props.removeClickHandlder()
+                  if (this.props.updateClickHandlder) {
+                    this.props.updateClickHandlder()
                   }
                 }}
               >
