@@ -6,6 +6,7 @@ import {NavLink} from 'react-router-dom'
 import {sendCart, fetchOrderByUserId} from '../store/order.js'
 import {createOrderProductDetails} from '../store/orderProduct'
 import {CheckoutForm} from './CheckoutForm'
+import {Confirmation} from './Confirmation'
 
 let userId
 let active
@@ -48,15 +49,16 @@ export class Cart extends Component {
     const {data} = await axios.post(`/api/users`, {name, email})
     userId = data.id
     console.log('HANDLE FORM SUBMIT', userId)
-    this.handleCheckout(totalPrice)
+    this.handleCheckout()
     this.setState({
       checkedOut: true
     })
   }
 
-  async handleCheckout(totalPrice) {
+  async handleCheckout(id) {
+    console.log('HANDLE CHECKOUT THIS.PROPS', this.props)
     if (userId === undefined) {
-      userId = this.props.user.id
+      userId = id
     }
     active = true
     total = totalPrice
@@ -130,7 +132,7 @@ export class Cart extends Component {
                     </div>
                     <div>
                       {console.log('userId', userId)}
-                      {userId === undefined &&
+                      {this.props.user.id === undefined &&
                       this.state.showCheckoutForm === false ? (
                         <button
                           type="button"
@@ -139,7 +141,19 @@ export class Cart extends Component {
                         >
                           Checkout
                         </button>
-                      ) : null}
+                      ) : (
+                        <NavLink to="/confirm">
+                          <button
+                            type="button"
+                            name="checkout"
+                            onClick={() =>
+                              this.handleCheckout(this.props.user.id)
+                            }
+                          >
+                            Place Order
+                          </button>
+                        </NavLink>
+                      )}
                     </div>
                   </div>
                 ) : (
@@ -151,7 +165,7 @@ export class Cart extends Component {
             </div>
           </div>
         ) : (
-          <p>SAY SOMETHING</p>
+          <Confirmation />
         )}
       </div>
     )
