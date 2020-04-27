@@ -33,7 +33,6 @@ export class Cart extends Component {
     this.updateClickHandler = this.updateClickHandler.bind(this)
   }
 
-
   updateClickHandler() {
     this.setState({updated: !this.state.updated})
   }
@@ -88,6 +87,7 @@ export class Cart extends Component {
     console.log('values>>>>>>>>>>>>>', allProducts)
     // const {isLoggedIn} = this.props
 
+    let orderPrice = 0
     let totalItems = 0
     return (
       <div id="cartBox">
@@ -105,23 +105,24 @@ export class Cart extends Component {
                   ? allProducts.map(product => {
                       totalItems += product.quantity
                       totalPrice += product.price
+                      orderPrice += product.price
                       return (
                         <ul key={product.prodId}>
-                      <div className="smallImg">
-                        <img src={product.imgUrl} /> {product.name} x{' '}
-                        {product.quantity} :{' '}
-                        {'$' + (product.price / 100).toFixed(2)}{' '}
-                        <Quantity
-                          quantity={product.quantity}
-                          prodId={product.prodId}
-                          price={product.price / product.quantity}
-                          updateClickHandlder={this.updateClickHandler}
-                          onRender={() => {
-                            this.setState({loaded: !this.state.loaded})
-                          }}
-                        />
-                      </div>
-                    </ul>
+                          <div className="smallImg">
+                            <img src={product.imgUrl} /> {product.name} x{' '}
+                            {product.quantity} :{' '}
+                            {'$' + (product.price / 100).toFixed(2)}{' '}
+                            <Quantity
+                              quantity={product.quantity}
+                              prodId={product.prodId}
+                              price={product.price / product.quantity}
+                              updateClickHandlder={this.updateClickHandler}
+                              onRender={() => {
+                                this.setState({loaded: !this.state.loaded})
+                              }}
+                            />
+                          </div>
+                        </ul>
                       )
                     })
                   : 'No items in cart'
@@ -135,7 +136,7 @@ export class Cart extends Component {
                       <p>Total Items: {totalItems}</p>
                     </div>
                     <div>
-                      <p>Total Price: {'$' + (totalPrice / 100).toFixed(2)}</p>
+                      <p>Total Price: {'$' + (orderPrice / 100).toFixed(2)}</p>
                     </div>
                     <div>
                       {console.log('userId', userId)}
@@ -169,7 +170,6 @@ export class Cart extends Component {
               ) : (
                 <div />
               )}
-
             </div>
           </div>
         ) : (

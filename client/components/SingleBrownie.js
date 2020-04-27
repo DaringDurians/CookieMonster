@@ -2,7 +2,6 @@ import React from 'react'
 import {Button} from 'reactstrap'
 import {connect} from 'react-redux'
 import {fetchBrownie, updatedBrownie} from '../store/singleBrownie'
-// import {fetchOrderProductDetails} from '../store/orderProduct'
 import Quantity from './Quantity'
 import ProductsForm from './ProductsForm'
 
@@ -101,8 +100,7 @@ const mapDispatch = dispatch => ({
   updatedBrownie: () =>
     dispatch(
       updatedBrownie(brownieId, name, category, price, description, imgUrl)
-    ),
-  fetchOrderProductDetails: prodId => dispatch(fetchOrderProductDetails(prodId))
+    )
 })
 
 export default connect(mapState, mapDispatch)(SingleBrownie)
