@@ -148,6 +148,9 @@ export class Quantity extends React.Component {
                 this.updateSessions()
                 this.toggleQuantityButton()
                 this.props.setQuantityThunk(this.state.quantity)
+                if (this.props.updateClickHandlder) {
+                  this.props.updateClickHandlder()
+                }
               }}
             >
               {this.state.addedToCart ? 'Update Cart' : 'Add To Cart'}
@@ -161,6 +164,9 @@ export class Quantity extends React.Component {
                     addedToCart: false
                   })
                   this.props.setQuantityThunk(0)
+                  if (this.props.removeClickHandlder) {
+                    this.props.removeClickHandlder()
+                  }
                 }}
               >
                 Remove Item

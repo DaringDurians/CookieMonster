@@ -6,18 +6,24 @@ export class Cart extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      loaded: false
+      loaded: false,
+      updated: false,
+      removed: false
     }
-
-    this.forceUpdateHandler = this.forceUpdateHandler.bind(this)
+    this.removeClickHandler = this.removeClickHandler.bind(this)
+    this.updateClickHandler = this.updateClickHandler.bind(this)
   }
 
   componentDidMount() {
     console.log('Cart Did Mount')
   }
 
-  forceUpdateHandler() {
-    this.forceUpdate()
+  updateClickHandler() {
+    this.setState({updated: !this.state.updated})
+  }
+
+  removeClickHandler() {
+    this.setState({removed: !this.state.removed})
   }
 
   render() {
@@ -48,6 +54,8 @@ export class Cart extends Component {
                           quantity={product.quantity}
                           prodId={product.prodId}
                           price={product.price / product.quantity}
+                          updateClickHandlder={this.updateClickHandler}
+                          removeClickHandler={this.removeClickHandler}
                           onRender={() => {
                             this.setState({loaded: true})
                           }}
