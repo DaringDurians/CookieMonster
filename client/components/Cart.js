@@ -62,8 +62,13 @@ export class Cart extends Component {
     }
     active = true
     total = totalPrice
-    await this.props.sendCart(userId, active, total)
+    const check = await this.props.sendCart(userId, active, total)
+    console.log(check, 'check what comes from send cart thunk')
     const {data} = await axios.get(`/api/order/${userId}`)
+    console.log(
+      data,
+      'check what comes from get route after sendcart thunk in handle checkout'
+    )
     orderId = data[0].id
     allProducts.map(product => {
       prodId = product.prodId
