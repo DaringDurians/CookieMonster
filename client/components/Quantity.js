@@ -1,21 +1,15 @@
 import React from 'react'
 import {connect} from 'react-redux'
 
-
-
 let totalPrice
 export class Quantity extends React.Component {
   constructor(props) {
     super(props)
 
     this.state = {
-      quantity: 0,
-      addedToCart: false
+      quantity: this.props.quantity ? this.props.quantity : 0,
+      addedToCart: this.props.addedToCart || false
     }
-  }
-
-  componentDidMount() {
-    console.log('Quantity Did Mount')
   }
 
   componentWillReceiveProps(nextProps) {
@@ -24,12 +18,12 @@ export class Quantity extends React.Component {
 
     if (nextProps.quantity > 0) {
       this.setState({addedToCart: true})
-    }
+      // }
 
-    if (nextProps.quantity !== this.props.quantity) {
-      this.setState({
-        quantity: nextProps.quantity
-      })
+      // if (nextProps.quantity !== this.props.quantity) {
+      //   this.setState({
+      //     quantity: nextProps.quantity
+      //   })
     } else {
       this.setState({quantity: this.props.quantity})
     }
@@ -101,6 +95,7 @@ export class Quantity extends React.Component {
       <div>
         <div className="quantityBox">
           <div>
+            {/* this is the minus button */}
             <button
               type="button"
               onClick={() => {
@@ -137,18 +132,25 @@ export class Quantity extends React.Component {
             </button>
           </div>
           <div>
+            {/* this is the add to cart/update cart button */}
             <button
               type="button"
               onClick={() => {
                 totalPrice = this.props.price * this.state.quantity
                 this.updateSessions()
                 this.toggleQuantityButton()
+                this.addedToCart = true
+                this.setState({
+                  addedToCart: true
+                })
               }}
             >
               {this.state.addedToCart ? 'Update Cart' : 'Add To Cart'}
+              {/* this is the remove item button */}
             </button>
             {this.state.addedToCart ? (
               <button
+                type="button"
                 onClick={() => {
                   this.removeProductFromSessions()
                   this.setState({

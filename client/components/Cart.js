@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import Quantity from './Quantity'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
-
+import SingleCookie from './SingleCookie'
 export class Cart extends Component {
   constructor(props) {
     super(props)
@@ -38,15 +38,20 @@ export class Cart extends Component {
           <p>Cart Contents:</p>
         </div>
         <div id="itemizedSummary">
-
-          {allProducts 
-          ? (allProducts.length 
-            ? (allProducts.map(product => {
+          {allProducts ? (
+            allProducts.length ? (
+              allProducts.map(product => {
                 totalItems += product.quantity
                 totalPrice += product.price
                 return (
                   <ul key={product.prodId}>
                     <div className="smallImg">
+                      <Quantity
+                        quantity={product.quantity}
+                        prodId={product.prodId}
+                        price={product.price / product.quantity}
+                        addedToCart={true}
+                      />
                       <Link to={`/${product.category}/${product.prodId}`}>
                         <img src={product.imgUrl} />
                       </Link>
@@ -64,7 +69,6 @@ export class Cart extends Component {
               <p>No items in cart</p>
             </div>
           )}
-
         </div>
         {allProducts ? (
           allProducts ? (
