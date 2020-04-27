@@ -5,6 +5,7 @@ import {connect} from 'react-redux'
 import {NavLink} from 'react-router-dom'
 import {sendCart, fetchOrderByUserId} from '../store/order.js'
 import {createOrderProductDetails} from '../store/orderProduct'
+import {CheckoutForm} from './CheckoutForm'
 
 let userId
 let active
@@ -14,18 +15,41 @@ let prodId
 let quantity
 let price
 let allProducts
+let name, email
+let totalPrice = 0
 export class Cart extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      loaded: false
+      loaded: false,
+      isGuest: true,
+      showCheckoutForm: false,
+      checkedOut: false
     }
-
+    this.handleClick = this.handleClick.bind(this)
+    this.handleFormSubmit = this.handleFormSubmit.bind(this)
     this.forceUpdateHandler = this.forceUpdateHandler.bind(this)
   }
 
   forceUpdateHandler() {
     this.forceUpdate()
+  }
+
+  handleClick() {
+    return this.setState({
+      showCheckoutForm: true
+    })
+  }
+
+  async handleFormSubmit(event) {
+    event.preventDefault()
+    name = event.target.fullname.value
+    email = event.target.email.value
+    await axios.post(`/api/users`, {name, email})
+    this.handleCheckout(totalPrice)
+    return this.setState({
+      checkedOut: true
+    })
   }
 
   async handleCheckout(totalPrice) {
@@ -43,6 +67,7 @@ export class Cart extends Component {
     })
   }
 
+  // eslint-disable-next-line complexity
   render() {
     allProducts = JSON.parse(window.sessionStorage.getItem(this.props.userId))
 
@@ -50,71 +75,73 @@ export class Cart extends Component {
     // const {isLoggedIn} = this.props
 
     let totalItems = 0
-    let totalPrice = 0
     return (
       <div id="cartBox">
-        <div>
-          <p>Cart Contents:</p>
-        </div>
-        <div id="itemizedSummary">
-          {allProducts
-            ? allProducts.length
-              ? allProducts.map(product => {
-                  totalItems += product.quantity
-                  totalPrice += product.price
-                  return (
-                    <ul key={product.prodId}>
-                      <div className="smallImg">
-                        <img src={product.imgUrl} /> {product.name} x{' '}
-                        {product.quantity}
-                        <Quantity
-                          quantity={product.quantity}
-                          prodId={product.prodId}
-                          price={product.price / product.quantity}
-                          onRender={() => {
-                            this.setState({loaded: true})
-                          }}
-                        />{' '}
-                        : {'$' + (product.price / 100).toFixed(2)}{' '}
-                      </div>
-                    </ul>
-                  )
-                })
-              : 'No items in cart'
-            : 'No items in cart'}
-        </div>
-        {allProducts ? (
-          allProducts ? (
-            <div id="totalSummary">
-              <div>
-                <p>Total Items: {totalItems}</p>
-              </div>
-              <div>
-                <p>Total Price: {'$' + (totalPrice / 100).toFixed(2)}</p>
-              </div>
-              <div>
-                {userId === undefined ? (
-                  <NavLink to="/checkout">
-                    <button type="button" name="checkout">
-                      Checkout
-                    </button>
-                  </NavLink>
-                ) : (
-                  <button
-                    type="button"
-                    name="checkout"
-                    onClick={() => this.handleCheckout(totalPrice)}
-                  >
-                    Place Order
-                  </button>
-                )}
-              </div>
+        <div>{this.state.showCheckoutForm ? <CheckoutForm /> : null}</div>
+        {!this.checkedOut ? (
+          <div>
+            <p>Cart Contents:</p>
+            <div id="itemizedSummary">
+              {allProducts
+                ? allProducts.length
+                  ? allProducts.map(product => {
+                      totalItems += product.quantity
+                      totalPrice += product.price
+                      return (
+                        <ul key={product.prodId}>
+                          <div className="smallImg">
+                            <img src={product.imgUrl} /> {product.name} x{' '}
+                            {product.quantity}
+                            <Quantity
+                              quantity={product.quantity}
+                              prodId={product.prodId}
+                              price={product.price / product.quantity}
+                              onRender={() => {
+                                this.setState({loaded: true})
+                              }}
+                            />{' '}
+                            : {'$' + (product.price / 100).toFixed(2)}{' '}
+                          </div>
+                        </ul>
+                      )
+                    })
+                  : 'No items in cart'
+                : 'No items in cart'}
             </div>
-          ) : (
-            <div />
-          )
+            <div>
+              {allProducts ? (
+                allProducts ? (
+                  <div id="totalSummary">
+                    <div>
+                      <p>Total Items: {totalItems}</p>
+                    </div>
+                    <div>
+                      <p>Total Price: {'$' + (totalPrice / 100).toFixed(2)}</p>
+                    </div>
+                    <div>
+                      {console.log('userId', userId)}
+                      {userId === undefined &&
+                      this.state.showCheckoutForm === false ? (
+                        <button
+                          type="button"
+                          name="checkout"
+                          onClick={this.handleClick}
+                        >
+                          Checkout
+                        </button>
+                      ) : null}
+                    </div>
+                  </div>
+                ) : (
+                  <div />
+                )
+              ) : (
+                <div />
+              )}
+            </div>
+          </div>
         ) : (
-          <div />
+          <p>SAY SOMETHING</p>
         )}
       </div>
     )
