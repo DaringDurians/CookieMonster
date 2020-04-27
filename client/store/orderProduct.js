@@ -45,30 +45,30 @@ const createdOrderProduct = orderProduct => ({
 //   }
 // }
 
-export const fetchOrderProductDetails = productId => async dispatch => {
-  try {
-    const {data} = await axios.get(`/api/orderProducts/${productId}`)
-    dispatch(gotOrderProduct(data))
-  } catch (error) {
-    console.error(error)
-  }
-}
+// export const fetchOrderProductDetails = productId => async dispatch => {
+//   try {
+//     const {data} = await axios.get(`/api/orderProducts/${productId}`)
+//     dispatch(gotOrderProduct(data))
+//   } catch (error) {
+//     console.error(error)
+//   }
+// }
 
-export const updateOrderProductDetails = (
-  productId,
-  quantity,
-  totalPrice
-) => async dispatch => {
-  try {
-    const {data} = await axios.put(`/api/orderProducts/${productId}`, {
-      quantity,
-      totalPrice
-    })
-    dispatch(updatedOrderProduct(data))
-  } catch (error) {
-    console.error(error)
-  }
-}
+// export const updateOrderProductDetails = (
+//   productId,
+//   quantity,
+//   totalPrice
+// ) => async dispatch => {
+//   try {
+//     const {data} = await axios.put(`/api/orderProducts/${productId}`, {
+//       quantity,
+//       totalPrice
+//     })
+//     dispatch(updatedOrderProduct(data))
+//   } catch (error) {
+//     console.error(error)
+//   }
+// }
 
 export const createOrderProductDetails = (
   orderId,

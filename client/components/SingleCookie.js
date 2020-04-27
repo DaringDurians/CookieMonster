@@ -1,7 +1,6 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {fetchCookie, updatedCookie} from '../store/singleCookie'
-import {fetchOrderProductDetails} from '../store/orderProduct'
 import Quantity from './Quantity'
 import ProductsForm from './ProductsForm'
 
@@ -96,8 +95,7 @@ const mapDispatch = dispatch => ({
   updatedCookie: () =>
     dispatch(
       updatedCookie(cookieId, name, category, price, description, imgUrl)
-    ),
-  fetchOrderProductDetails: prodId => dispatch(fetchOrderProductDetails(prodId))
+    )
 })
 
 export default connect(mapState, mapDispatch)(SingleCookie)

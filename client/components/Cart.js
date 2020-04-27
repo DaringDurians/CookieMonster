@@ -23,17 +23,18 @@ export class Cart extends Component {
     super(props)
     this.state = {
       loaded: false,
+      updated: false,
       isGuest: true,
       showCheckoutForm: false,
       checkedOut: false
     }
     this.handleClick = this.handleClick.bind(this)
     this.handleFormSubmit = this.handleFormSubmit.bind(this)
-    this.forceUpdateHandler = this.forceUpdateHandler.bind(this)
+    this.updateClickHandler = this.updateClickHandler.bind(this)
   }
 
-  forceUpdateHandler() {
-    this.forceUpdate()
+  updateClickHandler() {
+    this.setState({updated: !this.state.updated})
   }
 
   handleClick() {
@@ -62,8 +63,13 @@ export class Cart extends Component {
     }
     active = true
     total = totalPrice
-    await this.props.sendCart(userId, active, total)
+    const check = await this.props.sendCart(userId, active, total)
+    console.log(check, 'check what comes from send cart thunk')
     const {data} = await axios.get(`/api/order/${userId}`)
+    console.log(
+      data,
+      'check what comes from get route after sendcart thunk in handle checkout'
+    )
     orderId = data[0].id
     allProducts.map(product => {
       prodId = product.prodId
@@ -81,6 +87,7 @@ export class Cart extends Component {
     console.log('values>>>>>>>>>>>>>', allProducts)
     // const {isLoggedIn} = this.props
 
+    let orderPrice = 0
     let totalItems = 0
     return (
       <div id="cartBox">
@@ -89,7 +96,6 @@ export class Cart extends Component {
             <CheckoutForm handleFormSubmit={this.handleFormSubmit} />
           ) : null}
         </div>
-        {console.log(this.state.checkedOut)}
         {!this.state.checkedOut ? (
           <div>
             <p>Cart Contents:</p>
@@ -99,20 +105,22 @@ export class Cart extends Component {
                   ? allProducts.map(product => {
                       totalItems += product.quantity
                       totalPrice += product.price
+                      orderPrice += product.price
                       return (
                         <ul key={product.prodId}>
                           <div className="smallImg">
                             <img src={product.imgUrl} /> {product.name} x{' '}
-                            {product.quantity}
+                            {product.quantity} :{' '}
+                            {'$' + (product.price / 100).toFixed(2)}{' '}
                             <Quantity
                               quantity={product.quantity}
                               prodId={product.prodId}
                               price={product.price / product.quantity}
+                              updateClickHandlder={this.updateClickHandler}
                               onRender={() => {
-                                this.setState({loaded: true})
+                                this.setState({loaded: !this.state.loaded})
                               }}
-                            />{' '}
-                            : {'$' + (product.price / 100).toFixed(2)}{' '}
+                            />
                           </div>
                         </ul>
                       )
@@ -128,7 +136,7 @@ export class Cart extends Component {
                       <p>Total Items: {totalItems}</p>
                     </div>
                     <div>
-                      <p>Total Price: {'$' + (totalPrice / 100).toFixed(2)}</p>
+                      <p>Total Price: {'$' + (orderPrice / 100).toFixed(2)}</p>
                     </div>
                     <div>
                       {console.log('userId', userId)}
