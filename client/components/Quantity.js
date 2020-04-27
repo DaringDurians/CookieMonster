@@ -1,9 +1,10 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {getQuantityThunk, setQuantityThunk} from '../store/quantity'
+import {updateOrderProductDetails} from '../store/orderProduct'
 
+let totalPrice, prodId, quantity, price, userId, name, imgUrl, active
 
-let totalPrice
 export class Quantity extends React.Component {
   constructor(props) {
     super(props)
@@ -50,44 +51,24 @@ export class Quantity extends React.Component {
   }
 
   updateSessions() {
-    let allProducts
+    console.log('this.props in updateSessios', this.props)
     const prodName = this.props.products.find(el => el.id === this.props.prodId)
-    let prod = {
-      prodId: this.props.prodId,
-      name: prodName.name,
-      imgUrl: prodName.imgUrl,
-      active: true,
-      quantity: this.state.quantity,
-      price: totalPrice
-    }
+    prodId = this.props.prodId
+    name = prodName.name
+    imgUrl = prodName.imgUrl
+    active = true
+    quantity = this.state.quantity
+    price = totalPrice
+    userId = this.props.userId
 
-    const temp = JSON.parse(window.sessionStorage.getItem(this.props.userId))
-    if (temp !== null) {
-      const found = temp.find(product => product.prodId === prod.prodId)
-      if (found) {
-        const updateProduct = temp
-          .map(product => {
-            if (product.prodId === prod.prodId) {
-              product.quantity = prod.quantity
-              product.price = prod.price
-              return product
-            } else {
-              return product
-            }
-          })
-          .filter(product => product.quantity !== 0)
-        allProducts = updateProduct
-      } else if (prod.quantity !== 0) {
-        allProducts = [...temp, prod]
-      } else {
-        allProducts = [...temp]
-      }
-    } else if (prod.quantity !== 0) {
-      allProducts = [prod]
-    }
-    window.sessionStorage.setItem(
-      this.props.userId,
-      JSON.stringify(allProducts)
+    this.props.updateOrderProductDetails(
+      prodId,
+      quantity,
+      price,
+      userId,
+      name,
+      imgUrl,
+      active
     )
   }
 
@@ -143,7 +124,6 @@ export class Quantity extends React.Component {
           </div>
           <div>
             <button
-              type="button"
               onClick={() => {
                 totalPrice = this.props.price * this.state.quantity
                 this.updateSessions()
@@ -158,6 +138,7 @@ export class Quantity extends React.Component {
             </button>
             {this.state.addedToCart ? (
               <button
+                type="button"
                 onClick={() => {
                   this.removeProductFromSessions()
                   this.setState({
@@ -195,8 +176,19 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => ({
   getQuantityThunk: (prodId, products) =>
     dispatch(getQuantityThunk(prodId, products)),
-  setQuantityThunk: quantity => dispatch(setQuantityThunk(quantity))
+  setQuantityThunk: quantity => dispatch(setQuantityThunk(quantity)),
+  updateOrderProductDetails: () =>
+    dispatch(
+      updateOrderProductDetails(
+        prodId,
+        quantity,
+        price,
+        userId,
+        name,
+        imgUrl,
+        active
+      )
+    )
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Quantity)
-

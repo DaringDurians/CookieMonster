@@ -32,6 +32,10 @@ const createdOrderProduct = orderProduct => ({
   orderProduct
 })
 
+const getItemsHelper = userId => {
+  const temp = JSON.parse(window.sessionStorage.getItem(userId))
+  return temp
+}
 /**
  * THUNK CREATORS
  */
@@ -54,21 +58,55 @@ const createdOrderProduct = orderProduct => ({
 //   }
 // }
 
-// export const updateOrderProductDetails = (
-//   productId,
-//   quantity,
-//   totalPrice
-// ) => async dispatch => {
-//   try {
-//     const {data} = await axios.put(`/api/orderProducts/${productId}`, {
-//       quantity,
-//       totalPrice
-//     })
-//     dispatch(updatedOrderProduct(data))
-//   } catch (error) {
-//     console.error(error)
-//   }
-// }
+export const updateOrderProductDetails = (
+  prodId,
+  quantity,
+  price,
+  userId,
+  name,
+  imgUrl,
+  active
+) => async dispatch => {
+  try {
+    // const {data} = await axios.put(`/api/orderProducts/${productId}`, {
+    //   quantity,
+    //   totalPrice
+    // })
+    let tempProduct = {prodId, name, imgUrl, active, quantity, price}
+    const items = getItemsHelper(userId)
+    let allProducts
+
+    if (items !== null) {
+      const found = items.find(product => product.prodId === prodId)
+      if (found) {
+        const updateProduct = items
+          .map(product => {
+            if (product.prodId === prodId) {
+              product.quantity = quantity
+              product.price = price
+              return product
+            } else {
+              return product
+            }
+          })
+          .filter(product => product.quantity !== 0)
+        allProducts = updateProduct
+      } else if (quantity !== 0) {
+        allProducts = [...items, tempProduct]
+      } else {
+        allProducts = [...items]
+      }
+    } else if (quantity !== 0) {
+      allProducts = [tempProduct]
+    }
+    window.sessionStorage.setItem(userId, JSON.stringify(allProducts))
+    console.log('before dispatch in updated orderproduct thunk', allProducts)
+    dispatch(updatedOrderProduct(tempProduct))
+    console.log('after dispatch in updated orderproduct thunk', allProducts[0])
+  } catch (error) {
+    console.error(error)
+  }
+}
 
 export const createOrderProductDetails = (
   orderId,
