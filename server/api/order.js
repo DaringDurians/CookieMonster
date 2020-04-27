@@ -29,7 +29,31 @@ router.get('/:userId', async (req, res, next) => {
 
 router.post('/', async (req, res, next) => {
   try {
-    res.json(await Order.create(req.body))
+    let user = await User.findOne({where: {id: req.body.userId}})
+    let potentialCart = await Order.findOrCreate({where: {userId: user.id}})
+    let isNew = await OrderProducts.findAll({
+      where: {orderId: potentialCart[0].id}
+    })
+    console.log(isNew)
+    if (isNew.length > 1) {
+      console.log('ISNEW IS FALSE; SHOULD UPDATE')
+      let updated = await OrderProducts.create({
+        orderId: potentialCart[0].id,
+        productId: req.body.productId,
+        quantity: req.body.quantity,
+        totalPrice: req.body.totalPrice
+      })
+      res.json(updated)
+    } else {
+      console.log('ISNEW IS TRUE; SHOULD ADD TO ORDERPRODUCTS')
+      await OrderProducts.create({
+        orderId: potentialCart[0].id,
+        productId: req.body.productId,
+        quantity: req.body.quantity,
+        totalPrice: req.body.totalPrice
+      })
+      res.json(potentialCart[0])
+    }
   } catch (err) {
     next(err)
   }
