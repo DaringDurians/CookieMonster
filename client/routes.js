@@ -8,7 +8,8 @@ import {
   UserHome,
   Homepage,
   Confirmation,
-  Error
+  Error,
+  CheckoutForm
 } from './components'
 import SingleCookie from './components/SingleCookie'
 import SingleUser from './components/SingleUser'
@@ -53,6 +54,7 @@ class Routes extends Component {
         <Route exact path="/signup" component={Signup} />
         <Route exact path="/cookies/:cookieId" component={SingleCookie} />
         <Route exact path="/brownies/:brownieId" component={SingleBrownie} />
+        <Route exact path="/checkout" component={CheckoutForm} />
 
         {/* <Route exact path="*" component={Error} /> */}
         {isLoggedIn && (

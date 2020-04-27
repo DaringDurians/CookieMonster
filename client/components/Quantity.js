@@ -2,13 +2,14 @@ import React from 'react'
 import {connect} from 'react-redux'
 import {getQuantityThunk, setQuantityThunk} from '../store/quantity'
 
+
 let totalPrice
 export class Quantity extends React.Component {
   constructor(props) {
     super(props)
 
     this.state = {
-      quantity: 0,
+      quantity: this.props.quantity ? this.props.quantity : 0,
       addedToCart: false
     }
   }
@@ -198,3 +199,4 @@ const mapDispatchToProps = dispatch => ({
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Quantity)
+
