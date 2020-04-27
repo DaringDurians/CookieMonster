@@ -37,21 +37,33 @@ router.post('/', async (req, res, next) => {
     console.log(isNew)
     if (isNew.length > 1) {
       console.log('ISNEW IS FALSE; SHOULD UPDATE')
-      let updated = await OrderProducts.create({
-        orderId: potentialCart[0].id,
-        productId: req.body.productId,
-        quantity: req.body.quantity,
-        totalPrice: req.body.totalPrice
+      let updated = await OrderProducts.findAll({
+        where: {orderId: potentialCart[0].id}
       })
+      console.log('POST ROUTE FOR ORDER ISNEW', updated)
       res.json(updated)
     } else {
       console.log('ISNEW IS TRUE; SHOULD ADD TO ORDERPRODUCTS')
-      await OrderProducts.create({
-        orderId: potentialCart[0].id,
-        productId: req.body.productId,
-        quantity: req.body.quantity,
-        totalPrice: req.body.totalPrice
+      let existingProduct = OrderProducts.findOne({
+        where: {orderId: potentialCart[0].id, productId: req.body.productId}
       })
+      if (existingProduct) {
+        await OrderProducts.update(
+          {quantity: req.body.quantity},
+          {
+            returning: true,
+            plain: true,
+            where: {orderId: potentialCart[0].id, productId: req.body.productId}
+          }
+        )
+      } else {
+        await OrderProducts.create({
+          orderId: potentialCart[0].id,
+          productId: req.body.productId,
+          quantity: req.body.quantity,
+          totalPrice: req.body.totalPrice
+        })
+      }
       res.json(potentialCart[0])
     }
   } catch (err) {
