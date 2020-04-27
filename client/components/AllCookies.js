@@ -22,7 +22,7 @@ export class AllCookies extends React.Component {
   handleSubmit(event) {
     event.preventDefault()
     name = event.target.name.value
-    category = 'Cookie'
+    category = 'cookies'
     price = parseInt(event.target.price.value) * 100
     description = event.target.description.value
     imgUrl = event.target.imgUrl.value
@@ -36,7 +36,7 @@ export class AllCookies extends React.Component {
     return (
       <div className="allView">
         {this.props.isAdmin ? (
-          <ProductsForm handleSubmit={this.handleSubmit} category="Brownie" />
+          <ProductsForm handleSubmit={this.handleSubmit} category="cookies" />
         ) : null}
         {this.props.cookies
           ? this.props.cookies.length
@@ -51,6 +51,9 @@ export class AllCookies extends React.Component {
                         <img src={cookie.imgUrl} alt="cookie images" />
                       </div>
                       <div>Price: ${(cookie.price / 100).toFixed(2)}</div>
+                      <div>
+                        <button type="button">Add To Cart</button>
+                      </div>
                     </NavLink>
                     <div>
                       {this.props.isAdmin ? (

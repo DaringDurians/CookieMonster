@@ -19,7 +19,6 @@ const postOrder = order => ({type: POST_ORDER, order})
 export const fetchOrderByUserId = userId => async dispatch => {
   try {
     const {data} = await axios.get(`/api/order/${userId}`)
-    console.log(data)
     dispatch(gotOrder(data))
   } catch (error) {
     console.error(error)

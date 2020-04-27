@@ -7,7 +7,7 @@ export class Quantity extends React.Component {
     super(props)
 
     this.state = {
-      quantity: 0,
+      quantity: this.props.quantity ? this.props.quantity : 0,
       addedToCart: false
     }
   }
