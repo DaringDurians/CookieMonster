@@ -44,7 +44,8 @@ export class Cart extends Component {
                     <ul key={product.prodId}>
                       <div className="smallImg">
                         <img src={product.imgUrl} /> {product.name} x{' '}
-                        {product.quantity}
+                        {product.quantity} :{' '}
+                        {'$' + (product.price / 100).toFixed(2)}{' '}
                         <Quantity
                           quantity={product.quantity}
                           prodId={product.prodId}
@@ -53,8 +54,7 @@ export class Cart extends Component {
                           onRender={() => {
                             this.setState({loaded: !this.state.loaded})
                           }}
-                        />{' '}
-                        : {'$' + (product.price / 100).toFixed(2)}{' '}
+                        />
                       </div>
                     </ul>
                   )
