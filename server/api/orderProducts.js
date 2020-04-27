@@ -3,29 +3,49 @@ const {OrderProducts, Product} = require('../db/models')
 const {Op} = require('sequelize')
 module.exports = router
 
-// sitting on top if api/orderproducts/
-
-router.get('/:productId', async (req, res, next) => {
+router.get('/', async (req, res, next) => {
   try {
-    const orderProduct = await OrderProducts.findOne({
+    const order = await OrderProducts.findAll()
+    res.send(order)
+  } catch (err) {
+    next(err)
+  }
+})
+
+router.get('/:orderId', async (req, res, next) => {
+  try {
+    const orderDetails = await OrderProducts.findAll({
       where: {
-        productId: req.params.productId
+        orderId: req.params.orderId
       }
     })
-    res.status(200).json(orderProduct)
+    res.send(orderDetails)
   } catch (err) {
     next(err)
   }
 })
 
-router.post('/:productId', async (req, res, next) => {
-  try {
-    const orderProduct = await OrderProducts.create(req.body)
-    res.status(201).json(orderProduct)
-  } catch (err) {
-    next(err)
-  }
-})
+// router.get('/:productId', async (req, res, next) => {
+//   try {
+//     const orderProduct = await OrderProducts.findOne({
+//       where: {
+//         productId: req.params.productId
+//       }
+//     })
+//     res.status(200).json(orderProduct)
+//   } catch (err) {
+//     next(err)
+//   }
+// })
+
+// router.post('/:productId', async (req, res, next) => {
+//   try {
+//     const orderProduct = await OrderProducts.create(req.body)
+//     res.status(201).json(orderProduct)
+//   } catch (err) {
+//     next(err)
+//   }
+// })
 
 router.put('/:productId', async (req, res, next) => {
   try {

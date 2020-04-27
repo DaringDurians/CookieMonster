@@ -1,21 +1,19 @@
 import React from 'react'
 import {connect} from 'react-redux'
 
-
-
 let totalPrice
 export class Quantity extends React.Component {
   constructor(props) {
     super(props)
 
     this.state = {
-      quantity: 0,
+      quantity: this.props.quantity ? this.props.quantity : 0,
       addedToCart: false
     }
   }
 
   componentDidMount() {
-    console.log('Quantity Did Mount')
+    console.log('Quantity Did Mount', this.props)
   }
 
   componentWillReceiveProps(nextProps) {
@@ -49,7 +47,6 @@ export class Quantity extends React.Component {
     let prod = {
       prodId: this.props.prodId,
       name: prodName.name,
-      category: prodName.category,
       imgUrl: prodName.imgUrl,
       active: true,
       quantity: this.state.quantity,
@@ -178,9 +175,5 @@ const mapStateToProps = state => {
     products: [...state.cookies, ...state.brownies]
   }
 }
-
-// const mapDispatchToProps = dispatch => ({
-//   // getProduct: () => dispatch(getProduct()),
-// })
 
 export default connect(mapStateToProps, null)(Quantity)
