@@ -41,7 +41,7 @@ export const sendCart = (userId, active, total, name, email) => {
         // userId = guestUser.id
         const guestOrder = await axios.post(`/api/order`, {
           userId: guestUser.data.id,
-          productId: 2,
+          // productId: 2,
           quantity: 0,
           totalPrice: 0
         })
@@ -71,28 +71,6 @@ export const sendCart = (userId, active, total, name, email) => {
           active: false
         })
       }
-      //Clear session after checkout
-      // window.sessionStorage.clear()
-      // const getOrder = await axios.get(`/api/order/${userId}`)
-      // console.log(
-      //   'getORder deatils for existign users in DB',
-      //   getOrder.data[0].id
-      // )
-      // if (getOrder.data.length === 0) {
-      // const {data} = await axios.post('/api/order', {userId, active, total})
-      // dispatch(postOrder(data))
-      // } else {
-      // const {data} = await axios.get(`api/orderProducts/${getOrder.data[0].id}`)
-      // dispatch()
-      //following is just to make sure thigns dont break(needs update)
-      // const {data} = await axios.post('/api/order', {userId, active, total})
-      // dispatch(postOrder(data))
-
-      // const {data} = await axios.put(`api/order/${getOrder.data.id}`, {userId, active, total})
-      // console.log('put route in send cart thunk data retreived', data[0].id)
-      // dispatch(updateOrder(data[0]))
-      //   const {getOrderDetails} = await axios.get(`/api/orderProduct/${getOrder.data.id}`)
-      // dispatch(())
     } catch (err) {
       console.error('ERROR posting cart', err)
     }

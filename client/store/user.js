@@ -52,14 +52,16 @@ export const auth = (name, email, password, method) => async dispatch => {
     console.log('EXIST IN LOGIN', exist.data)
     // activeExist = if(exist.data.active
     const products = await axios.get('/api/products/')
-
+    const sorted = products.data.sort((a, b) => a.id - b.id)
+    console.log('HELLO~', sorted)
     if (Array.isArray(exist.data)) {
       console.log('Entered first if ')
       let mapExist = exist.data.map(product => {
+        // console.log('HELLO~', sorted.data)
         let tempProd = {
           prodId: product.productId,
-          name: products.data[product.productId].name,
-          imgUrl: products.data[product.productId].imgUrl,
+          name: sorted[product.productId - 1].name,
+          imgUrl: sorted[product.productId - 1].imgUrl,
           active: true,
           quantity: product.quantity,
           price: product.totalPrice

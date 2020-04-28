@@ -94,10 +94,12 @@ async function seed() {
       userId: Sarah.id
     }),
     Order.create({
-      userId: Tyler.id
+      userId: Tyler.id,
+      active: false
     }),
     Order.create({
-      userId: Dan.id
+      userId: Dan.id,
+      active: false
     })
   ])
 

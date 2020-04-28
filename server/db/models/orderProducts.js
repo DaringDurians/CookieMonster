@@ -7,8 +7,8 @@ const OrderProducts = db.define('orderProducts', {
     allowNull: false
   },
   productId: {
-    type: Sequelize.INTEGER,
-    allowNull: false
+    type: Sequelize.INTEGER
+    // allowNull: false
   },
   quantity: {
     type: Sequelize.INTEGER
