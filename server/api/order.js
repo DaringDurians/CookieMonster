@@ -31,24 +31,25 @@ router.post('/', async (req, res, next) => {
   try {
     let user = await User.findOne({where: {id: req.body.userId}})
     let potentialCart = await Order.findOrCreate({where: {userId: user.id}})
+    // console.log('potential', potentialCart)
     let isNew = await OrderProducts.findAll({
       where: {orderId: potentialCart[0].id}
     })
-    console.log(isNew)
     if (isNew.length > 1) {
-      console.log('ISNEW IS FALSE; SHOULD UPDATE')
+      // console.log('ISNEW IS FALSE; SHOULD UPDATE')
       let updated = await OrderProducts.findAll({
         where: {orderId: potentialCart[0].id}
       })
-      console.log('POST ROUTE FOR ORDER ISNEW', updated)
+      // console.log('POST ROUTE FOR ORDER ISNEW', updated)
       res.json(updated)
     } else {
       console.log('ISNEW IS TRUE; SHOULD ADD TO ORDERPRODUCTS')
-      let existingProduct = OrderProducts.findOne({
+      let existingProduct = await OrderProducts.findOne({
         where: {orderId: potentialCart[0].id, productId: req.body.productId}
       })
+      console.log(req.body.productId)
       if (existingProduct) {
-        await OrderProducts.update(
+        let updatedProd = await OrderProducts.update(
           {quantity: req.body.quantity},
           {
             returning: true,
@@ -56,7 +57,9 @@ router.post('/', async (req, res, next) => {
             where: {orderId: potentialCart[0].id, productId: req.body.productId}
           }
         )
+        // console.log('finished route', updatedProd)
       } else {
+        console.log('******************* req.body', req.body)
         await OrderProducts.create({
           orderId: potentialCart[0].id,
           productId: req.body.productId,
