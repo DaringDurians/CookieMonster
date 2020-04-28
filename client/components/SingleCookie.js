@@ -58,7 +58,7 @@ export class SingleCookie extends React.Component {
             <p>{singleCookie.description}</p>
           </div>
           <div>
-            <p>Price: {(singleCookie.price / 100).toFixed(2)}</p>
+            <p>Price: {'$' + (singleCookie.price / 100).toFixed(2)}</p>
           </div>
           <div>
             <Quantity

@@ -6,7 +6,9 @@ module.exports = router
 //sitting ontop api/order
 router.get('/', async (req, res, next) => {
   try {
-    const order = await Order.findAll()
+    const order = await Order.findAll({
+      include: [Product]
+    })
     res.send(order)
   } catch (err) {
     next(err)
@@ -77,7 +79,6 @@ router.post('/', async (req, res, next) => {
 
 router.put('/:id', async (req, res, next) => {
   try {
-    console.log('PUT ROUTE', req.params.id)
     const updated = await Order.update(
       {active: req.body.active},
       {returning: true, plain: true, where: {id: req.params.id}}

@@ -32,6 +32,7 @@ export const fetchOrderByUserId = userId => async dispatch => {
 export const sendCart = (userId, active, total, name, email) => {
   return async dispatch => {
     try {
+
       if (userId === undefined) {
         console.log('INSIDE SEND CART THUNBKKKK', name, email, userId)
         const guestUser = await axios.post(`/api/users`, {
@@ -63,6 +64,7 @@ export const sendCart = (userId, active, total, name, email) => {
         )
         await axios.put(`api/order/${guestOrder.data.id}`, {active: false})
         console.log('PUT ROUTE RAN')
+
       } else {
         console.log('LOGGEDINORDER')
         const loggedInOrder = await axios.get(`api/order/${userId}`)
@@ -93,7 +95,7 @@ export const sendCart = (userId, active, total, name, email) => {
       //   const {getOrderDetails} = await axios.get(`/api/orderProduct/${getOrder.data.id}`)
       // dispatch(())
     } catch (err) {
-      console.log('ERROR posting cart', err)
+      console.error('ERROR posting cart', err)
     }
   }
 }

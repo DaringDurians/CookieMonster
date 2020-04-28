@@ -41,6 +41,7 @@ export const auth = (name, email, password, method) => async dispatch => {
     exist
   try {
     res = await axios.post(`/auth/${method}`, {name, email, password})
+
     let userId = res.data.id
     exist = await axios.post(`/api/order/`, {
       userId,
@@ -66,6 +67,7 @@ export const auth = (name, email, password, method) => async dispatch => {
       })
       console.log('MAP EXIST', mapExist)
       const temp = JSON.parse(window.sessionStorage.getItem(undefined))
+
       window.sessionStorage.removeItem(undefined)
       if (temp !== null) {
         const updatedSession = [...mapExist, ...temp]

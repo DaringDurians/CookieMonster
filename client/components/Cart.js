@@ -60,28 +60,28 @@ export class Cart extends Component {
       }
     )
     // this.handleCheckout()
+
   }
 
   async handleCheckout(id) {
-    console.log('HANDLE CHECKOUT THIS.PROPS', this.props)
     if (userId === undefined) {
       userId = id
     }
     active = false
     total = totalPrice
+
     console.log('THIS.STATE', this.state)
     name = this.state.name
     email = this.state.email
     const check = await this.props.sendCart(userId, active, total, name, email)
     console.log(check, 'check what comes from send cart thunk')
+
+    
   }
 
   // eslint-disable-next-line complexity
   render() {
     allProducts = JSON.parse(window.sessionStorage.getItem(this.props.userId))
-
-    console.log('values>>>>>>>>>>>>>', allProducts)
-    // const {isLoggedIn} = this.props
 
     let orderPrice = 0
     let totalItems = 0
@@ -156,7 +156,6 @@ export class Cart extends Component {
                       <p>Total Price: {'$' + (orderPrice / 100).toFixed(2)}</p>
                     </div>
                     <div>
-                      {console.log('userId', userId)}
                       {this.props.user.id === undefined &&
                       this.state.showCheckoutForm === false ? (
                         <button

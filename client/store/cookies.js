@@ -32,7 +32,6 @@ export const fetchAllCookies = () => {
 }
 export const postProduct = (name, category, price, description, imgUrl) => {
   return async dispatch => {
-    console.log(name, category, price, description, imgUrl)
     try {
       const {data} = await axios.post('/api/products', {
         name,
@@ -43,7 +42,7 @@ export const postProduct = (name, category, price, description, imgUrl) => {
       })
       dispatch(postCookie(data))
     } catch (err) {
-      console.log('ERROR posting cookies', err)
+      console.error('ERROR posting cookies', err)
     }
   }
 }
@@ -53,7 +52,7 @@ export const deleteProduct = id => {
       await axios.delete(`/api/products/${id}`)
       dispatch(deleteCookie(id))
     } catch (err) {
-      console.log(err)
+      console.error(err)
     }
   }
 }

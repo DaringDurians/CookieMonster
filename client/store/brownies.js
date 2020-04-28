@@ -33,7 +33,6 @@ export const fetchAllBrownies = () => {
 }
 export const postProduct = (name, category, price, description, imgUrl) => {
   return async dispatch => {
-    console.log(name, category, price, description, imgUrl)
     try {
       const {data} = await axios.post('/api/products', {
         name,
@@ -44,7 +43,7 @@ export const postProduct = (name, category, price, description, imgUrl) => {
       })
       dispatch(postBrownie(data))
     } catch (err) {
-      console.log('ERROR posting brownies', err)
+      console.error('ERROR posting brownies', err)
     }
   }
 }
@@ -54,7 +53,7 @@ export const deleteProduct = id => {
       await axios.delete(`/api/products/${id}`)
       dispatch(deleteBrownie(id))
     } catch (err) {
-      console.log(err)
+      console.error(err)
     }
   }
 }

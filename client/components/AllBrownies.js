@@ -51,9 +51,7 @@ export class AllBrownies extends React.Component {
                         <img src={brownie.imgUrl} alt="brownie images" />
                       </div>
                       <div>Price: ${(brownie.price / 100).toFixed(2)}</div>
-                      <div>
-                        <button type="button">Add To Cart</button>
-                      </div>
+                      <div />
                     </NavLink>
                     <div>
                       {this.props.isAdmin ? (
