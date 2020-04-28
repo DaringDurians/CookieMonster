@@ -74,19 +74,6 @@ export class Cart extends Component {
     email = this.state.email
     const check = await this.props.sendCart(userId, active, total, name, email)
     console.log(check, 'check what comes from send cart thunk')
-    // const {data} = await axios.get(`/api/order/${userId}`)
-    // console.log(
-    //   data,
-    //   'check what comes from get route after sendcart thunk in handle checkout'
-    // )
-    // orderId = data[0].id
-    // allProducts.map(product => {
-    //   prodId = product.prodId
-    //   quantity = product.quantity
-    //   price = product.price
-    //   this.props.createOrderProductDetails(orderId, prodId, quantity, price)
-    // })
-    // await axios.put(`/api/order/${orderId}`, {active: false})
   }
 
   // eslint-disable-next-line complexity

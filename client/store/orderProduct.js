@@ -108,18 +108,21 @@ export const updateOrderProductDetails = (
         allProducts[0]
       )
       const currentSessions = JSON.parse(window.sessionStorage.getItem(userId))
-      if (!userId === undefined) {
+      console.log('USER OD', userId)
+      if (userId !== undefined) {
         const orderId = await axios.get(`/api/order/${userId}`)
+        console.log('about to map', orderId.data[0])
         let mapCurrentSession = Promise.all(
           currentSessions.map(item => {
             let newProduct = {
-              orderId: orderId.data.id,
+              orderId: orderId.data[0].id,
               productId: prodId,
               quantity: quantity,
               totalPrice: price
             }
-            console.log(newProduct)
-            axios.post(`api/orderProducts/${item.prodId}`, newProduct)
+            console.log('PRODUCTID', item.prodId)
+            axios.post(`/api/orderProducts/${item.prodId}`, newProduct)
+            console.log('after post')
           })
         )
       }

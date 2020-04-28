@@ -39,7 +39,6 @@ export const auth = (name, email, password, method) => async dispatch => {
     exist
   try {
     res = await axios.post(`/auth/${method}`, {name, email, password})
-    console.log(method)
     let userId = res.data.id
     exist = await axios.post(`/api/order/`, {
       userId,
@@ -62,20 +61,42 @@ export const auth = (name, email, password, method) => async dispatch => {
         }
         return tempProd
       })
-      console.log('map exist completed', mapExist)
       const temp = JSON.parse(window.sessionStorage.getItem(undefined))
       window.sessionStorage.removeItem(undefined)
       if (temp !== null) {
         const updatedSession = [...mapExist, ...temp]
-        console.log('UPDATED SESSION*********', updatedSession)
         window.sessionStorage.setItem(userId, JSON.stringify(updatedSession))
       } else {
-        console.log('UPDATED SESSION********* ELSE STATEMENT')
         window.sessionStorage.setItem(userId, JSON.stringify([...mapExist]))
       }
+    } else {
+      let linkUser
+      if (res.data.id) {
+        linkUser = JSON.parse(window.sessionStorage.getItem(undefined))
+      }
+      if (linkUser !== undefined && linkUser !== null) {
+        // console.log(linkUser)
+        window.sessionStorage.removeItem(undefined)
+        window.sessionStorage.setItem(res.data.id, JSON.stringify(linkUser))
+        const orderId = await axios.get(`/api/order/${res.data.id}`)
+        console.log('****************', linkUser)
+        const mapUser = Promise.all(
+          linkUser.map(product => {
+            let tempProd = {
+              orderId: orderId.data[0].id,
+              productId: product.prodId,
+              quantity: product.quantity,
+              totalPrice: product.price
+            }
+            console.log('tempProd', tempProd)
+            axios.post(`/api/orderProducts/${product.prodId}`, tempProd)
+          })
+        )
+      }
+      //
+      console.log('res.data upon initial load', res.data)
     }
     //take guest cart info (if it exists) and attach it to the user cart info upon login
-    console.log('res.data upon initial load', res.data)
   } catch (authError) {
     return dispatch(getUser({error: authError}))
   }
