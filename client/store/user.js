@@ -34,17 +34,11 @@ export const auth = (name, email, password, method) => async dispatch => {
   let res
   try {
     res = await axios.post(`/auth/${method}`, {name, email, password})
-    console.log(method)
 
     //take guest cart info (if it exists) and attach it to the user cart info upon login
-    console.log('res.data upon initial load', res.data)
     let linkUser
     if (res.data.id) {
       linkUser = JSON.parse(window.sessionStorage.getItem(undefined))
-      console.log(
-        'what happens if user not logged in and nothign in cart',
-        linkUser
-      )
     }
     if (linkUser !== undefined && linkUser !== null) {
       window.sessionStorage.setItem(res.data.id, JSON.stringify(linkUser))

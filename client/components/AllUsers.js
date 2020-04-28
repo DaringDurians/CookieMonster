@@ -3,7 +3,6 @@ import {connect} from 'react-redux'
 import {NavLink} from 'react-router-dom'
 
 export const AllUsers = props => {
-  console.log(props)
   return (
     <div>
       <div className="usersBox">

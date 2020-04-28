@@ -1,7 +1,6 @@
 import React from 'react'
 
 export const OrderHistory = props => {
-  console.log(props.orders)
   return (
     <div className="ordersBox">
       <ol>

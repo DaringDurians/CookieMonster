@@ -49,7 +49,6 @@ export class Cart extends Component {
     email = event.target.email.value
     const {data} = await axios.post(`/api/users`, {name, email})
     userId = data.id
-    console.log('HANDLE FORM SUBMIT', userId)
     this.handleCheckout()
     this.setState({
       checkedOut: true
@@ -57,19 +56,13 @@ export class Cart extends Component {
   }
 
   async handleCheckout(id) {
-    console.log('HANDLE CHECKOUT THIS.PROPS', this.props)
     if (userId === undefined) {
       userId = id
     }
     active = true
     total = totalPrice
     const check = await this.props.sendCart(userId, active, total)
-    console.log(check, 'check what comes from send cart thunk')
     const {data} = await axios.get(`/api/order/${userId}`)
-    console.log(
-      data,
-      'check what comes from get route after sendcart thunk in handle checkout'
-    )
     orderId = data[0].id
     allProducts.map(product => {
       prodId = product.prodId
@@ -83,9 +76,6 @@ export class Cart extends Component {
   // eslint-disable-next-line complexity
   render() {
     allProducts = JSON.parse(window.sessionStorage.getItem(this.props.userId))
-
-    console.log('values>>>>>>>>>>>>>', allProducts)
-    // const {isLoggedIn} = this.props
 
     let orderPrice = 0
     let totalItems = 0
@@ -139,7 +129,6 @@ export class Cart extends Component {
                       <p>Total Price: {'$' + (orderPrice / 100).toFixed(2)}</p>
                     </div>
                     <div>
-                      {console.log('userId', userId)}
                       {this.props.user.id === undefined &&
                       this.state.showCheckoutForm === false ? (
                         <button

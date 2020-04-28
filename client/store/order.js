@@ -31,10 +31,6 @@ export const sendCart = (userId, active, total) => {
   return async dispatch => {
     try {
       const getOrder = await axios.get(`/api/order/${userId}`)
-      console.log(
-        'getORder deatils for existign users in DB',
-        getOrder.data[0].id
-      )
       if (getOrder.data.length === 0) {
         const {data} = await axios.post('/api/order', {userId, active, total})
         dispatch(postOrder(data))
@@ -52,7 +48,7 @@ export const sendCart = (userId, active, total) => {
         // dispatch(())
       }
     } catch (err) {
-      console.log('ERROR posting cart', err)
+      console.error('ERROR posting cart', err)
     }
   }
 }

@@ -13,7 +13,6 @@ export const UserHome = props => {
   const userOrders = props.orders.filter(
     order => order.active === false && userId === order.userId
   )
-  console.log(userOrders)
 
   return (
     <div id="header">

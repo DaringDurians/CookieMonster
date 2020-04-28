@@ -77,7 +77,6 @@ export const createOrderProductDetails = (
   totalPrice
 ) => async dispatch => {
   try {
-    console.log(orderId, productId, quantity, totalPrice)
     const {data} = await axios.post(`/api/orderProducts/${productId}`, {
       orderId,
       productId,
@@ -86,7 +85,7 @@ export const createOrderProductDetails = (
     })
     dispatch(createdOrderProduct(data))
   } catch (error) {
-    console.log(error)
+    console.error(error)
   }
 }
 
