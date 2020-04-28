@@ -35,7 +35,7 @@ router.post('/', async (req, res, next) => {
     let isNew = await OrderProducts.findAll({
       where: {orderId: potentialCart[0].id}
     })
-    if (isNew.length > 1) {
+    if (Array.isArray(isNew)) {
       // console.log('ISNEW IS FALSE; SHOULD UPDATE')
       let updated = await OrderProducts.findAll({
         where: {orderId: potentialCart[0].id}
@@ -67,8 +67,8 @@ router.post('/', async (req, res, next) => {
           totalPrice: req.body.totalPrice
         })
       }
-      res.json(potentialCart[0])
     }
+    res.json(potentialCart[0])
   } catch (err) {
     next(err)
   }

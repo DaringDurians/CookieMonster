@@ -107,6 +107,22 @@ export const updateOrderProductDetails = (
         'after dispatch in updated orderproduct thunk',
         allProducts[0]
       )
+      const currentSessions = JSON.parse(window.sessionStorage.getItem(userId))
+      if (!userId === undefined) {
+        const orderId = await axios.get(`/api/order/${userId}`)
+        let mapCurrentSession = Promise.all(
+          currentSessions.map(item => {
+            let newProduct = {
+              orderId: orderId.data.id,
+              productId: prodId,
+              quantity: quantity,
+              totalPrice: price
+            }
+            console.log(newProduct)
+            axios.post(`api/orderProducts/${item.prodId}`, newProduct)
+          })
+        )
+      }
     }
   } catch (error) {
     console.error(error)
