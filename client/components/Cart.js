@@ -14,9 +14,10 @@ let total
 let orderId
 let prodId
 let quantity
+let name
+let email
 let price
 let allProducts
-let name, email
 let totalPrice = 0
 export class Cart extends Component {
   constructor(props) {
@@ -25,6 +26,8 @@ export class Cart extends Component {
       loaded: false,
       updated: false,
       isGuest: true,
+      name: '',
+      email: '',
       showCheckoutForm: false,
       checkedOut: false
     }
@@ -45,32 +48,35 @@ export class Cart extends Component {
 
   async handleFormSubmit(event) {
     event.preventDefault()
-    name = event.target.fullname.value
-    email = event.target.email.value
-    const {data} = await axios.post(`/api/users`, {name, email})
-    userId = data.id
-    this.handleCheckout()
-    this.setState({
-      checkedOut: true
-    })
+    console.log('HANDLE FORM SUBMIT')
+    this.setState(
+      {
+        name: event.target.fullname.value,
+        email: event.target.email.value,
+        checkedOut: true
+      },
+      function() {
+        this.handleCheckout()
+      }
+    )
+    // this.handleCheckout()
+
   }
 
   async handleCheckout(id) {
     if (userId === undefined) {
       userId = id
     }
-    active = true
+    active = false
     total = totalPrice
-    const check = await this.props.sendCart(userId, active, total)
-    const {data} = await axios.get(`/api/order/${userId}`)
-    orderId = data[0].id
-    allProducts.map(product => {
-      prodId = product.prodId
-      quantity = product.quantity
-      price = product.price
-      this.props.createOrderProductDetails(orderId, prodId, quantity, price)
-    })
-    await axios.put(`/api/order/${orderId}`, {active: false})
+
+    console.log('THIS.STATE', this.state)
+    name = this.state.name
+    email = this.state.email
+    const check = await this.props.sendCart(userId, active, total, name, email)
+    console.log(check, 'check what comes from send cart thunk')
+
+    
   }
 
   // eslint-disable-next-line complexity
@@ -90,33 +96,54 @@ export class Cart extends Component {
           <div>
             <p>Cart Contents:</p>
             <div id="itemizedSummary">
-              {allProducts
-                ? allProducts.length
-                  ? allProducts.map(product => {
-                      totalItems += product.quantity
-                      totalPrice += product.price
-                      orderPrice += product.price
-                      return (
-                        <ul key={product.prodId}>
-                          <div className="smallImg">
-                            <img src={product.imgUrl} /> {product.name} x{' '}
-                            {product.quantity} :{' '}
-                            {'$' + (product.price / 100).toFixed(2)}{' '}
-                            <Quantity
-                              quantity={product.quantity}
-                              prodId={product.prodId}
-                              price={product.price / product.quantity}
-                              updateClickHandlder={this.updateClickHandler}
-                              onRender={() => {
-                                this.setState({loaded: !this.state.loaded})
-                              }}
-                            />
-                          </div>
-                        </ul>
-                      )
-                    })
-                  : 'No items in cart'
-                : 'No items in cart'}
+              {allProducts ? (
+                allProducts.length ? (
+                  allProducts.map(product => {
+                    totalItems += product.quantity
+                    totalPrice += product.price
+                    orderPrice += product.price
+                    return (
+                      <ul key={product.prodId}>
+                        <div className="smallImg">
+                          <img src={product.imgUrl} /> {product.name} x{' '}
+                          {product.quantity} :{' '}
+                          {'$' + (product.price / 100).toFixed(2)}{' '}
+                          <Quantity
+                            quantity={product.quantity}
+                            prodId={product.prodId}
+                            price={product.price / product.quantity}
+                            updateClickHandlder={this.updateClickHandler}
+                            onRender={() => {
+                              this.setState({loaded: !this.state.loaded})
+                            }}
+                          />
+                        </div>
+                      </ul>
+                    )
+                  })
+                ) : allProducts ? (
+                  <ul key={allProducts.prodId}>
+                    <div className="smallImg">
+                      <img src={allProducts.imgUrl} /> {allProducts.name} x{' '}
+                      {allProducts.quantity} :{' '}
+                      {'$' + (allProducts.price / 100).toFixed(2)}{' '}
+                      <Quantity
+                        quantity={allProducts.quantity}
+                        prodId={allProducts.prodId}
+                        price={allProducts.price / allProducts.quantity}
+                        updateClickHandlder={this.updateClickHandler}
+                        onRender={() => {
+                          this.setState({loaded: !this.state.loaded})
+                        }}
+                      />
+                    </div>
+                  </ul>
+                ) : (
+                  'No items in cart'
+                )
+              ) : (
+                'No items in cart'
+              )}
             </div>
             <div>
               {allProducts ? (
@@ -177,7 +204,7 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatch = dispatch => ({
-  sendCart: () => dispatch(sendCart(userId, active, total)),
+  sendCart: () => dispatch(sendCart(userId, active, total, name, email)),
   createOrderProductDetails: () =>
     dispatch(createOrderProductDetails(orderId, prodId, quantity, price)),
   fetchOrderByUserId: () => dispatch(fetchOrderByUserId(userId))

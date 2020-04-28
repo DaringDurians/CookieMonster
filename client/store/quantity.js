@@ -2,6 +2,8 @@ import axios from 'axios'
 
 const SET_QUANTITY = 'SET_QUANTITY'
 const GET_QUANTITY = 'GET_QUANTITY'
+const GET_STORAGE = 'GET_STORAGE'
+const UPDATE_STORAGE = 'UPDATE_STORAGE'
 
 const setQuantity = quantity => ({
   type: SET_QUANTITY,
@@ -11,6 +13,34 @@ const setQuantity = quantity => ({
 const getQuantity = quantity => ({
   type: GET_QUANTITY,
   quantity
+})
+
+const getStorage = userId => ({
+  type: GET_STORAGE,
+  userId
+})
+
+const updateStorage = (
+  userId,
+  active,
+  orderId,
+  productId,
+  productImage,
+  productName,
+  productCategory,
+  productQuantity,
+  productPrice
+) => ({
+  type: UPDATE_STORAGE,
+  active,
+  productId,
+  productImage,
+  productName,
+  productQuantity,
+  productPrice,
+  productCategory,
+  userId,
+  orderId
 })
 
 export const setQuantityThunk = quantity => {
@@ -24,7 +54,7 @@ export const setQuantityThunk = quantity => {
 }
 
 export const getQuantityThunk = (prodId, productList) => {
-  return async dispatch => {
+  return dispatch => {
     try {
       if (productList) {
         if (
@@ -44,6 +74,36 @@ export const getQuantityThunk = (prodId, productList) => {
     }
   }
 }
+
+// export const gotStorage = (userId) => {
+//   return dispatch => {
+//     try {
+//       const temp = JSON.parse(window.sessionStorage.getItem(userId))
+//       //dispatch(getStorage(temp))
+//     } catch (err) {
+//       console.log('ERROR fetching storage data', err)
+//     }
+//   }
+// }
+
+// export const updatedStorage = (userId, active, orderId, productId, productImage, productName, productCategory, productQuantity, productPrice) => {
+//   return dispatch => {
+//     try {
+//       let prod = {
+//         active: true
+//         orderId: ,
+//         productId:
+//         productImage,
+//         productName,
+//         productCategory,
+//         productQuantity,
+//         productPrice
+//       const {update} = JSON.parse(window.sessionStorage.getItem(userId))
+//     } catch (err) {
+//       console.log('ERROR fetching storage data', err)
+//     }
+//   }
+// }
 
 const quantity = (quantity = 0, action) => {
   switch (action.type) {

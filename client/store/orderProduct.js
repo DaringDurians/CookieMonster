@@ -32,6 +32,10 @@ const createdOrderProduct = orderProduct => ({
   orderProduct
 })
 
+const getItemsHelper = userId => {
+  const temp = JSON.parse(window.sessionStorage.getItem(userId))
+  return temp
+}
 /**
  * THUNK CREATORS
  */
@@ -54,21 +58,80 @@ const createdOrderProduct = orderProduct => ({
 //   }
 // }
 
-// export const updateOrderProductDetails = (
-//   productId,
-//   quantity,
-//   totalPrice
-// ) => async dispatch => {
-//   try {
-//     const {data} = await axios.put(`/api/orderProducts/${productId}`, {
-//       quantity,
-//       totalPrice
-//     })
-//     dispatch(updatedOrderProduct(data))
-//   } catch (error) {
-//     console.error(error)
-//   }
-// }
+export const updateOrderProductDetails = (
+  prodId,
+  quantity,
+  price,
+  userId,
+  name,
+  imgUrl,
+  active
+  // eslint-disable-next-line complexity
+) => async dispatch => {
+  try {
+    // const {data} = await axios.put(`/api/orderProducts/${productId}`, {
+    //   quantity,
+    //   totalPrice
+    // })
+    if (quantity !== 0) {
+      let tempProduct = {prodId, name, imgUrl, active, quantity, price}
+      const items = getItemsHelper(userId)
+      let allProducts
+
+      if (items !== null && Array.isArray(items)) {
+        const found = items.find(product => product.prodId === prodId)
+        if (found) {
+          const updateProduct = items
+            .map(product => {
+              if (product.prodId === prodId) {
+                product.quantity = quantity
+                product.price = price
+                return product
+              } else {
+                return product
+              }
+            })
+            .filter(product => product.quantity !== 0)
+          allProducts = updateProduct
+        } else if (quantity !== 0) {
+          allProducts = [...items, tempProduct]
+        } else {
+          allProducts = [...items]
+        }
+      } else if (quantity !== 0) {
+        allProducts = [tempProduct]
+      }
+      window.sessionStorage.setItem(userId, JSON.stringify(allProducts))
+      console.log('before dispatch in updated orderproduct thunk', allProducts)
+      dispatch(updatedOrderProduct(tempProduct))
+      console.log(
+        'after dispatch in updated orderproduct thunk',
+        allProducts[0]
+      )
+      const currentSessions = JSON.parse(window.sessionStorage.getItem(userId))
+      console.log('USER OD', userId)
+      if (userId !== undefined) {
+        const orderId = await axios.get(`/api/order/${userId}`)
+        console.log('about to map', orderId.data[0])
+        let mapCurrentSession = Promise.all(
+          currentSessions.map(item => {
+            let newProduct = {
+              orderId: orderId.data[0].id,
+              productId: prodId,
+              quantity: quantity,
+              totalPrice: price
+            }
+            console.log('PRODUCTID', item.prodId)
+            axios.post(`/api/orderProducts/${item.prodId}`, newProduct)
+            console.log('after post')
+          })
+        )
+      }
+    }
+  } catch (error) {
+    console.error(error)
+  }
+}
 
 export const createOrderProductDetails = (
   orderId,
