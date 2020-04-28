@@ -13,7 +13,7 @@ export const fetchUser = id => {
       const {data} = await axios.get(`/api/users/${id}`)
       dispatch(gotUser(data))
     } catch (err) {
-      console.log('ERROR fetching user', err)
+      console.error('ERROR fetching user', err)
     }
   }
 }

@@ -18,7 +18,7 @@ export const setQuantityThunk = quantity => {
     try {
       dispatch(setQuantity(quantity))
     } catch (err) {
-      console.log('ERROR fetching brownie', err)
+      console.error('ERROR fetching Quantity', err)
     }
   }
 }
@@ -40,7 +40,7 @@ export const getQuantityThunk = (prodId, productList) => {
         dispatch(getQuantity(0))
       }
     } catch (err) {
-      console.log('ERROR fetching brownie', err)
+      console.error('ERROR fetching quantity', err)
     }
   }
 }

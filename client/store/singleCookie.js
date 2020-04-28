@@ -19,7 +19,7 @@ export const fetchCookie = id => {
       const {data} = await axios.get(`/api/products/cookies/${id}`)
       dispatch(gotCookie(data))
     } catch (err) {
-      console.log('ERROR fetching cookie', err)
+      console.error('ERROR fetching cookie', err)
     }
   }
 }
@@ -43,7 +43,7 @@ export const updatedCookie = (
       })
       dispatch(updateCookie(data))
     } catch (err) {
-      console.log('ERROR updating cookie', err)
+      console.error('ERROR updating cookie', err)
     }
   }
 }

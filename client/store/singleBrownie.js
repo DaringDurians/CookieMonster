@@ -19,7 +19,7 @@ export const fetchBrownie = id => {
       const {data} = await axios.get(`/api/products/brownies/${id}`)
       dispatch(gotBrownie(data))
     } catch (err) {
-      console.log('ERROR fetching brownie', err)
+      console.error('ERROR fetching brownie', err)
     }
   }
 }
@@ -43,7 +43,7 @@ export const updatedBrownie = (
       })
       dispatch(updateBrownie(data))
     } catch (err) {
-      console.log('ERROR updating brownie', err)
+      console.error('ERROR updating brownie', err)
     }
   }
 }

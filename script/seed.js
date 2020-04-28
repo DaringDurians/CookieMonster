@@ -257,8 +257,6 @@ async function seed() {
     })
   ])
 
-  // console.log(`seeded ${Product.length} products`)
-  // console.log(`seeded successfully`)
   return [
     chocolateChip,
     doubleChoclateChunk,
