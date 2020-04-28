@@ -52,6 +52,7 @@ export const auth = (name, email, password, method) => async dispatch => {
     const products = await axios.get('/api/products/')
 
     if (Array.isArray(exist.data)) {
+      console.log('Entered first if ')
       let mapExist = exist.data.map(product => {
         let tempProd = {
           prodId: product.productId,
@@ -63,6 +64,7 @@ export const auth = (name, email, password, method) => async dispatch => {
         }
         return tempProd
       })
+      console.log('MAP EXIST', mapExist)
       const temp = JSON.parse(window.sessionStorage.getItem(undefined))
       window.sessionStorage.removeItem(undefined)
       if (temp !== null) {
@@ -72,6 +74,7 @@ export const auth = (name, email, password, method) => async dispatch => {
         window.sessionStorage.setItem(userId, JSON.stringify([...mapExist]))
       }
     } else if (res.data.id) {
+      console.log('Entered first else if ')
       let linkUser
       linkUser = JSON.parse(window.sessionStorage.getItem(undefined))
       if (linkUser !== undefined && linkUser !== null) {
@@ -96,6 +99,7 @@ export const auth = (name, email, password, method) => async dispatch => {
       //
       console.log('res.data upon initial load', res.data)
     } else if (exist.data.id !== undefined || exist.data.id !== null) {
+      console.log('Entered second else if ')
       console.log('EXIST>DATA>ID', exist.data.id)
       const getDbCart = await axios.get(`/api/orderProducts/${exist.data.id}`)
       const dbOrder = getDbCart.data[0]
