@@ -20,6 +20,7 @@ import {me} from './store'
 import AllUsers from './components/AllUsers'
 import AllCookies from './components/AllCookies'
 import AllBrownies from './components/AllBrownies'
+import AllOrders from './components/AllOrders'
 
 import {fetchAllCookies} from './store/cookies'
 import {fetchAllBrownies} from './store/brownies'
@@ -65,10 +66,11 @@ class Routes extends Component {
             <Route exact path="/brownies" component={AllBrownies} />
             <Route exact path="/cookies" component={AllCookies} />
             {isAdmin && (
-              <div>
+              <Switch>
                 <Route exact path="/users" component={AllUsers} />
                 <Route exact path="/users/:userId" component={SingleUser} />
-              </div>
+                <Route exact path="/orderhistory" component={AllOrders} />
+              </Switch>
             )}
             <Route exact path="/" component={Homepage} />
             <Route exact path="/cookies/:cookieId" component={SingleCookie} />
