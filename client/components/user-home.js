@@ -8,8 +8,7 @@ import {OrderHistory} from './OrderHistory'
  * COMPONENT
  */
 export const UserHome = props => {
-  const name = props.user.name
-  const userId = props.user.id
+  const {name, userId} = props
   const userOrders = props.orders.filter(
     order => order.active === false && userId === order.userId
   )
@@ -32,7 +31,8 @@ export const UserHome = props => {
  */
 const mapState = state => {
   return {
-    user: state.user,
+    name: state.user.name,
+    user: state.user.id,
     orders: state.orders,
     isLoggedIn: !!state.user.id
   }
