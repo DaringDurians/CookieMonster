@@ -2,18 +2,28 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {NavLink} from 'react-router-dom'
+import {OrderHistory} from './OrderHistory'
 
 /**
  * COMPONENT
  */
 export const UserHome = props => {
   const name = props.user.name
-  const id = props.user.id
+  const userId = props.user.id
+  const userOrders = props.orders.filter(
+    order => order.active === false && userId === order.userId
+  )
+  console.log(userOrders)
 
   return (
-    <div>
+    <div id="header">
       <h3>Time to nom nom nom, {name}!</h3>
-      <NavLink to={`/users/${id}`}>Your Order History</NavLink>
+      <h5>Order History</h5>
+      <OrderHistory
+        orders={userOrders}
+        correctUserCheck={props.isLoggedIn}
+        hideUserId={true}
+      />
     </div>
   )
 }
@@ -23,7 +33,9 @@ export const UserHome = props => {
  */
 const mapState = state => {
   return {
-    user: state.user
+    user: state.user,
+    orders: state.orders,
+    isLoggedIn: !!state.user.id
   }
 }
 
