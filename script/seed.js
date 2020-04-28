@@ -89,9 +89,15 @@ async function seed() {
     })
   ])
 
-  const [sampleOrder] = await Promise.all([
+  const [sampleOrder1, sampleOrder2, sampleOrder3] = await Promise.all([
     Order.create({
       userId: Sarah.id
+    }),
+    Order.create({
+      userId: Tyler.id
+    }),
+    Order.create({
+      userId: Dan.id
     })
   ])
 
@@ -202,10 +208,52 @@ async function seed() {
 
   const [sampleOrderProduct1] = await Promise.all([
     OrderProducts.create({
-      orderId: sampleOrder.id,
+      orderId: sampleOrder1.id,
       productId: chocolateChip.id,
       quantity: 2,
       totalPrice: chocolateChip.price * 2
+    }),
+    OrderProducts.create({
+      orderId: sampleOrder2.id,
+      productId: doubleChoclateChunk.id,
+      quantity: 4,
+      totalPrice: doubleChoclateChunk.price * 4
+    }),
+    OrderProducts.create({
+      orderId: sampleOrder2.id,
+      productId: sugar.id,
+      quantity: 6,
+      totalPrice: sugar.price * 6
+    }),
+    OrderProducts.create({
+      orderId: sampleOrder2.id,
+      productId: oatmealRaisin.id,
+      quantity: 7,
+      totalPrice: oatmealRaisin.price * 7
+    }),
+    OrderProducts.create({
+      orderId: sampleOrder3.id,
+      productId: snickerdoodle.id,
+      quantity: 7,
+      totalPrice: snickerdoodle.price * 7
+    }),
+    OrderProducts.create({
+      orderId: sampleOrder3.id,
+      productId: peanutButter.id,
+      quantity: 8,
+      totalPrice: peanutButter.price * 8
+    }),
+    OrderProducts.create({
+      orderId: sampleOrder3.id,
+      productId: chocoBrownie.id,
+      quantity: 9,
+      totalPrice: chocoBrownie.price * 9
+    }),
+    OrderProducts.create({
+      orderId: sampleOrder3.id,
+      productId: oreoBrownie.id,
+      quantity: 12,
+      totalPrice: oreoBrownie.price * 12
     })
   ])
 
@@ -233,7 +281,9 @@ async function seed() {
     Natalie,
     Dan,
     Dakota,
-    sampleOrder,
+    sampleOrder1,
+    sampleOrder2,
+    sampleOrder3,
     sampleOrderProduct1
   ]
 }

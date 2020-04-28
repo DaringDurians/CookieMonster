@@ -6,7 +6,9 @@ module.exports = router
 //sitting ontop api/order
 router.get('/', async (req, res, next) => {
   try {
-    const order = await Order.findAll()
+    const order = await Order.findAll({
+      include: [Product]
+    })
     res.send(order)
   } catch (err) {
     next(err)

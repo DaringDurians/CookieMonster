@@ -20,10 +20,12 @@ import {me} from './store'
 import AllUsers from './components/AllUsers'
 import AllCookies from './components/AllCookies'
 import AllBrownies from './components/AllBrownies'
+import AllOrders from './components/AllOrders'
 
 import {fetchAllCookies} from './store/cookies'
 import {fetchAllBrownies} from './store/brownies'
 import {fetchAllUsers} from './store/allUsers'
+import {fetchAllOrderHistory} from './store/orders'
 import {fetchOrderByUserId} from './store/order'
 
 /**
@@ -36,6 +38,7 @@ class Routes extends Component {
     this.props.fetchAllBrownies()
     this.props.fetchAllCookies()
     this.props.fetchAllUsers()
+    this.props.fetchAllOrderHistory()
   }
 
   render() {
@@ -65,10 +68,12 @@ class Routes extends Component {
             <Route exact path="/brownies" component={AllBrownies} />
             <Route exact path="/cookies" component={AllCookies} />
             {isAdmin && (
-              <div>
+              <Switch>
                 <Route exact path="/users" component={AllUsers} />
                 <Route exact path="/users/:userId" component={SingleUser} />
-              </div>
+                <Route exact path="/orderhistory" component={AllOrders} />
+                <Route path="*" component={Error} />
+              </Switch>
             )}
             <Route exact path="/" component={Homepage} />
             <Route exact path="/cookies/:cookieId" component={SingleCookie} />
@@ -77,12 +82,11 @@ class Routes extends Component {
               path="/brownies/:brownieId"
               component={SingleBrownie}
             />
-            <Route exact path="/users/:userId" component={SingleUser} />
+            <Route path="*" component={Error} />
           </Switch>
         )}
         {/* Displays our Login component as a fallback */}
         <Route component={Login} />
-        <Route path="*" component={Error} />
       </Switch>
     )
   }
@@ -98,7 +102,8 @@ const mapState = state => {
     user: state.user,
     isLoggedIn: !!state.user.id,
     isAdmin: !!state.user.isAdmin,
-    userId: state.user.id
+    userId: state.user.id,
+    orders: state.orders
   }
 }
 
@@ -118,6 +123,9 @@ const mapDispatch = dispatch => {
     },
     fetchOrderByUserId(id) {
       dispatch(fetchOrderByUserId(id))
+    },
+    fetchAllOrderHistory() {
+      dispatch(fetchAllOrderHistory())
     }
   }
 }

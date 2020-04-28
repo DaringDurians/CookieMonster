@@ -8,6 +8,7 @@ export class SingleUser extends React.Component {
     userId = this.props.match.params.userId
     this.props.fetchUser(userId)
   }
+
   render() {
     const {singleUser} = this.props
     return (
@@ -27,7 +28,9 @@ export class SingleUser extends React.Component {
 
 const mapState = state => {
   return {
-    singleUser: state.singleUser
+    orders: state.orders,
+    singleUser: state.singleUser,
+    isLoggedIn: !!state.user.id
   }
 }
 const mapDispatch = dispatch => ({
