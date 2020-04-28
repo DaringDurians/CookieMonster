@@ -3,16 +3,14 @@ import {connect} from 'react-redux'
 import {getQuantityThunk, setQuantityThunk} from '../store/quantity'
 import {updateOrderProductDetails} from '../store/orderProduct'
 
-
 let totalPrice, prodId, quantity, price, userId, name, imgUrl, active
-
 
 export class Quantity extends React.Component {
   constructor(props) {
     super(props)
 
     this.state = {
-      quantity: this.props.quantity ? this.props.quantity : 0,
+      quantity: 0,
       addedToCart: false
     }
   }

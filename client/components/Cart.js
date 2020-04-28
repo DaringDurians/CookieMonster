@@ -60,7 +60,6 @@ export class Cart extends Component {
       }
     )
     // this.handleCheckout()
-
   }
 
   async handleCheckout(id) {
@@ -75,8 +74,6 @@ export class Cart extends Component {
     email = this.state.email
     const check = await this.props.sendCart(userId, active, total, name, email)
     console.log(check, 'check what comes from send cart thunk')
-
-    
   }
 
   // eslint-disable-next-line complexity
@@ -121,26 +118,26 @@ export class Cart extends Component {
                       </ul>
                     )
                   })
-                ) : allProducts ? (
-                  <ul key={allProducts.prodId}>
-                    <div className="smallImg">
-                      <img src={allProducts.imgUrl} /> {allProducts.name} x{' '}
-                      {allProducts.quantity} :{' '}
-                      {'$' + (allProducts.price / 100).toFixed(2)}{' '}
-                      <Quantity
-                        quantity={allProducts.quantity}
-                        prodId={allProducts.prodId}
-                        price={allProducts.price / allProducts.quantity}
-                        updateClickHandlder={this.updateClickHandler}
-                        onRender={() => {
-                          this.setState({loaded: !this.state.loaded})
-                        }}
-                      />
-                    </div>
-                  </ul>
                 ) : (
                   'No items in cart'
                 )
+              ) : allProducts ? (
+                <ul key={allProducts.prodId}>
+                  <div className="smallImg">
+                    <img src={allProducts.imgUrl} /> {allProducts.name} x{' '}
+                    {allProducts.quantity} :{' '}
+                    {'$' + (allProducts.price / 100).toFixed(2)}{' '}
+                    <Quantity
+                      quantity={allProducts.quantity}
+                      prodId={allProducts.prodId}
+                      price={allProducts.price / allProducts.quantity}
+                      updateClickHandlder={this.updateClickHandler}
+                      onRender={() => {
+                        this.setState({loaded: !this.state.loaded})
+                      }}
+                    />
+                  </div>
+                </ul>
               ) : (
                 'No items in cart'
               )}

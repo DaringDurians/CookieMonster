@@ -70,7 +70,7 @@ export class SingleCookie extends React.Component {
                     ? currentCart.find(
                         prodObj => prodObj.prodId === singleCookie.id
                       ).quantity
-                    : 'SAY HELLO'
+                    : 0
                   : 0
               }
               prodId={singleCookie.id}
