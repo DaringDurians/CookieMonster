@@ -26,9 +26,15 @@ const reducer = combineReducers({
   singleBrownie
 })
 
-const middleware = composeWithDevTools(
-  applyMiddleware(thunkMiddleware, createLogger({collapsed: true}))
-)
+let middleware
+if (process.env.NODE_ENV !== 'production') {
+  middleware = composeWithDevTools(
+    applyMiddleware(thunkMiddleware, createLogger({collapsed: true}))
+  )
+} else {
+  middleware = composeWithDevTools(applyMiddleware(thunkMiddleware))
+}
+
 const store = createStore(reducer, middleware)
 
 export default store
