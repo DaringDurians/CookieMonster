@@ -51,9 +51,7 @@ export class AllCookies extends React.Component {
                         <img src={cookie.imgUrl} alt="cookie images" />
                       </div>
                       <div>Price: ${(cookie.price / 100).toFixed(2)}</div>
-                      <div>
-                        <button type="button">Add To Cart</button>
-                      </div>
+                      <div />
                     </NavLink>
                     <div>
                       {this.props.isAdmin ? (

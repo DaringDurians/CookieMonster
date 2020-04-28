@@ -2,7 +2,6 @@ import React from 'react'
 import {connect} from 'react-redux'
 import {getQuantityThunk, setQuantityThunk} from '../store/quantity'
 
-
 let totalPrice
 export class Quantity extends React.Component {
   constructor(props) {
@@ -15,11 +14,7 @@ export class Quantity extends React.Component {
   }
 
   componentWillMount() {
-    if (
-      window.sessionStorage.getItem(this.props.userId) &&
-      this.props.prodId &&
-      this.props.userId
-    ) {
+    if (window.sessionStorage.getItem(this.props.userId) && this.props.prodId) {
       this.props.getQuantityThunk(
         this.props.prodId,
         JSON.parse(window.sessionStorage.getItem(this.props.userId))
@@ -199,4 +194,3 @@ const mapDispatchToProps = dispatch => ({
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Quantity)
-
