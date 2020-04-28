@@ -40,6 +40,7 @@ export class SingleCookie extends React.Component {
   render() {
     const {singleCookie, userId} = this.props
     const currentCart = JSON.parse(window.sessionStorage.getItem(userId))
+    console.log('CURRENT CART', currentCart)
     return (
       <div className="singleBox">
         {this.props.isAdmin ? (
@@ -62,14 +63,14 @@ export class SingleCookie extends React.Component {
           <div>
             <Quantity
               quantity={
-                currentCart
+                currentCart && Array.isArray(currentCart)
                   ? currentCart.find(
                       prodObj => prodObj.prodId === singleCookie.id
                     )
                     ? currentCart.find(
                         prodObj => prodObj.prodId === singleCookie.id
                       ).quantity
-                    : 0
+                    : 'SAY HELLO'
                   : 0
               }
               prodId={singleCookie.id}

@@ -41,7 +41,7 @@ export const sendCart = (userId, active, total, name, email) => {
         // userId = guestUser.id
         const guestOrder = await axios.post(`/api/order`, {
           userId: guestUser.data.id,
-          productId: 1,
+          productId: 2,
           quantity: 0,
           totalPrice: 0
         })

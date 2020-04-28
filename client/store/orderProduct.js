@@ -66,6 +66,7 @@ export const updateOrderProductDetails = (
   name,
   imgUrl,
   active
+  // eslint-disable-next-line complexity
 ) => async dispatch => {
   try {
     // const {data} = await axios.put(`/api/orderProducts/${productId}`, {
@@ -77,7 +78,7 @@ export const updateOrderProductDetails = (
       const items = getItemsHelper(userId)
       let allProducts
 
-      if (items !== null) {
+      if (items !== null && Array.isArray(items)) {
         const found = items.find(product => product.prodId === prodId)
         if (found) {
           const updateProduct = items

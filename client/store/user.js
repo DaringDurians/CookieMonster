@@ -1,3 +1,4 @@
+/* eslint-disable complexity */
 import axios from 'axios'
 import history from '../history'
 import {productsInfo} from '../components/Quantity.js'
@@ -31,9 +32,10 @@ export const me = () => async dispatch => {
   }
 }
 
+// eslint-disable-next-line max-statements
 export const auth = (name, email, password, method) => async dispatch => {
   let res,
-    productId = 1,
+    productId = 2,
     quantity = 0,
     totalPrice = 0,
     exist
@@ -69,11 +71,9 @@ export const auth = (name, email, password, method) => async dispatch => {
       } else {
         window.sessionStorage.setItem(userId, JSON.stringify([...mapExist]))
       }
-    } else {
+    } else if (res.data.id) {
       let linkUser
-      if (res.data.id) {
-        linkUser = JSON.parse(window.sessionStorage.getItem(undefined))
-      }
+      linkUser = JSON.parse(window.sessionStorage.getItem(undefined))
       if (linkUser !== undefined && linkUser !== null) {
         // console.log(linkUser)
         window.sessionStorage.removeItem(undefined)
@@ -95,6 +95,24 @@ export const auth = (name, email, password, method) => async dispatch => {
       }
       //
       console.log('res.data upon initial load', res.data)
+    } else if (exist.data.id !== undefined || exist.data.id !== null) {
+      console.log('EXIST>DATA>ID', exist.data.id)
+      const getDbCart = await axios.get(`/api/orderProducts/${exist.data.id}`)
+      const dbOrder = getDbCart.data[0]
+      console.log('PRODUCTS', products.data)
+      console.log(getDbCart.data[0], 'GET DB CART')
+      if (dbOrder.quantity !== 0) {
+        const tempProd = {
+          prodId: dbOrder.productId,
+          name: products.data[dbOrder.productId].name,
+          imgUrl: products.data[dbOrder.productId].imgUrl,
+          active: true,
+          quantity: dbOrder.quantity,
+          price: dbOrder.totalPrice
+        }
+        console.log(tempProd, 'TO BE SENT TO SESSIONS')
+        window.sessionStorage.setItem(userId, JSON.stringify(tempProd))
+      }
     }
     //take guest cart info (if it exists) and attach it to the user cart info upon login
   } catch (authError) {

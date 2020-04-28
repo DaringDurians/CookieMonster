@@ -96,33 +96,54 @@ export class Cart extends Component {
           <div>
             <p>Cart Contents:</p>
             <div id="itemizedSummary">
-              {allProducts
-                ? allProducts.length
-                  ? allProducts.map(product => {
-                      totalItems += product.quantity
-                      totalPrice += product.price
-                      orderPrice += product.price
-                      return (
-                        <ul key={product.prodId}>
-                          <div className="smallImg">
-                            <img src={product.imgUrl} /> {product.name} x{' '}
-                            {product.quantity} :{' '}
-                            {'$' + (product.price / 100).toFixed(2)}{' '}
-                            <Quantity
-                              quantity={product.quantity}
-                              prodId={product.prodId}
-                              price={product.price / product.quantity}
-                              updateClickHandlder={this.updateClickHandler}
-                              onRender={() => {
-                                this.setState({loaded: !this.state.loaded})
-                              }}
-                            />
-                          </div>
-                        </ul>
-                      )
-                    })
-                  : 'No items in cart'
-                : 'No items in cart'}
+              {allProducts ? (
+                allProducts.length ? (
+                  allProducts.map(product => {
+                    totalItems += product.quantity
+                    totalPrice += product.price
+                    orderPrice += product.price
+                    return (
+                      <ul key={product.prodId}>
+                        <div className="smallImg">
+                          <img src={product.imgUrl} /> {product.name} x{' '}
+                          {product.quantity} :{' '}
+                          {'$' + (product.price / 100).toFixed(2)}{' '}
+                          <Quantity
+                            quantity={product.quantity}
+                            prodId={product.prodId}
+                            price={product.price / product.quantity}
+                            updateClickHandlder={this.updateClickHandler}
+                            onRender={() => {
+                              this.setState({loaded: !this.state.loaded})
+                            }}
+                          />
+                        </div>
+                      </ul>
+                    )
+                  })
+                ) : allProducts ? (
+                  <ul key={allProducts.prodId}>
+                    <div className="smallImg">
+                      <img src={allProducts.imgUrl} /> {allProducts.name} x{' '}
+                      {allProducts.quantity} :{' '}
+                      {'$' + (allProducts.price / 100).toFixed(2)}{' '}
+                      <Quantity
+                        quantity={allProducts.quantity}
+                        prodId={allProducts.prodId}
+                        price={allProducts.price / allProducts.quantity}
+                        updateClickHandlder={this.updateClickHandler}
+                        onRender={() => {
+                          this.setState({loaded: !this.state.loaded})
+                        }}
+                      />
+                    </div>
+                  </ul>
+                ) : (
+                  'No items in cart'
+                )
+              ) : (
+                'No items in cart'
+              )}
             </div>
             <div>
               {allProducts ? (
