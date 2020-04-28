@@ -74,6 +74,7 @@ export class Cart extends Component {
     email = this.state.email
     const check = await this.props.sendCart(userId, active, total, name, email)
     console.log(check, 'check what comes from send cart thunk')
+    window.sessionStorage.clear()
   }
 
   // eslint-disable-next-line complexity
