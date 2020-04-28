@@ -32,7 +32,11 @@ router.get('/:userId', async (req, res, next) => {
 router.post('/', async (req, res, next) => {
   try {
     let user = await User.findOne({where: {id: req.body.userId}})
-    let potentialCart = await Order.findOrCreate({where: {userId: user.id}})
+    let potentialCart = await Order.findOrCreate({
+      where: {
+        userId: user.id
+      }
+    }) //, active: true
     console.log('potential', potentialCart)
     let isNew = await OrderProducts.findAll({
       where: {orderId: potentialCart[0].id}

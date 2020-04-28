@@ -50,6 +50,7 @@ export const auth = (name, email, password, method) => async dispatch => {
       totalPrice
     })
     console.log('EXIST IN LOGIN', exist.data)
+    // activeExist = if(exist.data.active
     const products = await axios.get('/api/products/')
 
     if (Array.isArray(exist.data)) {
@@ -82,6 +83,7 @@ export const auth = (name, email, password, method) => async dispatch => {
       if (linkUser !== undefined && linkUser !== null) {
         // console.log(linkUser)
         window.sessionStorage.removeItem(undefined)
+        // need to merge db cart upon login before setting sessions cart to user key
         window.sessionStorage.setItem(res.data.id, JSON.stringify(linkUser))
         const orderId = await axios.get(`/api/order/${res.data.id}`)
         console.log('****************', linkUser)
@@ -138,6 +140,7 @@ export const logout = () => async dispatch => {
     await axios.post('/auth/logout')
     dispatch(removeUser())
     history.push('/login')
+    window.sessionStorage.clear()
   } catch (err) {
     console.error(err)
   }
