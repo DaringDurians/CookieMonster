@@ -20,7 +20,7 @@ export const fetchAllOrderHistory = () => async dispatch => {
   try {
     const {data} = await axios.get(`/api/order`)
     const orders = data.filter(order => order.active === false)
-    dispatch(gotOldOrders(data))
+    dispatch(gotOldOrders(orders))
   } catch (error) {
     console.error(error)
   }
