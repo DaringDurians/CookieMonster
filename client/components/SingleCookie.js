@@ -40,7 +40,6 @@ export class SingleCookie extends React.Component {
   render() {
     const {singleCookie, userId} = this.props
     const currentCart = JSON.parse(window.sessionStorage.getItem(userId))
-    console.log('CURRENT CART', currentCart)
     return (
       <div className="singleBox">
         {this.props.isAdmin ? (

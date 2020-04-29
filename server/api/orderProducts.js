@@ -33,7 +33,6 @@ router.post('/:productId', async (req, res, next) => {
     })
     if (found) {
       console.log('*******POST ROUTE IF STATEMENT')
-      console.log(req.body)
       const update = await found.update({
         quantity: req.body.quantity,
         totalPrice: req.body.totalPrice

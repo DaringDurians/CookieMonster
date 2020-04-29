@@ -38,7 +38,6 @@ router.post('/', async (req, res, next) => {
         active: true
       }
     }) //, active: true
-    console.log('potential', potentialCart)
     let isNew = await OrderProducts.findAll({
       where: {orderId: potentialCart[0].id}
     })
@@ -56,7 +55,6 @@ router.post('/', async (req, res, next) => {
         where: {orderId: potentialCart[0].id, productId: req.body.productId}
       })
 
-      console.log(req.body.productId)
       if (existingProduct) {
         let updatedProd = await OrderProducts.update(
           {quantity: req.body.quantity},
@@ -66,9 +64,7 @@ router.post('/', async (req, res, next) => {
             where: {orderId: potentialCart[0].id, productId: req.body.productId}
           }
         )
-        console.log('finished route', updatedProd)
       } else {
-        console.log('******************* req.body', req.body)
         await OrderProducts.create({
           orderId: potentialCart[0].id,
           productId: req.body.productId,

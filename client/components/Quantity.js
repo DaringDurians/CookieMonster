@@ -47,7 +47,6 @@ export class Quantity extends React.Component {
   }
 
   updateSessions() {
-    // console.log('this.props in updateSessios', this.props)
     const prodName = this.props.products.find(el => el.id === this.props.prodId)
     prodId = this.props.prodId
     name = prodName.name
@@ -57,7 +56,6 @@ export class Quantity extends React.Component {
     price = totalPrice
     userId = this.props.userId
 
-    console.log('UPDATE SESSIONS>>>>>>>>', this.props)
     this.props.updateOrderProductDetails(
       prodId,
       quantity,

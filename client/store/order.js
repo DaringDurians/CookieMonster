@@ -33,7 +33,6 @@ export const sendCart = (userId, active, total, name, email) => {
   return async dispatch => {
     try {
       if (userId === undefined) {
-        console.log('INSIDE SEND CART THUNBKKKK', name, email, userId)
         const guestUser = await axios.post(`/api/users`, {
           name: name,
           email: email
@@ -48,7 +47,6 @@ export const sendCart = (userId, active, total, name, email) => {
         const guestSessions = JSON.parse(
           window.sessionStorage.getItem(undefined)
         )
-        console.log('GUEST ORDER', guestOrder)
         let mappedGS = Promise.all(
           guestSessions.map(item => {
             let newProduct = {
@@ -57,16 +55,12 @@ export const sendCart = (userId, active, total, name, email) => {
               quantity: item.quantity,
               totalPrice: item.price
             }
-            console.log(newProduct)
             axios.post(`/api/orderProducts/${item.prodId}`, newProduct)
           })
         )
         await axios.put(`/api/order/${guestOrder.data.id}`, {active: false})
-        console.log('PUT ROUTE RAN')
       } else {
-        console.log('LOGGEDINORDER', userId)
         const loggedInOrder = await axios.get(`/api/order/${userId}`)
-        console.log(loggedInOrder)
         await axios.put(`/api/order/${loggedInOrder.data[0].id}`, {
           active: false
         })
