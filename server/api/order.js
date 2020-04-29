@@ -34,7 +34,8 @@ router.post('/', async (req, res, next) => {
     let user = await User.findOne({where: {id: req.body.userId}})
     let potentialCart = await Order.findOrCreate({
       where: {
-        userId: user.id
+        userId: user.id,
+        active: true
       }
     }) //, active: true
     console.log('potential', potentialCart)
@@ -43,6 +44,7 @@ router.post('/', async (req, res, next) => {
     })
     if (Array.isArray(isNew) && isNew.length > 1) {
       console.log('ISNEW IS FALSE; SHOULD UPDATE')
+      await OrderProducts.destroy({where: {productId: 11, quantity: 0}})
       let updated = await OrderProducts.findAll({
         where: {orderId: potentialCart[0].id}
       })
@@ -53,6 +55,7 @@ router.post('/', async (req, res, next) => {
       let existingProduct = await OrderProducts.findOne({
         where: {orderId: potentialCart[0].id, productId: req.body.productId}
       })
+
       console.log(req.body.productId)
       if (existingProduct) {
         let updatedProd = await OrderProducts.update(
@@ -75,7 +78,6 @@ router.post('/', async (req, res, next) => {
       }
       res.json(potentialCart[0])
     }
-    // res.json(potentialCart[0])
   } catch (err) {
     next(err)
   }

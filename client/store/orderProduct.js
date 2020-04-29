@@ -40,24 +40,6 @@ const getItemsHelper = userId => {
  * THUNK CREATORS
  */
 
-// export const getProduct = () => async dispatch => {
-//   try {
-//     const {data} = await axios.get(`/api/products/`)
-//     dispatch(gotProduct(data))
-//   } catch (error) {
-//     console.error(error)
-//   }
-// }
-
-// export const fetchOrderProductDetails = productId => async dispatch => {
-//   try {
-//     const {data} = await axios.get(`/api/orderProducts/${productId}`)
-//     dispatch(gotOrderProduct(data))
-//   } catch (error) {
-//     console.error(error)
-//   }
-// }
-
 export const updateOrderProductDetails = (
   prodId,
   quantity,
@@ -69,10 +51,6 @@ export const updateOrderProductDetails = (
   // eslint-disable-next-line complexity
 ) => async dispatch => {
   try {
-    // const {data} = await axios.put(`/api/orderProducts/${productId}`, {
-    //   quantity,
-    //   totalPrice
-    // })
     if (quantity !== 0) {
       let tempProduct = {prodId, name, imgUrl, active, quantity, price}
       const items = getItemsHelper(userId)
@@ -112,7 +90,7 @@ export const updateOrderProductDetails = (
       console.log('USER OD', userId)
       if (userId !== undefined) {
         const orderId = await axios.get(`/api/order/${userId}`)
-        console.log('about to map', orderId.data[0])
+        console.log('about to map', orderId)
         let mapCurrentSession = Promise.all(
           currentSessions.map(item => {
             let newProduct = {
