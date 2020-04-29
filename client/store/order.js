@@ -58,16 +58,16 @@ export const sendCart = (userId, active, total, name, email) => {
               totalPrice: item.price
             }
             console.log(newProduct)
-            axios.post(`api/orderProducts/${item.prodId}`, newProduct)
+            axios.post(`/api/orderProducts/${item.prodId}`, newProduct)
           })
         )
-        await axios.put(`api/order/${guestOrder.data.id}`, {active: false})
+        await axios.put(`/api/order/${guestOrder.data.id}`, {active: false})
         console.log('PUT ROUTE RAN')
       } else {
         console.log('LOGGEDINORDER', userId)
         const loggedInOrder = await axios.get(`/api/order/${userId}`)
         console.log(loggedInOrder)
-        await axios.put(`api/order/${loggedInOrder.data[0].id}`, {
+        await axios.put(`/api/order/${loggedInOrder.data[0].id}`, {
           active: false
         })
       }

@@ -34,7 +34,8 @@ router.post('/', async (req, res, next) => {
     let user = await User.findOne({where: {id: req.body.userId}})
     let potentialCart = await Order.findOrCreate({
       where: {
-        userId: user.id
+        userId: user.id,
+        active: true
       }
     }) //, active: true
     console.log('potential', potentialCart)
