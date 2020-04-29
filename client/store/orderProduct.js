@@ -80,17 +80,10 @@ export const updateOrderProductDetails = (
         allProducts = [tempProduct]
       }
       window.sessionStorage.setItem(userId, JSON.stringify(allProducts))
-      console.log('before dispatch in updated orderproduct thunk', allProducts)
       dispatch(updatedOrderProduct(tempProduct))
-      console.log(
-        'after dispatch in updated orderproduct thunk',
-        allProducts[0]
-      )
       const currentSessions = JSON.parse(window.sessionStorage.getItem(userId))
-      console.log('USER OD', userId)
       if (userId !== undefined) {
         const orderId = await axios.get(`/api/order/${userId}`)
-        console.log('about to map', orderId)
         let mapCurrentSession = Promise.all(
           currentSessions.map(item => {
             let newProduct = {
@@ -99,9 +92,7 @@ export const updateOrderProductDetails = (
               quantity: quantity,
               totalPrice: price
             }
-            console.log('PRODUCTID', item.prodId)
             axios.post(`/api/orderProducts/${item.prodId}`, newProduct)
-            console.log('after post')
           })
         )
       }

@@ -50,15 +50,11 @@ export const auth = (name, email, password, method) => async dispatch => {
       totalPrice
     })
 
-    console.log('EXIST IN LOGIN', exist.data)
     // activeExist = if(exist.data.active
     const products = await axios.get('/api/products/')
     const sorted = products.data.sort((a, b) => a.id - b.id)
-    console.log('HELLO~', sorted)
     if (Array.isArray(exist.data)) {
-      console.log('Entered first if ')
       let mapExist = exist.data.map(product => {
-        // console.log('HELLO~', sorted.data)
         let tempProd = {
           prodId: product.productId,
           name: sorted[product.productId - 1].name,
@@ -69,7 +65,6 @@ export const auth = (name, email, password, method) => async dispatch => {
         }
         return tempProd
       })
-      console.log('MAP EXIST', mapExist)
       const temp = JSON.parse(window.sessionStorage.getItem(undefined))
 
       window.sessionStorage.removeItem(undefined)
@@ -80,16 +75,13 @@ export const auth = (name, email, password, method) => async dispatch => {
         window.sessionStorage.setItem(userId, JSON.stringify([...mapExist]))
       }
     } else if (res.data.id) {
-      console.log('Entered first else if ')
       let linkUser
       linkUser = JSON.parse(window.sessionStorage.getItem(undefined))
       if (linkUser !== undefined && linkUser !== null) {
-        // console.log(linkUser)
         window.sessionStorage.removeItem(undefined)
         // need to merge db cart upon login before setting sessions cart to user key
         window.sessionStorage.setItem(res.data.id, JSON.stringify(linkUser))
         const orderId = await axios.get(`/api/order/${res.data.id}`)
-        console.log('****************', linkUser)
         const mapUser = Promise.all(
           linkUser.map(product => {
             let tempProd = {
@@ -98,20 +90,14 @@ export const auth = (name, email, password, method) => async dispatch => {
               quantity: product.quantity,
               totalPrice: product.price
             }
-            console.log('tempProd', tempProd)
             axios.post(`/api/orderProducts/${product.prodId}`, tempProd)
           })
         )
       }
       //
-      console.log('res.data upon initial load', res.data)
     } else if (exist.data.id !== undefined || exist.data.id !== null) {
-      console.log('Entered second else if ')
-      console.log('EXIST>DATA>ID', exist.data.id)
       const getDbCart = await axios.get(`/api/orderProducts/${exist.data.id}`)
       const dbOrder = getDbCart.data[0]
-      console.log('PRODUCTS', products.data)
-      console.log(getDbCart.data[0], 'GET DB CART')
       if (dbOrder.quantity !== 0) {
         const tempProd = {
           prodId: dbOrder.productId,
@@ -121,7 +107,6 @@ export const auth = (name, email, password, method) => async dispatch => {
           quantity: dbOrder.quantity,
           price: dbOrder.totalPrice
         }
-        console.log(tempProd, 'TO BE SENT TO SESSIONS')
         window.sessionStorage.setItem(userId, JSON.stringify(tempProd))
       }
     }

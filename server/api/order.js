@@ -38,25 +38,20 @@ router.post('/', async (req, res, next) => {
         active: true
       }
     }) //, active: true
-    console.log('potential', potentialCart)
     let isNew = await OrderProducts.findAll({
       where: {orderId: potentialCart[0].id}
     })
     if (Array.isArray(isNew) && isNew.length > 1) {
-      console.log('ISNEW IS FALSE; SHOULD UPDATE')
       await OrderProducts.destroy({where: {productId: 11, quantity: 0}})
       let updated = await OrderProducts.findAll({
         where: {orderId: potentialCart[0].id}
       })
-      console.log('POST ROUTE FOR ORDER ISNEW', updated)
       res.json(updated)
     } else {
-      console.log('ISNEW IS TRUE; SHOULD ADD TO ORDERPRODUCTS')
       let existingProduct = await OrderProducts.findOne({
         where: {orderId: potentialCart[0].id, productId: req.body.productId}
       })
 
-      console.log(req.body.productId)
       if (existingProduct) {
         let updatedProd = await OrderProducts.update(
           {quantity: req.body.quantity},
@@ -66,9 +61,7 @@ router.post('/', async (req, res, next) => {
             where: {orderId: potentialCart[0].id, productId: req.body.productId}
           }
         )
-        console.log('finished route', updatedProd)
       } else {
-        console.log('******************* req.body', req.body)
         await OrderProducts.create({
           orderId: potentialCart[0].id,
           productId: req.body.productId,
