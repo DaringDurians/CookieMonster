@@ -75,36 +75,6 @@ export const getQuantityThunk = (prodId, productList) => {
   }
 }
 
-// export const gotStorage = (userId) => {
-//   return dispatch => {
-//     try {
-//       const temp = JSON.parse(window.sessionStorage.getItem(userId))
-//       //dispatch(getStorage(temp))
-//     } catch (err) {
-//       console.log('ERROR fetching storage data', err)
-//     }
-//   }
-// }
-
-// export const updatedStorage = (userId, active, orderId, productId, productImage, productName, productCategory, productQuantity, productPrice) => {
-//   return dispatch => {
-//     try {
-//       let prod = {
-//         active: true
-//         orderId: ,
-//         productId:
-//         productImage,
-//         productName,
-//         productCategory,
-//         productQuantity,
-//         productPrice
-//       const {update} = JSON.parse(window.sessionStorage.getItem(userId))
-//     } catch (err) {
-//       console.log('ERROR fetching storage data', err)
-//     }
-//   }
-// }
-
 const quantity = (quantity = 0, action) => {
   switch (action.type) {
     case SET_QUANTITY:

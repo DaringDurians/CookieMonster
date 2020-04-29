@@ -32,7 +32,7 @@ export const UserHome = props => {
 const mapState = state => {
   return {
     name: state.user.name,
-    user: state.user.id,
+    userId: state.user.id,
     orders: state.orders,
     isLoggedIn: !!state.user.id
   }

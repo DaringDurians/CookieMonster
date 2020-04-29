@@ -35,7 +35,7 @@ export const me = () => async dispatch => {
 // eslint-disable-next-line max-statements
 export const auth = (name, email, password, method) => async dispatch => {
   let res,
-    productId = 2,
+    productId = 11,
     quantity = 0,
     totalPrice = 0,
     exist
@@ -49,23 +49,22 @@ export const auth = (name, email, password, method) => async dispatch => {
       quantity,
       totalPrice
     })
-    console.log('EXIST IN LOGIN', exist.data)
-    const products = await axios.get('/api/products/')
 
+    // activeExist = if(exist.data.active
+    const products = await axios.get('/api/products/')
+    const sorted = products.data.sort((a, b) => a.id - b.id)
     if (Array.isArray(exist.data)) {
-      console.log('Entered first if ')
       let mapExist = exist.data.map(product => {
         let tempProd = {
           prodId: product.productId,
-          name: products.data[product.productId].name,
-          imgUrl: products.data[product.productId].imgUrl,
+          name: sorted[product.productId - 1].name,
+          imgUrl: sorted[product.productId - 1].imgUrl,
           active: true,
           quantity: product.quantity,
           price: product.totalPrice
         }
         return tempProd
       })
-      console.log('MAP EXIST', mapExist)
       const temp = JSON.parse(window.sessionStorage.getItem(undefined))
 
       window.sessionStorage.removeItem(undefined)
@@ -76,15 +75,13 @@ export const auth = (name, email, password, method) => async dispatch => {
         window.sessionStorage.setItem(userId, JSON.stringify([...mapExist]))
       }
     } else if (res.data.id) {
-      console.log('Entered first else if ')
       let linkUser
       linkUser = JSON.parse(window.sessionStorage.getItem(undefined))
       if (linkUser !== undefined && linkUser !== null) {
-        // console.log(linkUser)
         window.sessionStorage.removeItem(undefined)
+        // need to merge db cart upon login before setting sessions cart to user key
         window.sessionStorage.setItem(res.data.id, JSON.stringify(linkUser))
         const orderId = await axios.get(`/api/order/${res.data.id}`)
-        console.log('****************', linkUser)
         const mapUser = Promise.all(
           linkUser.map(product => {
             let tempProd = {
@@ -93,20 +90,14 @@ export const auth = (name, email, password, method) => async dispatch => {
               quantity: product.quantity,
               totalPrice: product.price
             }
-            console.log('tempProd', tempProd)
             axios.post(`/api/orderProducts/${product.prodId}`, tempProd)
           })
         )
       }
       //
-      console.log('res.data upon initial load', res.data)
     } else if (exist.data.id !== undefined || exist.data.id !== null) {
-      console.log('Entered second else if ')
-      console.log('EXIST>DATA>ID', exist.data.id)
       const getDbCart = await axios.get(`/api/orderProducts/${exist.data.id}`)
       const dbOrder = getDbCart.data[0]
-      console.log('PRODUCTS', products.data)
-      console.log(getDbCart.data[0], 'GET DB CART')
       if (dbOrder.quantity !== 0) {
         const tempProd = {
           prodId: dbOrder.productId,
@@ -116,10 +107,10 @@ export const auth = (name, email, password, method) => async dispatch => {
           quantity: dbOrder.quantity,
           price: dbOrder.totalPrice
         }
-        console.log(tempProd, 'TO BE SENT TO SESSIONS')
         window.sessionStorage.setItem(userId, JSON.stringify(tempProd))
       }
     }
+
     //take guest cart info (if it exists) and attach it to the user cart info upon login
   } catch (authError) {
     return dispatch(getUser({error: authError}))
@@ -138,6 +129,7 @@ export const logout = () => async dispatch => {
     await axios.post('/auth/logout')
     dispatch(removeUser())
     history.push('/login')
+    window.sessionStorage.clear()
   } catch (err) {
     console.error(err)
   }

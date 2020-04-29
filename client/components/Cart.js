@@ -48,7 +48,6 @@ export class Cart extends Component {
 
   async handleFormSubmit(event) {
     event.preventDefault()
-    console.log('HANDLE FORM SUBMIT')
     this.setState(
       {
         name: event.target.fullname.value,
@@ -69,11 +68,9 @@ export class Cart extends Component {
     active = false
     total = totalPrice
 
-    console.log('THIS.STATE', this.state)
     name = this.state.name
     email = this.state.email
     const check = await this.props.sendCart(userId, active, total, name, email)
-    console.log(check, 'check what comes from send cart thunk')
     window.sessionStorage.clear()
   }
 
