@@ -8,6 +8,7 @@ const OrderProducts = db.define('orderProducts', {
   },
   productId: {
     type: Sequelize.INTEGER
+    // defaultValue: 0
     // allowNull: false
   },
   quantity: {

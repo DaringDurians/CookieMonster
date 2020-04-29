@@ -41,7 +41,7 @@ export const sendCart = (userId, active, total, name, email) => {
         // userId = guestUser.id
         const guestOrder = await axios.post(`/api/order`, {
           userId: guestUser.data.id,
-          // productId: 2,
+          productId: 11,
           quantity: 0,
           totalPrice: 0
         })
@@ -64,8 +64,8 @@ export const sendCart = (userId, active, total, name, email) => {
         await axios.put(`api/order/${guestOrder.data.id}`, {active: false})
         console.log('PUT ROUTE RAN')
       } else {
-        console.log('LOGGEDINORDER')
-        const loggedInOrder = await axios.get(`api/order/${userId}`)
+        console.log('LOGGEDINORDER', userId)
+        const loggedInOrder = await axios.get(`/api/order/${userId}`)
         console.log(loggedInOrder)
         await axios.put(`api/order/${loggedInOrder.data[0].id}`, {
           active: false

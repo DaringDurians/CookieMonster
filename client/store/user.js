@@ -35,7 +35,7 @@ export const me = () => async dispatch => {
 // eslint-disable-next-line max-statements
 export const auth = (name, email, password, method) => async dispatch => {
   let res,
-    productId = 2,
+    productId = 11,
     quantity = 0,
     totalPrice = 0,
     exist
@@ -49,6 +49,7 @@ export const auth = (name, email, password, method) => async dispatch => {
       quantity,
       totalPrice
     })
+
     console.log('EXIST IN LOGIN', exist.data)
     // activeExist = if(exist.data.active
     const products = await axios.get('/api/products/')
@@ -124,6 +125,7 @@ export const auth = (name, email, password, method) => async dispatch => {
         window.sessionStorage.setItem(userId, JSON.stringify(tempProd))
       }
     }
+
     //take guest cart info (if it exists) and attach it to the user cart info upon login
   } catch (authError) {
     return dispatch(getUser({error: authError}))
